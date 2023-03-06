@@ -1,0 +1,77 @@
+/* Table of contents
+--------------------------------------------------
+    1. Colors
+    2. Base typography
+    3. Spacing
+    4. Other
+    5. Larger screens font sizes
+*/
+
+:root {
+  /** 1. Colors
+-------------------------*/
+  --clr-primary-200: #ebd1be;
+  --clr-primary-300: #d0b4a0;
+  --clr-primary-400: #d8a47f;
+  --clr-primary-500: #826b5c;
+
+  --clr-neutral-200: #faf7f5;
+  --clr-neutral-300: #8f9499;
+  --clr-neutral-400: #5d606b;
+  --clr-neutral-500: #41434d;
+  --clr-neutral-600: #272932;
+  --clr-neutral-600--opacity-90: #272932e6;
+  --clr-neutral-600--opacity-20: #27293233;
+
+  /** 2. Base typography
+-------------------------*/
+  --ff-base: "Late", sans-serif;
+  --ff-accent: "Vollkorn", serif;
+
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-italic: 400 italic;
+  --fw-bold: 700;
+  --fw-bold-italic: 700 italic;
+
+  --fs-400: 1rem; /* 16px */
+  --fs-450: 1.25rem; /* 20px */
+  --fs-500: 1.563rem; /* 25px */
+  --fs-550: 1.953rem; /* 31.25px */
+  --fs-600: 2.441rem; /* 39.06px */
+  --fs-700: 3.052rem; /* 48.83px */
+  --fs-800: 3.815rem; /* 61.04px */
+
+  /** 3. Spacing
+-------------------------*/
+  --space-300: 0.25rem; /* 4px */
+  --space-350: 0.5rem; /* 8px */
+  --space-375: 0.75rem; /* 12px */
+  --space-400: 1rem; /* 16px */
+  --space-450: 1.5rem; /* 24px */
+  --space-500: 2rem; /* 32px */
+  --space-600: 3rem; /* 48px */
+  --space-700: 4rem; /* 64px */
+  --space-900: 6rem; /* 96px */
+  --space-1000: 8rem; /* 128px */
+
+  /** 4. Other
+-------------------------*/
+  --box-shadow--inset: inset 0px 1px 4px 0px var(--clr-neutral-600--opacity-20);
+  --box-shadow: 2px 3px 6px var(--clr-neutral-600--opacity-20);
+  --border-radius: 2px;
+}
+
+/** 5. Smaller screens font sizes
+-------------------------*/
+@media (min-width: 40em) {
+  :root {
+    --fs-400: 1rem; /* 16px */
+    --fs-450: 1.25rem; /* 20px */
+    --fs-500: 1.563rem; /* 25px */
+    --fs-550: 1.953rem; /* 31.25px */
+    --fs-600: 2.441rem; /* 39.06px */
+    --fs-700: 3.052rem; /* 48.83px */
+    --fs-700: 3.815rem; /* 61.04px */
+  }
+}

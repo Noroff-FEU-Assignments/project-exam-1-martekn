@@ -1,0 +1,186 @@
+/* Table of contents
+--------------------------------------------------
+    1. Skip nav link
+    2. Button
+    3. Icon
+    4. Category boxes
+    5. Inputs + Label
+    6. Card
+    7. Loader
+*/
+
+/** 1. Skip nav link
+-------------------------*/
+/* #region */
+.skip-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: var(--fs-400);
+  font-weight: var(--fw-bold);
+  font-family: var(--ff-accent);
+  box-shadow: var(--box-shadow);
+  padding: var(--space-350) var(--space-500);
+  border-radius: 0 0 var(--border-radius) 0;
+  background-color: var(--clr-neutral-600);
+  color: var(--clr-primary-400);
+  transform: translateX(-130%);
+  transition: transform 300ms ease-in;
+}
+
+.skip-nav:focus {
+  transform: translateX(0);
+  outline: none;
+}
+/* #endregion */
+
+/** 2. Button
+-------------------------*/
+/* #region */
+.btn {
+  margin: 500px;
+  padding: var(--space-350) var(--space-500);
+  font-size: var(--fs-450);
+  font-weight: var(--fw-bold);
+  font-family: var(--ff-accent);
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
+  background-color: var(--bg, var(--clr-neutral-600));
+  color: var(--fg, var(--clr-primary-400));
+  border: none;
+}
+.btn--primary {
+  --bg: var(--clr-neutral-600);
+  --fg: var(--clr-primary-400);
+}
+
+.btn--secondary {
+  --bg: var(--clr-primary-400);
+  --fg: var(--clr-neutral-600);
+  --bg-hover: var(--clr-primary-200);
+  --bg-active: var(--clr-primary-300);
+}
+
+.btn:hover {
+  background-color: var(--bg-hover, var(--clr-neutral-500));
+}
+.btn:active {
+  background-color: var(--bg-hover, var(--clr-neutral-400));
+}
+
+.btn--text {
+  font-weight: var(--fw-bold-italic);
+  text-decoration: none;
+
+  --bg: none;
+  --fg: var(--primary-500);
+}
+
+.btn--text:hover {
+  text-decoration: underline;
+  --fg: var(--clr-primary-400);
+}
+
+.btn--text:active {
+  text-decoration: none;
+  --fg: var(--clr-primary-300);
+}
+
+/* #endregion */
+
+/** 3. Icon
+-------------------------*/
+/* #region */
+.icon {
+  min-height: 44px;
+  aspect-ratio: 1 / 1;
+  padding: var(--space-300);
+  border-radius: var(--border-radius);
+
+  background-color: var(--bg, var(--clr-neutral-600));
+  color: var(--fg, var(--clr-primary-400));
+}
+
+.icon--secondary {
+  --bg: var(--clr-primary-200);
+  --fg: var(--clr-neutral-600);
+  --bg-hover: var(--clr-primary-400);
+  --bg-active: var(--clr-primary-300);
+}
+
+.icon:hover {
+  background-color: var(--bg-hover, var(--clr-neutral-500));
+}
+.icon:active {
+  background-color: var(--bg-hover, var(--clr-neutral-400));
+}
+/* #endregion */
+
+/** 4. Category boxes
+-------------------------*/
+/* #region */
+.category-item {
+  padding: var(--space-350) var(--space-400);
+  background-color: var(--bg, var(--clr-neutral-600));
+  color: var(--fg, var(--clr-neutral-200));
+}
+
+.category-item.selected {
+  --bg: var(--clr-primary-400);
+  --fg: var(--clr-neutral-600);
+  --bg-hover: var(--clr-primary-200);
+}
+
+.category-item:hover {
+  background-color: var(--bg-hover, var(--clr-neutral-400));
+}
+
+.category-item:active {
+  box-shadow: var(--box-shadow--inset);
+}
+/* #endregion */
+
+/** 5. Inputs + Label
+-------------------------*/
+/* #region */
+input,
+.input,
+textarea,
+.textarea {
+  background-color: var(--clr-neutral-200);
+  color: var(--clr-neutral-600);
+  font-size: var(--fs-400);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--clr-neutral-300);
+  box-shadow: var(--box-shadow--inset);
+  display: block;
+}
+
+input:focus-visible,
+.input:focus-visible,
+textarea:focus-visible,
+.textarea:focus-visible {
+  border-color: var(--clr-neutral-600);
+  outline: 2px solid var(--clr-primary-400);
+}
+
+label,
+.label {
+  font-size: var(--fs-400);
+  font-weight: var(--fw-bold);
+  color: var(--fg, var(--clr-neutral-600));
+  display: block;
+}
+/* #endregion */
+
+/** 6. Card
+-------------------------*/
+/* #region */
+
+/* #endregion */
+
+/** 7. Loader
+-------------------------*/
+/* #region */
+
+/* #endregion */
