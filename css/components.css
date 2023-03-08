@@ -390,7 +390,12 @@ footer .logo {
   background-color: var(--bg-category, var(--clr-neutral-600));
   color: var(--fg-category, var(--clr-neutral-200));
   border-radius: var(--border-radius);
+  border: none;
   font-size: var(--fs-350);
+}
+
+.category-item.category-clickable {
+  cursor: pointer;
 }
 
 .category-item.selected {
@@ -405,6 +410,11 @@ footer .logo {
 
 .category-item.category-clickable:active {
   box-shadow: var(--box-shadow--inset);
+}
+
+.category-item.category-clickable:focus-visible {
+  outline: 2px solid var(--bg, var(--clr-neutral-200));
+  box-shadow: 0 0 0 4px var(--focus-shadow, var(--clr-neutral-600));
 }
 /* #endregion */
 
@@ -471,30 +481,36 @@ label,
   z-index: 100;
 }
 
-.card.card--small {
+.card.card--small,
+.card.card--large {
   grid-template-rows: minmax(150px, 1fr) auto;
   --gap: var(--space-450);
 }
 
-.card.card--small p {
+.card.card--small p,
+.card.card--large p {
   --lines: 3;
   color: var(--clr-neutral-500);
 }
 
-.card.card--small .content {
+.card.card--small .content,
+.card.card--large .content {
   --flow-space: var(--space-350);
 }
 
-.card.card--small .image {
+.card.card--small .image,
+.card.card--large .image {
   grid-row: 1;
   position: relative;
 }
 
-.card.card--small .image > * {
+.card.card--small .image > *,
+.card.card--large .image > * {
   position: absolute;
 }
 
-.card.card--small img {
+.card.card--small img,
+.card.card--large img {
   height: 100%;
   width: 100%;
   object-fit: cover;
@@ -502,9 +518,32 @@ label,
   border-radius: var(--border-radius);
 }
 
-.card.card--small .category-item {
+.card.card--small .category-item,
+.card.card--large .category-item {
   bottom: 8px;
   left: 8px;
+}
+
+/* 6.1. Media queries
+-------------------------*/
+@media (min-width: 40em) {
+  .card.card--large {
+    grid-template-columns: minmax(250px, 1fr) minmax(30ch, 70ch);
+    grid-template-rows: auto;
+  }
+
+  .card.card--large .image {
+    grid-column: 1;
+    min-height: 250px;
+  }
+  .card.card--large .content {
+    padding-block: var(--space-600);
+    grid-column: 2;
+    align-self: center;
+  }
+  .card.card--large .ellipse-text {
+    --lines: 4;
+  }
 }
 
 /* #endregion */

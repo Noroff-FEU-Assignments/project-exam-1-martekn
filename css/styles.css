@@ -372,10 +372,35 @@ body {
 /** 6. Articles page
 -------------------------*/
 /* #region */
+.page-articles {
+  margin-top: var(--space-600);
+  gap: var(--space-500);
+}
+
+.page-articles .categories > .category-item {
+  flex: 0;
+}
+
+.page-articles ul {
+  --gap: var(--space-600);
+}
+.page-articles .btn {
+  align-self: center;
+  margin-top: calc(var(--space-900) - var(--gap));
+}
 
 /* 6.1. Media queries
 -------------------------*/
+@media (min-width: 50em) {
+  .page-articles {
+    margin-top: var(--space-700);
+    gap: var(--space-600);
+  }
 
+  .page-articles .btn {
+    margin-top: calc(var(--space-1000) - var(--gap));
+  }
+}
 /* #endregion */
 
 /** 7. Article specific page

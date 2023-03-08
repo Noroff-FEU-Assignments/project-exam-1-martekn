@@ -34,21 +34,201 @@
   <body>
     <a href="#main-content" class="skip-nav">Skip to content</a>
     <div class="min-full-height">
-      <header>
-        <a href="#" class="logo">Travella</a>
-        <button></button>
-        <nav class="primary-nav">
-          <ul>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
+      <header class="primary-header container flex">
+        <a href="./index.html" class="logo">Travella</a>
+        <button
+          id="nav-open"
+          class="btn--nav"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+          aria-haspopup="true"
+        >
+          <i class="ri-menu-line" aria-hidden="true"></i>
+          <span class="visually-hidden">Open menu</span>
+        </button>
+
+        <nav id="primary-nav" class="primary-nav flex" data-visible="false">
+          <button id="nav-close" class="btn--nav" aria-controls="primary-navigation" aria-expanded="true">
+            <i class="ri-close-line"></i>
+            <span class="visually-hidden">Close menu</span>
+          </button>
+          <ul class="flex">
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./articles.html" aria-current="page">Articles</a></li>
+            <li><a href="./about.html">About</a></li>
+            <li><a href="./contact.html">Contact</a></li>
           </ul>
         </nav>
       </header>
-      <main id="main"></main>
+
+      <main id="main-content" class="page-articles grid container">
+        <h1>Articles</h1>
+        <div class="flow-content">
+          <span class="text-350">Filter by category:</span>
+          <div class="categories flex flex--wrap">
+            <button class="category-item category-clickable">Travel</button>
+            <button class="category-item category-clickable">Photograpghy</button>
+            <button class="category-item category-clickable">Reviews</button>
+            <button class="category-item category-clickable">Lifestyle</button>
+          </div>
+        </div>
+        <ul class="flex flex--col">
+          <li class="card card--large grid">
+            <div class="content flow-content">
+              <h2><a href="./article.html">Top tips for travelling</a></h2>
+              <p class="ellipse-text">
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.
+              </p>
+            </div>
+            <div class="image">
+              <div class="category-item">Travel</div>
+              <img src="https://source.unsplash.com/random" alt="" />
+            </div>
+          </li>
+          <li class="card card--large grid">
+            <div class="content flow-content">
+              <h2><a href="./article.html">Top tips for travelling</a></h2>
+              <p class="ellipse-text">
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.
+              </p>
+            </div>
+            <div class="image">
+              <div class="category-item">Travel</div>
+              <img src="https://source.unsplash.com/random" alt="" />
+            </div>
+          </li>
+          <li class="card card--large grid">
+            <div class="content flow-content">
+              <h2><a href="./article.html">Top tips for travelling</a></h2>
+              <p class="ellipse-text">
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.
+              </p>
+            </div>
+            <div class="image">
+              <div class="category-item">Travel</div>
+              <img src="https://source.unsplash.com/random" alt="" />
+            </div>
+          </li>
+          <li class="card card--large grid">
+            <div class="content flow-content">
+              <h2><a href="./article.html">Top tips for travelling</a></h2>
+              <p class="ellipse-text">
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.
+              </p>
+            </div>
+            <div class="image">
+              <div class="category-item">Travel</div>
+              <img src="https://source.unsplash.com/random" alt="" />
+            </div>
+          </li>
+          <li class="card card--large grid">
+            <div class="content flow-content">
+              <h2><a href="./article.html">Top tips for travelling</a></h2>
+              <p class="ellipse-text">
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.
+              </p>
+            </div>
+            <div class="image">
+              <div class="category-item">Travel</div>
+              <img src="https://source.unsplash.com/random" alt="" />
+            </div>
+          </li>
+          <li class="card card--large grid">
+            <div class="content flow-content">
+              <h2><a href="./article.html">Top tips for travelling</a></h2>
+              <p class="ellipse-text">
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.
+              </p>
+            </div>
+            <div class="image">
+              <div class="category-item">Travel</div>
+              <img src="https://source.unsplash.com/random" alt="" />
+            </div>
+          </li>
+          <li class="card card--large grid">
+            <div class="content flow-content">
+              <h2><a href="./article.html">Top tips for travelling</a></h2>
+              <p class="ellipse-text">
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.
+              </p>
+            </div>
+            <div class="image">
+              <div class="category-item">Travel</div>
+              <img src="https://source.unsplash.com/random" alt="" />
+            </div>
+          </li>
+          <li class="card card--large grid">
+            <div class="content flow-content">
+              <h2><a href="./article.html">Top tips for travelling</a></h2>
+              <p class="ellipse-text">
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.
+              </p>
+            </div>
+            <div class="image">
+              <div class="category-item">Travel</div>
+              <img src="https://source.unsplash.com/random" alt="" />
+            </div>
+          </li>
+          <li class="card card--large grid">
+            <div class="content flow-content">
+              <h2><a href="./article.html">Top tips for travelling</a></h2>
+              <p class="ellipse-text">
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.
+              </p>
+            </div>
+            <div class="image">
+              <div class="category-item">Travel</div>
+              <img src="https://source.unsplash.com/random" alt="" />
+            </div>
+          </li>
+          <li class="card card--large grid">
+            <div class="content flow-content">
+              <h2><a href="./article.html">Top tips for travelling</a></h2>
+              <p class="ellipse-text">
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.
+              </p>
+            </div>
+            <div class="image">
+              <div class="category-item">Travel</div>
+              <img src="https://source.unsplash.com/random" alt="" />
+            </div>
+          </li>
+          <button class="btn btn--primary">See more</button>
+        </ul>
+      </main>
     </div>
-    <footer class="primary-footer"></footer>
+    <footer class="primary-footer bg--dark footer-margin">
+      <div class="top-bar flex container">
+        <a href="./index.html" class="logo">Travella</a>
+        <div class="socials flex">
+          <a href="#" class="icon"
+            ><i class="ri-instagram-fill" aria-hidden="true"></i><span class="visually-hidden">Instagram</span></a
+          >
+          <a href="#" class="icon"
+            ><i class="ri-facebook-fill" aria-hidden="true"></i><span class="visually-hidden">Facebook</span></a
+          >
+          <a href="#" class="icon"
+            ><i class="ri-twitter-fill" aria-hidden="true"></i><span class="visually-hidden">Twitter</span></a
+          >
+        </div>
+      </div>
+      <form action="" class="grid grid--even-col2 container">
+        <h2>Subscribe to our newsletter</h2>
+        <p>
+          Get extra tips, tricks and updates delivered right to your email. We will also notify you about new posts on
+          the blog.
+        </p>
+        <div class="grid">
+          <label for="sub-email">Email</label>
+
+          <input type="text" id="sub-email" />
+          <button class="btn btn--secondary">Subscribe</button>
+        </div>
+      </form>
+      <div class="container">
+        <i class="ri-copyright-line" aria-hidden="true"></i><span class="visually-hidden">Copyright </span>2023 Marte
+        Møllen Knutsen
+      </div>
+    </footer>
   </body>
 </html>

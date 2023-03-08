@@ -66,6 +66,9 @@ h3,
 /** 3. Font sizes
 -------------------------*/
 /* #region */
+.text-350 {
+  font-size: var(--fs-350);
+}
 .text-450 {
   font-size: var(--fs-450);
 }
