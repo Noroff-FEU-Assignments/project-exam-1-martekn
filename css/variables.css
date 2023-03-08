@@ -25,8 +25,8 @@
 
   /** 2. Base typography
 -------------------------*/
-  --ff-base: "Late", sans-serif;
-  --ff-accent: "Vollkorn", serif;
+  --ff-base: "Lato", arial, helvetica, sans-serif;
+  --ff-accent: "Vollkorn", cambria, "times new roman", serif;
 
   --fw-light: 300;
   --fw-regular: 400;
