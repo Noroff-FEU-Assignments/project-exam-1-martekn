@@ -315,10 +315,58 @@ body {
 /** 5. Contact page
 -------------------------*/
 /* #region */
+.page-contact form {
+  padding-block: var(--space-500) var(--space-900);
+  --gap: var(--space-400);
+  min-height: 80dvh;
+}
+
+.page-contact .form-group {
+  --flow-space: var(--space-350);
+  --gap: var(--flow-space);
+}
+
+.page-contact form > :nth-child(2) {
+  margin-top: var(--space-500);
+}
+
+.page-contact .form-group:last-of-type {
+  flex: 1;
+}
+
+.page-contact textarea {
+  flex: 1;
+  min-height: 200px;
+}
+
+.page-contact button {
+  margin-top: calc(var(--space-500) - var(--gap));
+  width: fit-content;
+}
 
 /* 5.1. Media queries
 -------------------------*/
+@media (min-width: 50em) {
+  .page-contact {
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
 
+  .page-contact form {
+    margin: var(--space-700) 0 var(--space-1000) auto;
+    width: min(var(--max-width) / 2, 100% - (var(--screen-edge)));
+    padding-right: var(--space-700);
+  }
+
+  .page-contact::after {
+    content: "";
+    display: block;
+    background: url(https://source.unsplash.com/random) no-repeat;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+  }
+}
 /* #endregion */
 
 /** 6. Articles page
