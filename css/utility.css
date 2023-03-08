@@ -23,22 +23,23 @@
 }
 
 /* #endregion */
+
 /** 2. Colors
 -------------------------*/
 /* #region */
 [class*="bg-"] {
-  color: var(--fg, var(--clr-font));
+  color: var(--fg, var(--clr-neutral-600));
   background-color: var(--bg, green);
 }
 
 .bg--accent {
-  background-color: var(--clr-primary-200);
-  color: var(--clr-neutral-600);
+  --bg: var(--clr-primary-200);
+  --fg: var(--clr-neutral-600);
 }
 
 .bg--dark {
-  background-color: var(--clr-neutral-600);
-  color: var(--clr-neutral-200);
+  --bg: var(--clr-neutral-600);
+  --fg: var(--clr-neutral-200);
 }
 
 /* #endregion */
@@ -53,9 +54,6 @@ This keeps things consistent regardless of the formatting context */
 }
 
 .container {
-  --max-width: 78rem;
-  --screen-edge: var(--space-450);
-
   width: min(var(--max-width), 100% - (var(--screen-edge) * 2));
   margin-inline: auto;
 }
@@ -87,7 +85,7 @@ This keeps things consistent regardless of the formatting context */
   grid-auto-flow: column;
 }
 
-@media (min-width: 45em) {
+@media (min-width: 50em) {
   .grid--even-col2 {
     grid-template-columns: 1fr 1fr;
   }

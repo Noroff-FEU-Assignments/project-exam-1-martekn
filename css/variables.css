@@ -4,7 +4,7 @@
     2. Base typography
     3. Spacing
     4. Other
-    5. Larger screens font sizes
+    5. Smaller screens font sizes
 */
 
 :root {
@@ -34,7 +34,8 @@
   --fw-bold: 700;
   --fw-bold-italic: 700 italic;
 
-  --fs-400: 1rem; /* 16px */
+  --fs-350: 1rem; /* 16px */
+  --fs-400: 1.138rem; /* 18.22px */
   --fs-450: 1.25rem; /* 20px */
   --fs-500: 1.563rem; /* 25px */
   --fs-550: 1.953rem; /* 31.25px */
@@ -57,6 +58,8 @@
 
   /** 4. Other
 -------------------------*/
+  --max-width: 78rem;
+  --screen-edge: var(--space-450);
   --box-shadow--inset: inset 0px 1px 4px 0px var(--clr-neutral-600--opacity-20);
   --box-shadow: 2px 3px 6px var(--clr-neutral-600--opacity-20);
   --border-radius: 2px;
@@ -64,14 +67,10 @@
 
 /** 5. Smaller screens font sizes
 -------------------------*/
-@media (min-width: 40em) {
+@media (max-width: 40em) {
   :root {
-    --fs-400: 1rem; /* 16px */
-    --fs-450: 1.25rem; /* 20px */
-    --fs-500: 1.563rem; /* 25px */
-    --fs-550: 1.953rem; /* 31.25px */
-    --fs-600: 2.441rem; /* 39.06px */
-    --fs-700: 3.052rem; /* 48.83px */
-    --fs-700: 3.815rem; /* 61.04px */
+    --fs-600: 2.178rem; /* 34.84px */
+    --fs-700: 2.441rem; /* 39.06px */
+    --fs-800: 3.052rem; /* 48.83px */
   }
 }

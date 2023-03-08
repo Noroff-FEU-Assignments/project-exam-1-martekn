@@ -1,13 +1,16 @@
 /* Table of contents
 --------------------------------------------------
     1. General
-    2. Links
+    2. Headings
+    3. Font sizes
+    4. Font weights
+    5. Font families
+    6. Links
 */
 
 /** 1. General
 -------------------------*/
 /* #region */
-
 body {
   font-family: var(--ff-base);
   font-size: var(--fs-400);
@@ -16,27 +19,53 @@ body {
   color: var(--clr-neutral-600);
 }
 
+.ellipse-text {
+  display: -webkit-box;
+  line-height: var(--line-height, 1.2);
+  -webkit-line-clamp: var(--lines, 1);
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+/* #endregion */
+
+/** 2. Headings
+-------------------------*/
+/* #region */
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3 {
+  font-weight: var(--fw-bold);
+}
+
+h1,
+.h1,
+h2,
+.h2 {
+  font-family: var(--ff-accent);
+}
 h1,
 .h1 {
-  font-family: var(--ff-accent);
   font-size: var(--fs-800);
-  font-weight: var(--fw-bold);
 }
 
 h2,
 .h2 {
-  font-family: var(--ff-accent);
   font-size: var(--fs-550);
-  font-weight: var(--fw-bold);
 }
 
 h3,
 .h3 {
-  font-family: var(--ff-base);
   font-size: var(--fs-450);
-  font-weight: var(--fw-bold);
 }
+/* #endregion */
 
+/** 3. Font sizes
+-------------------------*/
+/* #region */
 .text-450 {
   font-size: var(--fs-450);
 }
@@ -60,7 +89,11 @@ h3,
 .text-800 {
   font-size: var(--fs-800);
 }
+/* #endregion */
 
+/** 4. Font weights
+-------------------------*/
+/* #region */
 .text-light {
   font-weight: var(--fw-light);
 }
@@ -68,7 +101,11 @@ h3,
 .text-bold {
   font-weight: var(--fw-bold);
 }
+/* #endregion */
 
+/** 5. Font families
+-------------------------*/
+/* #region */
 .text-base {
   font-family: var(--ff-base);
 }
@@ -78,8 +115,7 @@ h3,
 }
 /* #endregion */
 
-/** 2. Links
+/** 6. Links
 -------------------------*/
 /* #region */
-
 /* #endregion */
