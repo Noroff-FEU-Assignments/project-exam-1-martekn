@@ -269,8 +269,46 @@ body {
 -------------------------*/
 /* #region */
 
+.page-about {
+  gap: var(--space-900);
+}
+
+/* 4.1. Hero
+-------------------------*/
+.page-about .hero .content {
+  font-size: var(--fs-450);
+}
+
+.page-about .hero .content p {
+  --flow-space: var(--space-400);
+}
+
+.page-about .hero .content p:first-of-type {
+  margin-top: 0;
+}
+
+/* 4.1. Contact section
+-------------------------*/
+.contact-me {
+  --gap: var(--space-500) var(--space-900);
+  grid-template-columns: repeat(auto-fit, minmax(min(30ch, 100%), 1fr));
+}
+
+.contact-me .btn {
+  margin-top: var(--space-500);
+}
+
+.page-about ul {
+  --gap: var(--space-300);
+}
+
 /* 4.1. Media queries
 -------------------------*/
+@media (min-width: 50em) {
+  .page-about {
+    gap: var(--space-1000);
+  }
+}
 
 /* #endregion */
 

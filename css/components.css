@@ -207,6 +207,10 @@ footer .logo {
   padding-block: var(--space-600);
 }
 
+.primary-footer.footer-margin {
+  margin-top: var(--space-900);
+}
+
 .primary-footer .top-bar {
   justify-content: space-between;
   align-items: center;
@@ -240,6 +244,7 @@ footer .logo {
 .primary-footer h2 {
   color: var(--clr-primary-400);
 }
+
 .primary-footer button {
   justify-self: start;
 }
@@ -257,7 +262,12 @@ footer .logo {
     grid-column: 1 / -1;
   }
 }
+
 @media (min-width: 50em) {
+  .primary-footer.footer-margin {
+    margin-top: var(--space-1000);
+  }
+
   .primary-footer form {
     padding-block: var(--space-700);
     --gap: var(--space-400) var(--space-600);
