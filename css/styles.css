@@ -382,15 +382,15 @@ body {
   margin-top: calc(var(--space-600) - var(--spacing));
 }
 .page-articles .btn {
-  align-self: center;
-  margin-top: calc(var(--space-900) - var(--gap));
+  margin-inline: auto;
+  margin-top: var(--space-900);
 }
 
 /* 6.1. Media queries
 -------------------------*/
 @media (min-width: 50em) {
   .page-articles .btn {
-    margin-top: calc(var(--space-1000) - var(--gap));
+    margin-top: var(--space-1000);
   }
 }
 /* #endregion */
@@ -479,13 +479,9 @@ h6 {
   margin-top: var(--space-600);
 }
 
-.comments-section > div {
-  justify-content: center;
-}
-
 .comments-section > div .btn {
   flex-grow: 0;
-  align-self: center;
+  height: fit-content;
 }
 
 .comment-error {
@@ -496,12 +492,13 @@ h6 {
   text-align: center;
 }
 
-.comments {
+.comments ul {
   gap: var(--space-600);
 }
 
 .comments .btn {
   margin-inline: auto;
+  margin-top: var(--space-700);
 }
 
 /* 7.3.1 Comment */
