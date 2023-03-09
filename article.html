@@ -31,21 +31,217 @@
   <body>
     <a href="#main-content" class="skip-nav">Skip to content</a>
     <div class="min-full-height">
-      <header>
-        <a href="#" class="logo">Travella</a>
-        <button></button>
-        <nav class="primary-nav">
-          <ul>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
+      <header class="primary-header container flex">
+        <a href="./index.html" class="logo">Travella</a>
+        <button
+          id="nav-open"
+          class="btn--nav"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+          aria-haspopup="true"
+        >
+          <i class="ri-menu-line" aria-hidden="true"></i>
+          <span class="visually-hidden">Open menu</span>
+        </button>
+
+        <nav id="primary-nav" class="primary-nav flex" data-visible="false">
+          <button id="nav-close" class="btn--nav" aria-controls="primary-navigation" aria-expanded="true">
+            <i class="ri-close-line"></i>
+            <span class="visually-hidden">Close menu</span>
+          </button>
+          <ul class="flex">
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./articles.html">Articles</a></li>
+            <li><a href="./about.html">About</a></li>
+            <li><a href="./contact.html">Contact</a></li>
           </ul>
         </nav>
       </header>
-      <main id="main"></main>
+
+      <main id="main-content" class="page-article">
+        <article class="flow-content">
+          <header clasS="article-header flow-content">
+            <div class="image bg--dark">
+              <img src="https://source.unsplash.com/random" alt="" />
+            </div>
+            <div class="flow-content container">
+              <a href="./articles.html" class="category-item category-clickable">Travel</a>
+              <h1>Top tips for travelling</h1>
+            </div>
+          </header>
+          <div class="article-content flow-content container">
+            <p>
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+              et dolore magna aliquyam erat, sed diam oluptua
+            </p>
+
+            <p>
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+              Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+              amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+              aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+              gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br />Lorem ipsum dolor sit amet,
+              consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+              erat, sed diam.
+            </p>
+
+            <p>
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+              Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+              amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+              aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+              gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br />Lorem ipsum dolor sit amet,
+              consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+              erat, sed diam.
+            </p>
+
+            <figure class="wp-block-image size-large">
+              <img
+                decoding="async"
+                loading="lazy"
+                width="1024"
+                height="576"
+                src="https://source.unsplash.com/random"
+                alt=""
+                class="wp-image-35"
+                sizes="(max-width: 1024px) 100vw, 1024px"
+              />
+            </figure>
+
+            <p>
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+              Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+              amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+              aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+              gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br />Lorem ipsum dolor sit amet,
+              consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+              erat, sed diam.
+            </p>
+
+            <h2>Subtitle</h2>
+
+            <p>
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+              et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+              Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+              amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+              aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+              gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br />Lorem ipsum dolor sit amet,
+              consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+              erat, sed diam.
+            </p>
+
+            <figure class="wp-block-image size-large">
+              <img
+                decoding="async"
+                loading="lazy"
+                width="1024"
+                height="576"
+                src="https://source.unsplash.com/random"
+                alt=""
+                class="wp-image-35"
+                sizes="(max-width: 1024px) 100vw, 1024px"
+              />
+            </figure>
+            <p>
+              <em>Lorem</em> ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
+              ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et
+              ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est <strong>Lorem</strong> ipsum dolor sit
+              amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+              labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+              rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br />Lorem ipsum
+              dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+              magna aliquyam erat,
+              <a href="https://www.wowhead.com/" target="_blank" rel="noreferrer noopener">sed diam</a>.
+            </p>
+          </div>
+          <footer class="article-footer container flex flex--wrap text-350">
+            <div>March 8</div>
+            <div>0 comments</div>
+          </footer>
+        </article>
+        <section class="comments-section flow-content">
+          <div class="flex flex--wrap container">
+            <h2 class="text-600">Comments</h2>
+            <a href="#comment-form" class="btn btn--primary">Write a comment</a>
+          </div>
+          <!-- <div class="comment-error container">There are no comments on this post yet</div> -->
+          <ul class="comments flex flex--col container">
+            <li class="comment flow-content">
+              <div class="header flex">
+                <h3>Jane doe</h3>
+                <span class="flex">1h ago</span>
+              </div>
+              <div>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, officiis.</p>
+              </div>
+            </li>
+            <li class="comment flow-content">
+              <div class="header flex">
+                <h3>Jane doe</h3>
+                <span class="flex">1h ago</span>
+              </div>
+              <div class="content">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, officiis.</p>
+              </div>
+            </li>
+
+            <li><button class="btn btn--primary">See more</button></li>
+          </ul>
+          <form id="comment-form" action="" class="comment-form flex flex--col container">
+            <h3 class="h2">Write a comment</h3>
+            <div class="form-group flow-content">
+              <label for="name">Name</label>
+              <input type="text" name="name" id="name" />
+            </div>
+            <div class="form-group flow-content">
+              <label for="email">Email</label>
+              <input type="email" name="email" id="email" />
+            </div>
+            <div class="form-group flex flex--col">
+              <label for="comment">Comment</label>
+              <textarea name="comment" id="comment"></textarea>
+            </div>
+            <button class="btn btn--primary">Post</button>
+          </form>
+        </section>
+      </main>
     </div>
-    <footer class="primary-footer"></footer>
+    <footer class="primary-footer bg--dark footer-margin">
+      <div class="top-bar flex container">
+        <a href="./index.html" class="logo">Travella</a>
+        <div class="socials flex">
+          <a href="#" class="icon"
+            ><i class="ri-instagram-fill" aria-hidden="true"></i><span class="visually-hidden">Instagram</span></a
+          >
+          <a href="#" class="icon"
+            ><i class="ri-facebook-fill" aria-hidden="true"></i><span class="visually-hidden">Facebook</span></a
+          >
+          <a href="#" class="icon"
+            ><i class="ri-twitter-fill" aria-hidden="true"></i><span class="visually-hidden">Twitter</span></a
+          >
+        </div>
+      </div>
+      <form action="" class="grid grid--even-col2 container">
+        <h2>Subscribe to our newsletter</h2>
+        <p>
+          Get extra tips, tricks and updates delivered right to your email. We will also notify you about new posts on
+          the blog.
+        </p>
+        <div class="grid">
+          <label for="sub-email">Email</label>
+
+          <input type="text" id="sub-email" />
+          <button class="btn btn--secondary">Subscribe</button>
+        </div>
+      </form>
+      <div class="container">
+        <i class="ri-copyright-line" aria-hidden="true"></i><span class="visually-hidden">Copyright </span>2023 Marte
+        Møllen Knutsen
+      </div>
+    </footer>
   </body>
 </html>
