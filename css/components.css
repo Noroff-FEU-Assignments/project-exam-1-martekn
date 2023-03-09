@@ -290,6 +290,7 @@ footer .logo {
 -------------------------*/
 /* #region */
 .btn {
+  display: block;
   padding: var(--space-350) var(--space-500);
   font-size: var(--fs-450);
   font-weight: var(--fw-bold);
@@ -299,6 +300,7 @@ footer .logo {
   background-color: var(--bg-btn, var(--clr-neutral-600));
   color: var(--fg-btn, var(--clr-primary-400));
   border: none;
+  cursor: pointer;
 }
 
 .btn--primary {
@@ -327,23 +329,6 @@ footer .logo {
   box-shadow: 0 0 0 4px var(--focus-shadow, var(--clr-neutral-600));
 }
 
-.btn--text {
-  font-weight: var(--fw-bold-italic);
-  text-decoration: none;
-
-  --bg-btn: none;
-  --fg-btn: var(--primary-500);
-}
-
-.btn--text:hover {
-  text-decoration: underline;
-  --fg-btn: var(--clr-primary-400);
-}
-
-.btn--text:active {
-  text-decoration: none;
-  --fg-btn: var(--clr-primary-300);
-}
 /* #endregion */
 
 /** 7. Icon
@@ -451,6 +436,7 @@ label,
   display: block;
   font-weight: var(--fw-bold);
 }
+
 /* #endregion */
 
 /** 10. Cards
