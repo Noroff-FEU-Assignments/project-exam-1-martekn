@@ -368,8 +368,9 @@ body {
 -------------------------*/
 /* #region */
 .page-articles {
+  --spacing: var(--space-300);
   margin-top: var(--space-600);
-  gap: var(--space-500);
+  gap: var(--spacing);
 }
 
 .page-articles .categories > .category-item {
@@ -378,6 +379,7 @@ body {
 
 .page-articles ul {
   --gap: var(--space-600);
+  margin-top: calc(var(--space-600) - var(--spacing));
 }
 .page-articles .btn {
   align-self: center;
@@ -387,11 +389,6 @@ body {
 /* 6.1. Media queries
 -------------------------*/
 @media (min-width: 50em) {
-  .page-articles {
-    margin-top: var(--space-700);
-    gap: var(--space-600);
-  }
-
   .page-articles .btn {
     margin-top: calc(var(--space-1000) - var(--gap));
   }
