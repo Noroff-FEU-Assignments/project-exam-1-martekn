@@ -437,6 +437,11 @@ label,
   font-weight: var(--fw-bold);
 }
 
+.form-group {
+  --flow-space: var(--space-350);
+  --gap: var(--flow-space);
+}
+
 /* #endregion */
 
 /** 10. Cards

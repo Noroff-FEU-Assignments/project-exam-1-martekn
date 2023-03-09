@@ -321,11 +321,6 @@ body {
   min-height: 80dvh;
 }
 
-.page-contact .form-group {
-  --flow-space: var(--space-350);
-  --gap: var(--flow-space);
-}
-
 .page-contact form > :nth-child(2) {
   margin-top: var(--space-500);
 }
