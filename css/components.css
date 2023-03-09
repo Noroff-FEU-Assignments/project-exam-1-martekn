@@ -230,7 +230,6 @@ footer .logo {
 
 .primary-footer .socials {
   --gap: var(--space-300);
-  font-size: var(--fs-500);
 }
 
 .primary-footer form {
@@ -301,6 +300,7 @@ footer .logo {
   color: var(--fg-btn, var(--clr-primary-400));
   border: none;
   cursor: pointer;
+  width: fit-content;
 }
 
 .btn--primary {
@@ -344,6 +344,7 @@ footer .logo {
   background-color: var(--bg-icon, var(--clr-neutral-600));
   color: var(--fg-icon, var(--clr-primary-400));
   cursor: pointer;
+  font-size: var(--fs-500);
 }
 
 .icon--secondary {
