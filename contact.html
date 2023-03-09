@@ -20,13 +20,6 @@
 
     <!-- Css -->
     <link rel="stylesheet" href="./css/styles.css" />
-
-    <!-- Js -->
-    <script src="./js/app.js" type="module" defer></script>
-    <script type="module" defer>
-      import { setupContact } from "./js/pages/contact.js";
-      setupContact();
-    </script>
   </head>
   <body>
     <a href="#main-content" class="skip-nav">Skip to content</a>
@@ -120,5 +113,12 @@
         Møllen Knutsen
       </div>
     </footer>
+
+    <!-- Js -->
+    <script src="./js/app.js" type="module"></script>
+    <script type="module">
+      import { setupContact } from "./js/pages/contact.js";
+      setupContact();
+    </script>
   </body>
 </html>
