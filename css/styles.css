@@ -41,6 +41,9 @@
 body {
   background-color: var(--clr-neutral-200);
 }
+body.no-scroll {
+  overflow: hidden;
+}
 
 .min-full-height {
   min-height: 100vh;
