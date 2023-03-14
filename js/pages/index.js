@@ -24,15 +24,12 @@ const createHero = async () => {
   }
 };
 
-// Carousel functionality
+// Carousel
+const ul = document.querySelector("#carousel");
 const carouselRightButton = document.querySelector("#carousel-right");
 const carouselLeftButton = document.querySelector("#carousel-left");
-const ul = document.querySelector("#carousel");
 
 let carouselWidth = ul.clientWidth;
-const cardWidth = ul.querySelector("li").clientWidth;
-const visibleCards = Math.floor(carouselWidth / cardWidth);
-const padding = (carouselWidth - cardWidth * visibleCards) / (visibleCards - 1);
 const dots = Array.from(document.querySelectorAll(".dots .dot"));
 
 let scrollX = 0;
@@ -40,6 +37,34 @@ let dotCount = 0;
 let sliderIndex = 0;
 
 dots[sliderIndex].classList.add("active");
+
+const renderCard = (post) => {
+  const template = document.querySelector("#template_carousel-card");
+  const card = template.content.cloneNode(true);
+  const titleLink = card.querySelector("h3 a");
+  titleLink.innerText = post.title.rendered;
+  titleLink.setAttribute("href", `./article.html?id=${post.id}`);
+  const excerpt = post.excerpt.rendered.replace("/n", "").replace("<p>", "").replace("</p>", "");
+  card.querySelector("p").innerText = excerpt;
+  const image = card.querySelector("img");
+  image.setAttribute("src", post._embedded["wp:featuredmedia"][0].source_url);
+  image.setAttribute("alt", post._embedded["wp:featuredmedia"][0].alt_text);
+  card.querySelector(".category-item").innerText = post._embedded["wp:term"][0][0].name;
+
+  return card;
+};
+
+const renderCarousel = async () => {
+  try {
+    const carouselPosts = await fetchApiResults("/wp/v2/posts", "?per_page=12&_embed");
+    for (const post of carouselPosts) {
+      const li = renderCard(post);
+      ul.appendChild(li);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const setDotCount = () => {
   if (!window.matchMedia("(max-width: 70em)").matches) {
@@ -62,10 +87,10 @@ const updateCarousel = (e) => {
     }
 
     if (scrollX <= 0) {
-      scrollX = ul.scrollLeftMax + carouselWidth + padding;
+      scrollX = ul.scrollLeftMax + carouselWidth + window.padding;
     }
 
-    scrollX -= carouselWidth + padding;
+    scrollX -= carouselWidth + window.padding;
   } else if (e.target === carouselRightButton) {
     sliderIndex++;
     if (sliderIndex > dotCount - 1) {
@@ -73,10 +98,10 @@ const updateCarousel = (e) => {
     }
 
     if (scrollX >= ul.scrollLeftMax) {
-      scrollX = 0 - carouselWidth - padding;
+      scrollX = 0 - carouselWidth - window.padding;
     }
 
-    scrollX += carouselWidth + padding;
+    scrollX += carouselWidth + window.padding;
   } else {
     dots[sliderIndex].classList.add("active");
     return;
@@ -96,9 +121,16 @@ const updateCarousel = (e) => {
   dots[sliderIndex].classList.add("active");
 };
 
-const setupCarouselFunctionality = () => {
+const setupCarousel = async () => {
   ul.scrollLeft = scrollX;
+
+  await renderCarousel();
   setDotCount();
+
+  const cardWidth = ul.querySelector("li").clientWidth;
+  const visibleCards = Math.floor(carouselWidth / cardWidth);
+  window.padding = (carouselWidth - cardWidth * visibleCards) / (visibleCards - 1);
+
   carouselLeftButton.addEventListener("click", updateCarousel);
   carouselRightButton.addEventListener("click", updateCarousel);
 
@@ -134,5 +166,5 @@ const setupCarouselFunctionality = () => {
 // Setup
 export const setupIndex = () => {
   createHero();
-  setupCarouselFunctionality();
+  setupCarousel();
 };
