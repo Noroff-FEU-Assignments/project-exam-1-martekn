@@ -352,18 +352,19 @@ body.no-scroll {
   }
 
   .page-contact form {
-    margin: var(--space-700) 0 var(--space-1000) auto;
+    margin: var(--space-700) auto var(--space-1000) 0;
     width: min(var(--max-width) / 2, 100% - (var(--screen-edge)));
-    padding-right: var(--space-700);
+    padding-left: var(--space-700);
   }
 
-  .page-contact::after {
+  .page-contact::before {
     content: "";
     display: block;
-    background: url(https://source.unsplash.com/random) no-repeat;
+    background: url(../assets/contact.jpg) no-repeat;
     height: 100%;
     width: 100%;
     background-size: cover;
+    background-position: center;
   }
 }
 /* #endregion */
