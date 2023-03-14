@@ -1,3 +1,30 @@
+import { fetchApiResults } from "../util/api.js";
+import { createHTML } from "../util/createHTML.js";
+
+// Hero
+const heroSection = document.querySelector("#home-hero");
+
+const renderHomeHero = (hero) => {
+  console.log(hero);
+  heroSection.innerHTML += hero.content.rendered;
+  const content = heroSection.querySelector(".content");
+  const btn = createHTML("a", ["btn", "btn--primary"], "Read more", { href: "./about.html" });
+  const btnHidden = createHTML("span", "visually-hidden", "about travella");
+  btn.appendChild(btnHidden);
+  content.appendChild(btn);
+};
+
+const createHero = async () => {
+  try {
+    const heroRes = await fetchApiResults("/wp/v2/pages", "?slug=home");
+    renderHomeHero(heroRes[0]);
+    heroSection.querySelector(".loader").remove();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Carousel functionality
 const carouselRightButton = document.querySelector("#carousel-right");
 const carouselLeftButton = document.querySelector("#carousel-left");
 const ul = document.querySelector("#carousel");
@@ -104,6 +131,8 @@ const setupCarouselFunctionality = () => {
   resizeObserver.observe(ul);
 };
 
+// Setup
 export const setupIndex = () => {
+  createHero();
   setupCarouselFunctionality();
 };
