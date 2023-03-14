@@ -475,19 +475,26 @@ label,
 
 .card.card--small,
 .card.card--large {
-  grid-template-rows: minmax(150px, 1fr) auto;
-  --gap: var(--space-450);
+  grid-template-rows: 150px auto;
+  --gap: var(--space-400);
+}
+
+.card.card--small a,
+.card.card--large a {
+  line-height: 1.5;
+  --lines: 2;
+  font-size: var(--fs-400);
 }
 
 .card.card--small p,
 .card.card--large p {
-  --lines: 3;
+  --lines: 4;
   color: var(--clr-neutral-500);
 }
 
 .card.card--small .content,
 .card.card--large .content {
-  --flow-space: var(--space-350);
+  --gap: var(--space-350);
 }
 
 .card.card--small .image,
