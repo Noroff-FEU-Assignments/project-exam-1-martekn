@@ -107,10 +107,11 @@ body.no-scroll {
 
 /* 3.3. Popular posts
 -------------------------*/
-.popular-posts ul {
+.popular-posts ol {
   margin-top: var(--space-450);
   --gap: var(--space-500);
 }
+
 .popular-posts .card {
   --flow-space: var(--space-400);
 }
@@ -122,11 +123,16 @@ body.no-scroll {
 
 .popular-posts .card:first-of-type .image {
   order: -1;
+  flex: 1;
+  position: relative;
+  flex-basis: 200px;
 }
 
 .popular-posts .card:first-of-type img {
   border-radius: var(--border-radius);
-  max-height: 300px;
+  position: absolute;
+  inset: 0;
+  height: 100%;
   width: 100%;
   object-fit: cover;
 }
@@ -175,6 +181,7 @@ body.no-scroll {
 .ig-container a:focus-visible {
   color: var(--clr-primary-400);
 }
+
 .ig-container a:focus-visible {
   outline: 4px solid var(--clr-neutral-600);
   box-shadow: 0 0 0 6px var(--clr-primary-400);
@@ -216,7 +223,7 @@ body.no-scroll {
   }
 
   /* 3.5.2 Popular posts */
-  .popular-posts ul {
+  .popular-posts ol {
     margin-top: var(--space-500);
     grid-template-columns: 1fr 1fr;
     column-gap: 0;
@@ -232,6 +239,10 @@ body.no-scroll {
     grid-row: 1 / 4;
     border-right: 1px solid var(--clr-primary-400);
     padding-right: var(--gap);
+  }
+
+  .popular-posts .card:first-of-type .image {
+    flex-basis: auto;
   }
 
   .popular-posts .card:nth-of-type(2) {

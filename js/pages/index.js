@@ -162,8 +162,49 @@ const setupCarousel = async () => {
   resizeObserver.observe(ul);
 };
 
+// Featured
+
+// Popular
+const renderPopularCard = (index, post) => {
+  const template = document.querySelector("#template_popular-card");
+  const card = template.content.cloneNode(true);
+  const titleLink = card.querySelector("h3 a");
+  titleLink.innerHTML = post.title.rendered;
+  titleLink.setAttribute("href", `./article.html?id=${post.id}`);
+  const excerpt = post.excerpt.rendered.replace("/n", "").replace("<p>", "").replace("</p>", "");
+  card.querySelector("p").innerHTML = excerpt;
+
+  if (index === 0) {
+    const li = card.querySelector("li");
+    li.classList.remove("flow-content");
+    li.classList.add("flex", "flex--col");
+    const imageUrl = post._embedded["wp:featuredmedia"][0].source_url;
+    const imageAlt = post._embedded["wp:featuredmedia"][0].alt_text;
+    const imageContainer = createHTML("div", "image");
+    const image = createHTML("img", null, null, { src: imageUrl, alt: imageAlt });
+    imageContainer.append(image);
+    li.appendChild(imageContainer);
+  }
+
+  return card;
+};
+
+const renderPopularSection = async () => {
+  try {
+    const popularContainer = document.querySelector("#popular-container");
+    popularContainer.querySelector(".loader").remove();
+    const popularPosts = await fetchApiResults("/wordpress-popular-posts/v1/popular-posts", "?limit=4&_embed");
+    for (const [index, post] of popularPosts.entries()) {
+      popularContainer.appendChild(renderPopularCard(index, post));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // Setup
 export const setupIndex = () => {
   createHero();
   setupCarousel();
+  renderPopularSection();
 };

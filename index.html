@@ -91,35 +91,9 @@
         </section>
         <section class="popular-posts container">
           <h2>Popular posts</h2>
-          <ul class="popular-list grid">
-            <li class="card flex flex--col">
-              <h3><a href="article.html">Top tips for travelling</a></h3>
-              <p class="ellipse-text">
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.
-              </p>
-              <div class="image">
-                <img src="https://source.unsplash.com/random" alt="" />
-              </div>
-            </li>
-            <li class="card flow-content">
-              <h3><a href="article.html">Top tips for travelling</a></h3>
-              <p class="ellipse-text">
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.
-              </p>
-            </li>
-            <li class="card flow-content">
-              <h3><a href="article.html">Top tips for travelling</a></h3>
-              <p class="ellipse-text">
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.
-              </p>
-            </li>
-            <li class="card flow-content">
-              <h3><a href="article.html">Top tips for travelling</a></h3>
-              <p class="ellipse-text">
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.
-              </p>
-            </li>
-          </ul>
+          <ol id="popular-container" class="popular-list grid">
+            <div class="loader"></div>
+          </ol>
         </section>
         <section class="bg--accent">
           <div class="ig-container flex flex--col container">
@@ -193,6 +167,13 @@
           <div class="category-item"></div>
           <img src="" alt="" />
         </div>
+      </li>
+    </template>
+
+    <template id="template_popular-card">
+      <li class="card flow-content">
+        <h3><a href=""></a></h3>
+        <p class="ellipse-text"></p>
       </li>
     </template>
 
