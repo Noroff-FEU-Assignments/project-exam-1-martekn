@@ -163,6 +163,34 @@ const setupCarousel = async () => {
 };
 
 // Featured
+const renderFeaturedHtml = (post) => {
+  const template = document.querySelector("#template_featured");
+  const featured = template.content.cloneNode(true);
+  const titleLink = featured.querySelector("h2");
+  titleLink.innerHTML = post.title.rendered;
+  titleLink.setAttribute("href", `./article.html?id=${post.id}`);
+  const excerpt = post.excerpt.rendered.replace("/n", "").replace("<p>", "").replace("</p>", "");
+  featured.querySelector("p").innerHTML = excerpt;
+
+  const imageUrl = post._embedded["wp:featuredmedia"][0].source_url;
+  const imageAlt = post._embedded["wp:featuredmedia"][0].alt_text;
+  const image = featured.querySelector("img");
+  image.setAttribute("src", imageUrl);
+  image.setAttribute("alt", imageAlt);
+
+  return featured;
+};
+
+const renderFeatured = async () => {
+  try {
+    const featuredContainer = document.querySelector("#featured-section");
+    featuredContainer.querySelector(".loader").remove();
+    const featuredPost = await fetchApiResults("/wp/v2/posts", "?tags=5&_embed");
+    featuredContainer.appendChild(renderFeaturedHtml(featuredPost[0]));
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 // Popular
 const renderPopularCard = (index, post) => {
@@ -206,5 +234,6 @@ const renderPopularSection = async () => {
 export const setupIndex = () => {
   createHero();
   setupCarousel();
+  renderFeatured();
   renderPopularSection();
 };

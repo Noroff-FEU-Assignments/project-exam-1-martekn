@@ -72,22 +72,8 @@
           </div>
           <ul id="carousel" class="carousel flex"></ul>
         </section>
-        <section class="featured-post bg--dark">
-          <div class="container flex">
-            <div class="content flex flex--col">
-              <h2 class="text-600">Top tips for travelling</h2>
-              <p class="text-450">
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                labore et dolore magna aliquyam erat, sed diam voluptua.
-              </p>
-              <a href="./article.html" class="btn btn--secondary"
-                >Read more <span class="visually-hidden">Read top tips for travelling</span></a
-              >
-            </div>
-            <div class="image">
-              <img src="https://source.unsplash.com/random" alt="" />
-            </div>
-          </div>
+        <section id="featured-section" class="featured-post bg--dark">
+          <div class="loader"></div>
         </section>
         <section class="popular-posts container">
           <h2>Popular posts</h2>
@@ -168,6 +154,19 @@
           <img src="" alt="" />
         </div>
       </li>
+    </template>
+
+    <template id="template_featured">
+      <div class="container flex">
+        <div class="content flex flex--col">
+          <h2 class="text-600"></h2>
+          <p class="text-450"></p>
+          <a href="" class="btn btn--secondary">Read more</a>
+        </div>
+        <div class="image">
+          <img src="https://source.unsplash.com/random" alt="" />
+        </div>
+      </div>
     </template>
 
     <template id="template_popular-card">
