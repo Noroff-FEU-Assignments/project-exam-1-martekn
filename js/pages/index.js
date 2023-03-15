@@ -166,9 +166,9 @@ const setupCarousel = async () => {
 const renderFeaturedHtml = (post) => {
   const template = document.querySelector("#template_featured");
   const featured = template.content.cloneNode(true);
-  const titleLink = featured.querySelector("h2");
-  titleLink.innerHTML = post.title.rendered;
-  titleLink.setAttribute("href", `./article.html?id=${post.id}`);
+  const title = featured.querySelector("h2");
+  title.innerHTML = post.title.rendered;
+  featured.querySelector(".btn").setAttribute("href", `./article.html?id=${post.id}`);
   const excerpt = post.excerpt.rendered.replace("/n", "").replace("<p>", "").replace("</p>", "");
   featured.querySelector("p").innerHTML = excerpt;
 
