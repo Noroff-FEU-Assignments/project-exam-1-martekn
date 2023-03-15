@@ -24,11 +24,11 @@ const createHero = async () => {
 };
 
 // Carousel
-const ul = document.querySelector("#carousel");
+const carousel = document.querySelector("#carousel");
 const carouselRightButton = document.querySelector("#carousel-right");
 const carouselLeftButton = document.querySelector("#carousel-left");
 
-let carouselWidth = ul.clientWidth;
+let carouselWidth = carousel.clientWidth;
 const dots = Array.from(document.querySelectorAll(".dots .dot"));
 
 let scrollX = 0;
@@ -58,7 +58,7 @@ const renderCarousel = async () => {
     const carouselPosts = await fetchApiResults("/wp/v2/posts", "?per_page=12&_embed");
     for (const post of carouselPosts) {
       const li = renderCard(post);
-      ul.appendChild(li);
+      carousel.appendChild(li);
     }
   } catch (error) {
     console.log(error);
@@ -76,7 +76,7 @@ const setDotCount = () => {
 };
 
 const updateCarousel = (e) => {
-  carouselWidth = ul.clientWidth;
+  carouselWidth = carousel.clientWidth;
   dots[sliderIndex].classList.remove("active");
 
   if (e.target === carouselLeftButton) {
@@ -86,7 +86,7 @@ const updateCarousel = (e) => {
     }
 
     if (scrollX <= 0) {
-      scrollX = ul.scrollWidth + window.padding;
+      scrollX = carousel.scrollWidth + window.padding;
     }
 
     scrollX -= carouselWidth + window.padding;
@@ -96,7 +96,7 @@ const updateCarousel = (e) => {
       sliderIndex = 0;
     }
 
-    if (scrollX >= ul.scrollWidth - carouselWidth) {
+    if (scrollX >= carousel.scrollWidth - carouselWidth) {
       scrollX = 0 - carouselWidth - window.padding;
     }
 
@@ -111,7 +111,7 @@ const updateCarousel = (e) => {
     e.target.disabled = false;
   }, 150);
 
-  ul.scroll({
+  carousel.scroll({
     left: scrollX,
     top: 0,
     behavior: "smooth",
@@ -121,12 +121,12 @@ const updateCarousel = (e) => {
 };
 
 const setupCarousel = async () => {
-  ul.scrollLeft = scrollX;
+  carousel.scrollLeft = scrollX;
 
   await renderCarousel();
   setDotCount();
 
-  const cardWidth = ul.querySelector("li").clientWidth;
+  const cardWidth = carousel.querySelector("li").clientWidth;
   const visibleCards = Math.floor(carouselWidth / cardWidth);
   window.padding = (carouselWidth - cardWidth * visibleCards) / (visibleCards - 1);
 
@@ -150,7 +150,7 @@ const setupCarousel = async () => {
         dots[sliderIndex].classList.add("active");
         scrollX = 0;
 
-        ul.scroll({
+        carousel.scroll({
           left: scrollX,
           top: 0,
           behavior: "smooth",
@@ -159,7 +159,7 @@ const setupCarousel = async () => {
     }, 500);
   });
 
-  resizeObserver.observe(ul);
+  resizeObserver.observe(carousel);
 };
 
 // Featured
