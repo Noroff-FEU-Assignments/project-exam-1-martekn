@@ -5,7 +5,6 @@ import { createHTML } from "../util/createHTML.js";
 const heroSection = document.querySelector("#home-hero");
 
 const renderHomeHero = (hero) => {
-  console.log(hero);
   heroSection.innerHTML += hero.content.rendered;
   const content = heroSection.querySelector(".content");
   const btn = createHTML("a", ["btn", "btn--primary"], "Read more", { href: "./about.html" });
@@ -42,10 +41,10 @@ const renderCard = (post) => {
   const template = document.querySelector("#template_carousel-card");
   const card = template.content.cloneNode(true);
   const titleLink = card.querySelector("h3 a");
-  titleLink.innerText = post.title.rendered;
+  titleLink.innerHTML = post.title.rendered;
   titleLink.setAttribute("href", `./article.html?id=${post.id}`);
   const excerpt = post.excerpt.rendered.replace("/n", "").replace("<p>", "").replace("</p>", "");
-  card.querySelector("p").innerText = excerpt;
+  card.querySelector("p").innerHTML = excerpt;
   const image = card.querySelector("img");
   image.setAttribute("src", post._embedded["wp:featuredmedia"][0].source_url);
   image.setAttribute("alt", post._embedded["wp:featuredmedia"][0].alt_text);
@@ -87,7 +86,7 @@ const updateCarousel = (e) => {
     }
 
     if (scrollX <= 0) {
-      scrollX = ul.scrollLeftMax + carouselWidth + window.padding;
+      scrollX = ul.scrollWidth + window.padding;
     }
 
     scrollX -= carouselWidth + window.padding;
@@ -97,7 +96,7 @@ const updateCarousel = (e) => {
       sliderIndex = 0;
     }
 
-    if (scrollX >= ul.scrollLeftMax) {
+    if (scrollX >= ul.scrollWidth - carouselWidth) {
       scrollX = 0 - carouselWidth - window.padding;
     }
 
