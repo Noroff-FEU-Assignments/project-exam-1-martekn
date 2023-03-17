@@ -54,6 +54,11 @@ const setDate = (createdDate) => {
 const renderArticle = async () => {
   try {
     const articleRes = await fetchApiResults(`/wp/v2/posts/${articleId}`, "?_embed");
+
+    document.title = `${articleRes.title.rendered} | Travella`;
+    const excerpt = articleRes.excerpt.rendered.replace("<p>", "").replace("</p>", "").replace("/n", "");
+    document.querySelector("meta[name='description']").setAttribute("content", excerpt);
+
     const template = document.querySelector("#template_article");
     const article = template.content.cloneNode(true);
 
@@ -83,6 +88,7 @@ const loadComments = async (e) => {
     e.target.remove();
   }
 };
+
 const renderComment = (comment) => {
   const template = document.querySelector("#template_comment");
   const commentElem = template.content.cloneNode(true);
