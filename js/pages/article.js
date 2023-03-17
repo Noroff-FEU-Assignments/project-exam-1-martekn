@@ -1,7 +1,9 @@
 import { fetchApiResults } from "../util/api.js";
+import { createHTML } from "../util/createHTML.js";
 
 const articleId = new URLSearchParams(window.location.search).get("id");
 const main = document.querySelector("#main-content");
+let commentPage = 1;
 
 const setDate = (createdDate) => {
   const date = new Date();
@@ -52,7 +54,6 @@ const setDate = (createdDate) => {
 const renderArticle = async () => {
   try {
     const articleRes = await fetchApiResults(`/wp/v2/posts/${articleId}`, "?_embed");
-
     const template = document.querySelector("#template_article");
     const article = template.content.cloneNode(true);
 
@@ -74,6 +75,60 @@ const renderArticle = async () => {
   }
 };
 
+const loadComments = async (e) => {
+  commentPage++;
+  const comments = await fetchApiResults("/wp/v2/comments", `?post=${articleId}&page=${commentPage}&_embed`);
+  renderComments(comments);
+  if (commentPage == comments.resHeader["x-wp-totalpages"]) {
+    e.target.remove();
+  }
+};
+const renderComment = (comment) => {
+  const template = document.querySelector("#template_comment");
+  const commentElem = template.content.cloneNode(true);
+  console.log(comment);
+  commentElem.querySelector("h3").innerText = comment.author_name;
+  commentElem.querySelector("#content").innerHTML = comment.content.rendered;
+  commentElem.querySelector("#time").innerText = setDate(comment.date);
+  return commentElem;
+};
+
+const createErrorDialog = (errorType, message) => {
+  const error = createHTML("div", ["error-dialog", errorType], message);
+  return error;
+};
+
+const renderComments = async (comments) => {
+  if (comments.length === 0) {
+    container.innerHTML = "";
+    container.append(createErrorDialog("error", "There are no comments on this post yet"));
+  } else {
+    for (const comment of comments) {
+      document.querySelector("#comments-ul").append(renderComment(comment));
+    }
+  }
+};
+
+const setupComments = async () => {
+  try {
+    const comments = await fetchApiResults("/wp/v2/comments", `?post=${articleId}&page=${commentPage}&_embed`);
+    const container = document.querySelector("#comments-container");
+    const commentCount = comments.resHeader["x-wp-total"];
+
+    renderComments(comments);
+
+    if (commentCount > 10) {
+      const button = createHTML("button", ["btn", "btn--primary"], "See more");
+      button.addEventListener("click", loadComments);
+      container.append(button);
+    }
+    document.querySelector("#comment-count").innerText = `( ${commentCount} )`;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const setupArticle = () => {
   renderArticle();
+  setupComments();
 };
