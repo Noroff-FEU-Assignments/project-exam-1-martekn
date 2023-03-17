@@ -19,7 +19,10 @@ export const fetchApiResults = async (endpoint, query) => {
     url += `?${consumerKey}&${consumerSecret}`;
   }
   const req = await fetch(url);
+  const headers = Object.fromEntries(req.headers.entries());
   const res = await req.json();
+
+  res.resHeader = headers;
 
   return res;
 };
