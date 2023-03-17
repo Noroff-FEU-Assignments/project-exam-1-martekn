@@ -221,7 +221,10 @@ const renderPopularSection = async () => {
   try {
     const popularContainer = document.querySelector("#popular-container");
     popularContainer.querySelector(".loader").remove();
-    const popularPosts = await fetchApiResults("/wordpress-popular-posts/v1/popular-posts", "?limit=4&_embed");
+    const popularPosts = await fetchApiResults(
+      "/wordpress-popular-posts/v1/popular-posts",
+      "?limit=4&range=all&_embed"
+    );
     for (const [index, post] of popularPosts.entries()) {
       popularContainer.appendChild(renderPopularCard(index, post));
     }
