@@ -476,10 +476,6 @@ h6 {
   object-fit: cover;
 }
 
-.page-article footer :last-child {
-  text-align: right;
-}
-
 /* 7.2. Modal
 -------------------------*/
 
@@ -500,7 +496,7 @@ h6 {
   height: fit-content;
 }
 
-.comment-error {
+.comments-section .error {
   border-radius: var(--border-radius);
   border: 1px solid var(--clr-neutral-300);
   background-color: var(--clr-neutral-600--opacity-20);
