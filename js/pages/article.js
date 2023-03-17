@@ -104,10 +104,10 @@ const createErrorDialog = (errorType, message) => {
   return error;
 };
 
-const renderComments = async (comments) => {
+const renderComments = async (comments, parent) => {
   if (comments.length === 0) {
-    container.innerHTML = "";
-    container.append(createErrorDialog("error", "There are no comments on this post yet"));
+    parent.innerHTML = "";
+    parent.append(createErrorDialog("error", "There are no comments on this post yet"));
   } else {
     for (const comment of comments) {
       document.querySelector("#comments-ul").append(renderComment(comment));
@@ -121,7 +121,7 @@ const setupComments = async () => {
     const container = document.querySelector("#comments-container");
     const commentCount = comments.resHeader["x-wp-total"];
 
-    renderComments(comments);
+    renderComments(comments, container);
 
     if (commentCount > 10) {
       const button = createHTML("button", ["btn", "btn--primary"], "See more");
