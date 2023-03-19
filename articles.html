@@ -34,7 +34,14 @@
           <span class="visually-hidden">Open menu</span>
         </button>
 
-        <nav id="primary-nav" class="primary-nav flex" data-visible="false">
+        <nav
+          id="primary-nav"
+          class="primary-nav flex"
+          data-visible="false"
+          tabindex="-1"
+          role="dialog"
+          aria-modal="true"
+        >
           <button id="nav-close" class="btn--nav" aria-controls="primary-nav" aria-expanded="true">
             <i class="ri-close-line"></i>
             <span class="visually-hidden">Close menu</span>

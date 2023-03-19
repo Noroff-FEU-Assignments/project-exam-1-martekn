@@ -15,6 +15,7 @@ const openNav = (e) => {
   buttonOpen.setAttribute("aria-expanded", true);
   buttonClose.setAttribute("aria-expanded", true);
   document.body.classList.add("no-scroll");
+  nav.focus();
   document.addEventListener("keydown", setupNavTrapFocus);
 };
 
@@ -30,11 +31,21 @@ const closeNav = (e) => {
 export const setupMobileNav = () => {
   if (!mobileScreenSize.matches) {
     document.removeEventListener("keydown", setupNavTrapFocus);
+    nav.removeAttribute("role");
+    nav.removeAttribute("aria-modal");
+  } else {
+    nav.setAttribute("role", "dialog");
+    nav.setAttribute("aria-modal", "true");
   }
 
   mobileScreenSize.addEventListener("change", (e) => {
     if (!mobileScreenSize.matches) {
       document.removeEventListener("keydown", setupNavTrapFocus);
+      nav.removeAttribute("role");
+      nav.removeAttribute("aria-modal");
+    } else {
+      nav.setAttribute("role", "dialog");
+      nav.setAttribute("aria-modal", "true");
     }
   });
 
