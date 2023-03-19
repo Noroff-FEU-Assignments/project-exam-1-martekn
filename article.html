@@ -80,6 +80,23 @@
           </form>
         </section>
       </main>
+      <div
+        id="img-modal"
+        aria-label="Larger image"
+        class="img-modal hidden grid"
+        tabindex="-1"
+        role="dialog"
+        aria-modal="true"
+      >
+        <div class="container">
+          <img tabindex="-1" src="" alt="" />
+          <button id="modal-close" class="icon">
+            <i class="ri-close-line"></i>
+            <span class="visually-hidden">Close modal</span>
+          </button>
+        </div>
+      </div>
+      s
     </div>
 
     <footer class="primary-footer bg--dark footer-margin">
@@ -126,7 +143,7 @@
     <template id="template_article">
       <article class="flow-content">
         <header clasS="article-header flow-content">
-          <div class="image bg--dark">
+          <div class="image">
             <img src="" alt="" />
           </div>
           <div class="flow-content container">

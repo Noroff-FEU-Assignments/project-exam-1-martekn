@@ -1,5 +1,6 @@
 import { fetchApiResults } from "../util/api.js";
 import { createHTML } from "../util/createHTML.js";
+import { setupModalTrapFocus } from "../util/focus-trap.js";
 
 const articleId = new URLSearchParams(window.location.search).get("id");
 const main = document.querySelector("#main-content");
@@ -51,6 +52,60 @@ const setDate = (createdDate) => {
   }
 };
 
+const body = document.querySelector("body");
+const modal = document.querySelector("#img-modal");
+
+const setupImageModalFocus = (e) => {
+  setupModalTrapFocus(modal, "button", closeModal, e);
+};
+
+const openModal = (e) => {
+  if (e.type === "click" || e.key === "Enter") {
+    e.target.setAttribute("id", "modal-open");
+    const img = modal.querySelector("img");
+    const src = e.target.getAttribute("src");
+    const alt = e.target.getAttribute("alt");
+    img.setAttribute("src", src);
+    img.setAttribute("alt", alt);
+    body.classList.add("no-scroll");
+    modal.classList.remove("hidden");
+
+    modal.focus();
+
+    document.addEventListener("keydown", setupImageModalFocus);
+  }
+};
+
+const closeModal = () => {
+  modal.classList.add("hidden");
+  body.classList.remove("no-scroll");
+  document.removeEventListener("keydown", setupImageModalFocus);
+  const openedElement = document.querySelector("#modal-open");
+  openedElement.focus();
+  openedElement.removeAttribute("id");
+};
+
+const setupModal = (article) => {
+  const featuredImage = article.querySelector("header img");
+  featuredImage.setAttribute("tabindex", 0);
+  featuredImage.addEventListener("click", openModal);
+  featuredImage.addEventListener("keydown", openModal);
+  const images = Array.from(article.querySelectorAll(".article-content img"));
+  for (const image of images) {
+    image.setAttribute("tabindex", 0);
+    image.addEventListener("click", openModal);
+    image.addEventListener("keydown", openModal);
+  }
+  const closeButton = document.querySelector("#modal-close");
+  closeButton.addEventListener("click", closeModal);
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+};
+
 const renderArticle = async () => {
   try {
     const articleRes = await fetchApiResults(`/wp/v2/posts/${articleId}`, "?_embed");
@@ -74,6 +129,7 @@ const renderArticle = async () => {
 
     article.querySelector("#date").innerText = setDate(articleRes.date);
 
+    setupModal(article);
     main.prepend(article);
   } catch (error) {
     console.log(error);
@@ -92,7 +148,6 @@ const loadComments = async (e) => {
 const renderComment = (comment) => {
   const template = document.querySelector("#template_comment");
   const commentElem = template.content.cloneNode(true);
-  console.log(comment);
   commentElem.querySelector("h3").innerText = comment.author_name;
   commentElem.querySelector("#content").innerHTML = comment.content.rendered;
   commentElem.querySelector("#time").innerText = setDate(comment.date);
