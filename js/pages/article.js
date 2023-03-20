@@ -119,12 +119,12 @@ const renderArticle = async () => {
 
     const featuredImage = article.querySelector("header img");
     const category = article.querySelector("#category");
+    const imageInfo = articleRes._embedded["wp:featuredmedia"][0];
+
     category.innerText = articleRes._embedded["wp:term"][0][0].name;
-    const categoryId = articleRes._embedded["wp:term"][0][0].id;
-    category.setAttribute("href", `./articles.html?category=${categoryId}`);
-    featuredImage.setAttribute("src", articleRes._embedded["wp:featuredmedia"][0].source_url);
-    featuredImage.setAttribute("alt", articleRes._embedded["wp:featuredmedia"][0].alt_text);
-    article.querySelector("header h1").innerText = articleRes.title.rendered;
+    featuredImage.setAttribute("src", imageInfo.source_url);
+    featuredImage.setAttribute("alt", imageInfo.alt_text);
+    article.querySelector("header h1").innerHTML = articleRes.title.rendered;
     article.querySelector(".article-content").innerHTML = articleRes.content.rendered;
 
     article.querySelector("#date").innerText = setDate(articleRes.date);
