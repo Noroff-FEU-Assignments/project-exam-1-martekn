@@ -389,17 +389,22 @@ body.no-scroll {
   gap: var(--spacing);
 }
 
-.page-articles .categories > .category-item {
+.page-articles .categories > li {
   flex: 0;
 }
 
-.page-articles ul {
+.page-articles .cards-container ul {
   --gap: var(--space-600);
   margin-top: calc(var(--space-600) - var(--spacing));
 }
+
 .page-articles .btn {
   margin-inline: auto;
   margin-top: var(--space-900);
+}
+
+.page-articles .btn.hidden {
+  display: none;
 }
 
 /* 6.1. Media queries

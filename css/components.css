@@ -378,6 +378,8 @@ footer .logo {
   border-radius: var(--border-radius);
   border: none;
   font-size: var(--fs-350);
+  font-family: var(--ff-accent);
+  font-weight: var(--fw-bold);
 }
 
 .category-item.category-clickable {
@@ -388,6 +390,7 @@ footer .logo {
   --bg-category: var(--clr-primary-400);
   --fg-category: var(--clr-neutral-600);
   --bg-category-hover: var(--clr-primary-200);
+  font-weight: var(--fw-bold);
 }
 
 .category-item.category-clickable:hover {
@@ -454,13 +457,16 @@ label,
 
 .card a {
   color: inherit;
+  padding-bottom: 0.3rem;
 }
 
 .card a:hover,
 .card a:focus-visible {
   color: var(--clr-neutral-500);
-  box-shadow: 0 2px 0 0 var(--clr-primary-400);
+  text-decoration: underline solid var(--clr-primary-400) 2px;
+  text-underline-offset: 0.35rem;
 }
+
 .card a:focus {
   outline: none;
 }
@@ -481,7 +487,7 @@ label,
 
 .card.card--small a,
 .card.card--large a {
-  line-height: 1.5;
+  line-height: 1.6;
   --lines: 2;
   font-size: var(--fs-400);
 }
@@ -529,17 +535,29 @@ label,
   .card.card--large {
     grid-template-columns: minmax(250px, 1fr) minmax(30ch, 70ch);
     grid-template-rows: auto;
+    gap: var(--space-500);
+  }
+
+  .card.card--large a {
+    font-size: unset;
+  }
+
+  .card.card--large a:hover,
+  .card.card--large a:focus-visible {
+    text-underline-offset: 0.65rem;
   }
 
   .card.card--large .image {
     grid-column: 1;
     min-height: 250px;
   }
+
   .card.card--large .content {
     padding-block: var(--space-600);
     grid-column: 2;
     align-self: center;
   }
+
   .card.card--large .ellipse-text {
     --lines: 4;
   }
