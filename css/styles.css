@@ -419,7 +419,7 @@ body.no-scroll {
 /** 7. Article specific page
 -------------------------*/
 /* #region */
-.page-article {
+.page-article .container {
   --max-width: 43rem;
 }
 
@@ -573,6 +573,10 @@ h6 {
   align-items: center;
 }
 
+.comment .header > * {
+  flex: 0 0 auto;
+}
+
 .comment h3 {
   font-size: var(--fs-500);
   font-family: var(--ff-accent);
@@ -621,6 +625,11 @@ h6 {
 
   .comments-section form {
     margin-top: var(--space-1000);
+  }
+}
+@media (min-width: 2000px) {
+  .page-article header img {
+    width: min(var(--max-width), 100% - (var(--screen-edge)));
   }
 }
 /* #endregion */
