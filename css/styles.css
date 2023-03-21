@@ -52,8 +52,21 @@ body.no-scroll {
   flex-direction: column;
   gap: 0;
 }
+
 /* 2.1. Media queries
 -------------------------*/
+@media (min-width: 170em) {
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .min-full-height {
+    min-height: unset;
+    flex: 1;
+  }
+}
 
 /* #endregion */
 
@@ -333,20 +346,16 @@ body.no-scroll {
 .page-contact form {
   padding-block: var(--space-500) var(--space-900);
   --gap: var(--space-400);
-  min-height: 80dvh;
 }
 
 .page-contact form > :nth-child(2) {
   margin-top: var(--space-500);
 }
 
-.page-contact .form-group:last-of-type {
-  flex: 1;
-}
-
 .page-contact textarea {
   flex: 1;
-  min-height: 200px;
+  min-height: 12rem;
+  max-height: 16rem;
 }
 
 .page-contact button {
@@ -376,6 +385,13 @@ body.no-scroll {
     width: 100%;
     background-size: cover;
     background-position: center;
+  }
+}
+
+@media (min-width: 170em) {
+  .page-contact::before {
+    width: min(var(--max-width) / 2, 100% - (var(--screen-edge)));
+    margin-left: auto;
   }
 }
 /* #endregion */
