@@ -7,7 +7,6 @@ let postsPage = 1;
 let categoryId;
 
 const loadPosts = async () => {
-  const totalPostsPages = posts.resHeader["x-wp-totalpages"];
   let posts = [];
   postsPage++;
 
@@ -20,6 +19,8 @@ const loadPosts = async () => {
   }
 
   renderPosts(posts);
+
+  const totalPostsPages = posts.resHeader["x-wp-totalpages"];
 
   if (seeMoreButton.classList.contains("hidden") && postsPage < totalPostsPages) {
     seeMoreButton.classList.remove("hidden");
