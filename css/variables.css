@@ -23,6 +23,15 @@
   --clr-neutral-600--opacity-90: #272932e6;
   --clr-neutral-600--opacity-20: #27293233;
 
+  --clr-error-350: #f0deda;
+  --clr-error-400: #750a0a;
+  --clr-warning-350: #ede2d2;
+  --clr-warning-400: #744409;
+  --clr-success-350: #e5e7dd;
+  --clr-success-400: #1f5409;
+  --clr-alert-350: #eeebeb;
+  --clr-alert-400: #272932;
+
   /** 2. Base typography
 -------------------------*/
   --ff-base: "Lato", arial, helvetica, sans-serif;

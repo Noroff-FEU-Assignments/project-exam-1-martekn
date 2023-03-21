@@ -13,6 +13,7 @@
     11. Hero section
     12. Carousel
       12.1. Media queries
+    13. Alert
 */
 
 /** 1. Skip nav link
@@ -778,6 +779,38 @@ label,
   .carousel-container .dot:nth-of-type(n + 4) {
     display: none;
   }
+}
+
+/* #endregion */
+
+/** 13. Alert
+-------------------------*/
+/* #region */
+.alert {
+  color: var(--fg, var(--clr-alert-400));
+}
+
+.alert.error {
+  --fg: var(--clr-error-400);
+  --bg: var(--clr-error-350);
+}
+
+.alert.warning {
+  --fg: var(--clr-warning-400);
+  --bg: var(--clr-warning-350);
+}
+
+.alert.success {
+  --fg: var(--clr-success-400);
+  --bg: var(--clr-success-350);
+}
+
+.alert-type--dialog {
+  padding: var(--space-400) var(--space-500);
+  border-radius: var(--border-radius);
+
+  border: 1px solid var(--fg, var(--clr-alert-400));
+  background-color: var(--bg, var(--clr-alert-350));
 }
 
 /* #endregion */
