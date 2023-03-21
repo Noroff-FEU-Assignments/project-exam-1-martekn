@@ -53,6 +53,9 @@ body.no-scroll {
   gap: 0;
 }
 
+main {
+  flex: 1;
+}
 /* 2.1. Media queries
 -------------------------*/
 @media (min-width: 170em) {
@@ -343,9 +346,11 @@ body.no-scroll {
 /** 5. Contact page
 -------------------------*/
 /* #region */
-.page-contact form {
+.page-contact form,
+.page-contact .success {
   padding-block: var(--space-500) var(--space-900);
   --gap: var(--space-400);
+  min-height: 62rem;
 }
 
 .page-contact form > :nth-child(2) {
@@ -371,7 +376,8 @@ body.no-scroll {
     gap: 0;
   }
 
-  .page-contact form {
+  .page-contact form,
+  .page-contact .success {
     margin: var(--space-700) auto var(--space-1000) 0;
     width: min(var(--max-width) / 2, 100% - (var(--screen-edge)));
     padding-left: var(--space-700);

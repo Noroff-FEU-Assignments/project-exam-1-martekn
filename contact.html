@@ -71,7 +71,7 @@
             <label for="message">Message</label>
             <textarea name="message" id="message"></textarea>
           </div>
-          <button class="btn btn--primary">Send message</button>
+          <button id="submit-btn" class="btn btn--primary">Send message</button>
         </form>
       </main>
     </div>
@@ -114,6 +114,18 @@
         Møllen Knutsen
       </div>
     </footer>
+
+    <!-- Templates -->
+    <template id="template_success">
+      <div class="success flow-content container">
+        <h1>Your message have been sent!</h1>
+
+        <p>
+          <strong>Note:</strong> I will always read the messages that i recieve, but I might not always have the time to
+          reply to everyone.
+        </p>
+      </div>
+    </template>
 
     <!-- Js -->
     <script src="./js/app.js" type="module"></script>
