@@ -1,4 +1,5 @@
 import { fetchApiResults } from "../util/api.js";
+import { renderAlertDialog } from "../components/error.js";
 import { createHTML } from "../util/createHTML.js";
 import { setupModalTrapFocus } from "../util/focus-trap.js";
 
@@ -154,15 +155,10 @@ const renderComment = (comment) => {
   return commentElem;
 };
 
-const createErrorDialog = (errorType, message) => {
-  const error = createHTML("div", ["error-dialog", errorType], message);
-  return error;
-};
-
 const renderComments = async (comments, parent) => {
   if (comments.length === 0) {
     parent.innerHTML = "";
-    parent.append(createErrorDialog("error", "There are no comments on this post yet"));
+    parent.append(renderAlertDialog("alert", "There are no comments on this post yet"));
   } else {
     for (const comment of comments) {
       document.querySelector("#comments-ul").append(renderComment(comment));

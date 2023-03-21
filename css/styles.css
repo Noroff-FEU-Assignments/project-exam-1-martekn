@@ -409,6 +409,7 @@ main {
   --spacing: var(--space-300);
   margin-top: var(--space-600);
   gap: var(--spacing);
+  grid-auto-rows: min-content;
 }
 
 .page-articles .categories > li {

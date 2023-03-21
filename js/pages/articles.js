@@ -1,5 +1,6 @@
 import { fetchApiResults } from "../util/api.js";
 import { createHTML } from "../util/createHTML.js";
+import { renderAlertDialog } from "../components/error.js";
 
 const seeMoreButton = document.querySelector("#see-more");
 const postsUl = document.querySelector("#posts");
@@ -43,15 +44,14 @@ const renderPost = (post) => {
   return card;
 };
 
-const createErrorDialog = (errorType, message) => {
-  const error = createHTML("div", ["error-dialog", errorType], message);
-  return error;
-};
-
 const renderPosts = async (posts) => {
   if (posts.length === 0) {
+    let errorMessage = "There are no posts";
     postsUl.innerHTML = "";
-    postsUl.append(createErrorDialog("error", "There are no posts"));
+    if (categoryId) {
+      errorMessage = "There are no posts for this category";
+    }
+    postsUl.append(renderAlertDialog("alert", errorMessage));
     if (!seeMoreButton.classList.contains("hidden")) {
       seeMoreButton.classList.add("hidden");
     }
@@ -66,13 +66,10 @@ const setupPosts = async () => {
   try {
     const posts = await fetchApiResults("/wp/v2/posts", `?page=${postsPage}&_embed`);
     const container = document.querySelector("#posts-container");
-    const postCount = posts.resHeader["x-wp-totalpages"];
-    if (posts.length === 0) {
-      parent.innerHTML = "";
-      parent.append(createErrorDialog("error", "There are no posts"));
-    } else {
-      renderPosts(posts, container);
-    }
+
+    const postCount = posts?.resHeader?.["x-wp-totalpages"] ?? 0;
+
+    renderPosts(posts, container);
 
     if (postCount > 1) {
       seeMoreButton.classList.remove("hidden");
