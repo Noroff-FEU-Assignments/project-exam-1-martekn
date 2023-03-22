@@ -5,6 +5,8 @@ import { setupModalTrapFocus } from "../util/focus-trap.js";
 
 const articleId = new URLSearchParams(window.location.search).get("id");
 const main = document.querySelector("#main-content");
+const container = document.querySelector("#comments-container");
+const commentsLoader = container.querySelector(".loader");
 let commentPage = 1;
 
 const setDate = (createdDate) => {
@@ -131,6 +133,8 @@ const renderArticle = async () => {
     article.querySelector("#date").innerText = setDate(articleRes.date);
 
     setupModal(article);
+
+    main.querySelector(".loader").remove();
     main.prepend(article);
   } catch (error) {
     console.log(error);
@@ -138,11 +142,17 @@ const renderArticle = async () => {
 };
 
 const loadComments = async (e) => {
-  commentPage++;
-  const comments = await fetchApiResults("/wp/v2/comments", `?post=${articleId}&page=${commentPage}&_embed`);
-  renderComments(comments);
-  if (commentPage == comments.resHeader["x-wp-totalpages"]) {
-    e.target.remove();
+  try {
+    commentsLoader.classList.remove("hidden");
+    commentPage++;
+    const comments = await fetchApiResults("/wp/v2/comments", `?post=${articleId}&page=${commentPage}&_embed`);
+    commentsLoader.classList.add("hidden");
+    renderComments(comments);
+    if (commentPage == comments.resHeader["x-wp-totalpages"]) {
+      e.target.remove();
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -169,9 +179,9 @@ const renderComments = async (comments, parent) => {
 const setupComments = async () => {
   try {
     const comments = await fetchApiResults("/wp/v2/comments", `?post=${articleId}&page=${commentPage}&_embed`);
-    const container = document.querySelector("#comments-container");
-    const commentCount = comments.resHeader["x-wp-total"];
 
+    const commentCount = comments.resHeader["x-wp-total"];
+    commentsLoader.classList.add("hidden");
     renderComments(comments, container);
 
     if (commentCount > 10) {

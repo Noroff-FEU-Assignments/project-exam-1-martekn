@@ -324,6 +324,10 @@ footer .logo {
   border-right-color: transparent;
 }
 
+.loader.hidden {
+  display: none;
+}
+
 /* #endregion */
 
 /** 6. Button
@@ -612,6 +616,9 @@ label,
 .hero {
   gap: 0;
   --flow-space: var(--space-300);
+}
+.hero .loader {
+  grid-column: 1 / -1;
 }
 
 .hero .content {

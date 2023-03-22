@@ -60,6 +60,7 @@ const renderCarousel = async () => {
       const li = renderCard(post);
       carousel.appendChild(li);
     }
+    document.querySelector(".carousel-container .loader").remove();
   } catch (error) {
     console.log(error);
   }
@@ -184,8 +185,8 @@ const renderFeaturedHtml = (post) => {
 const renderFeatured = async () => {
   try {
     const featuredContainer = document.querySelector("#featured-section");
-    featuredContainer.querySelector(".loader").remove();
     const featuredPost = await fetchApiResults("/wp/v2/posts", "?tags=5&_embed");
+    featuredContainer.querySelector(".loader").remove();
     featuredContainer.appendChild(renderFeaturedHtml(featuredPost[0]));
   } catch (error) {
     console.log(error);
@@ -220,11 +221,11 @@ const renderPopularCard = (index, post) => {
 const renderPopularSection = async () => {
   try {
     const popularContainer = document.querySelector("#popular-container");
-    popularContainer.querySelector(".loader").remove();
     const popularPosts = await fetchApiResults(
       "/wordpress-popular-posts/v1/popular-posts",
       "?limit=4&range=all&_embed"
     );
+    document.querySelector(".popular-posts .loader").remove();
     for (const [index, post] of popularPosts.entries()) {
       popularContainer.appendChild(renderPopularCard(index, post));
     }

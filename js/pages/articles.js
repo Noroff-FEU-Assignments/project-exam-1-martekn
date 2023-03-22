@@ -4,27 +4,35 @@ import { renderAlertDialog } from "../components/error.js";
 
 const seeMoreButton = document.querySelector("#see-more");
 const postsUl = document.querySelector("#posts");
+const articlesLoader = document.querySelector("#posts-container .loader");
 let postsPage = 1;
 let categoryId;
 
 const loadPosts = async () => {
-  let posts = [];
-  postsPage++;
+  try {
+    articlesLoader.classList.remove("hidden");
+    let posts = [];
+    postsPage++;
 
-  seeMoreButton.classList.add("hidden");
+    seeMoreButton.classList.add("hidden");
 
-  if (categoryId) {
-    posts = await fetchApiResults("/wp/v2/posts", `?categories=${Number(categoryId)}&page=${postsPage}&_embed`);
-  } else {
-    posts = await fetchApiResults("/wp/v2/posts", `?page=${postsPage}&_embed`);
-  }
+    if (categoryId) {
+      posts = await fetchApiResults("/wp/v2/posts", `?categories=${Number(categoryId)}&page=${postsPage}&_embed`);
+    } else {
+      posts = await fetchApiResults("/wp/v2/posts", `?page=${postsPage}&_embed`);
+    }
 
-  renderPosts(posts);
+    renderPosts(posts);
 
-  const totalPostsPages = posts.resHeader["x-wp-totalpages"];
+    articlesLoader.classList.add("hidden");
 
-  if (seeMoreButton.classList.contains("hidden") && postsPage < totalPostsPages) {
-    seeMoreButton.classList.remove("hidden");
+    const totalPostsPages = posts.resHeader["x-wp-totalpages"];
+
+    if (seeMoreButton.classList.contains("hidden") && postsPage < totalPostsPages) {
+      seeMoreButton.classList.remove("hidden");
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -70,7 +78,7 @@ const setupPosts = async () => {
     const postCount = posts?.resHeader?.["x-wp-totalpages"] ?? 0;
 
     renderPosts(posts, container);
-
+    articlesLoader.classList.add("hidden");
     if (postCount > 1) {
       seeMoreButton.classList.remove("hidden");
       seeMoreButton.addEventListener("click", loadPosts);
@@ -81,7 +89,8 @@ const setupPosts = async () => {
 };
 
 const categoryListener = (e) => {
-  postsUl.innerHTML = `<li><div class="loader"></div></li>`;
+  articlesLoader.classList.remove("hidden");
+  postsUl.innerHTML = ``;
   if (e.target.classList.contains("selected")) {
     e.target.classList.remove("selected");
     categoryId = null;
@@ -131,8 +140,9 @@ const setupCategories = async () => {
     const categories = await fetchApiResults("/wp/v2/categories");
     const container = document.querySelector("#category-container");
     if (categories.length === 0) {
-      container.innerHTML = "";
+      container.remove();
     } else {
+      container.querySelector(".loader").remove();
       renderCategories(categories);
     }
   } catch (error) {
