@@ -284,6 +284,46 @@ footer .logo {
 /** 5. Loader
 -------------------------*/
 /* #region */
+.loader {
+  position: relative;
+  margin: 100px auto;
+  height: 60px;
+  border-color: var(--clr-neutral-600);
+  animation: spinner 3s linear infinite;
+}
+
+.loader::after,
+.loader::before {
+  content: "";
+  display: block;
+  position: absolute;
+  inset: 0;
+  margin: auto;
+}
+
+.loader::after {
+  height: calc(100% - 10px);
+  border-color: var(--clr-primary-400);
+  animation: spinner 2s ease-in-out infinite;
+}
+
+.loader::before {
+  height: calc(100% - 25px);
+  border-color: var(--clr-neutral-600);
+  animation: spinner 1s linear infinite;
+}
+
+.loader,
+.loader::after,
+.loader::before {
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  border-top-color: transparent;
+  border-right-color: transparent;
+}
+
 /* #endregion */
 
 /** 6. Button
