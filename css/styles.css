@@ -387,7 +387,7 @@ main {
     content: "";
     display: block;
     background: url(../assets/contact.jpg) no-repeat;
-    height: 100%;
+    height: calc(62rem + var(--space-1000) + var(--space-700));
     width: 100%;
     background-size: cover;
     background-position: center;
