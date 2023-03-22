@@ -176,7 +176,7 @@ main {
 }
 
 .ig-container .content {
-  padding: var(--space-450);
+  padding: var(--space-600) var(--space-450);
   --gap: var(--space-400);
   border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
@@ -206,10 +206,13 @@ main {
 
 .ig-container .images li {
   flex-basis: 100%;
+  position: relative;
+  min-height: 250px;
 }
 
 .ig-container img {
-  height: 250px;
+  position: absolute;
+  height: 100%;
   width: 100%;
   object-fit: cover;
 }
@@ -220,6 +223,12 @@ main {
 
 /* 3.5. Media queries
 -------------------------*/
+@media (min-width: 35em) {
+  .ig-container .images {
+    flex-direction: row;
+  }
+}
+
 @media (min-width: 50em) {
   .page-home {
     gap: var(--space-1000);
@@ -280,8 +289,7 @@ main {
     border-radius: var(--border-radius) 0 0 var(--border-radius);
   }
 
-  .ig-container,
-  .ig-container .images {
+  .ig-container {
     flex-direction: row;
   }
 
