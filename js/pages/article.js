@@ -1,13 +1,55 @@
-import { fetchApiResults } from "../util/api.js";
+import { fetchApiResults, postRequest } from "../util/api.js";
 import { renderAlertDialog } from "../components/error.js";
 import { createHTML } from "../util/createHTML.js";
 import { setupModalTrapFocus } from "../util/focus-trap.js";
+import { renderAlertText } from "../components/error.js";
+import { emailValidation, characterValidation, setupEmailEventListener, validationError } from "../util/validation.js";
 
 const articleId = new URLSearchParams(window.location.search).get("id");
 const main = document.querySelector("#main-content");
 const container = document.querySelector("#comments-container");
+const commentsUl = document.querySelector("#comments-ul");
 const commentsLoader = container.querySelector(".loader");
+const commentForm = document.querySelector("#comment-form");
+const submitButton = commentForm.querySelector(".btn");
 let commentPage = 1;
+
+const nameInput = document.querySelector("#name");
+const emailInput = document.querySelector("#email");
+const commentInput = document.querySelector("#comment");
+
+const errorInfo = {
+  name: {
+    id: "name-error",
+    errorMessage: "Name is required",
+  },
+  email: {
+    id: "email-error",
+    errorMessage: "Enter a valid email",
+  },
+  comment: {
+    id: "comment-error",
+    errorMessage: "Your comment has to contain at least 15 characters",
+  },
+};
+
+const body = document.querySelector("body");
+const modal = document.querySelector("#img-modal");
+
+const months = {
+  "01": "January",
+  "02": "February",
+  "03": "March",
+  "04": "April",
+  "05": "May",
+  "06": "June",
+  "07": "July",
+  "08": "August",
+  "09": "September",
+  ["10"]: "October", // Added brackets to prevent potential bugs
+  ["11"]: "November", // due to prettier removing double quotes
+  ["12"]: "December",
+};
 
 const setDate = (createdDate) => {
   const date = new Date();
@@ -25,21 +67,6 @@ const setDate = (createdDate) => {
     second: time[2],
   };
 
-  const months = {
-    "01": "January",
-    "02": "February",
-    "03": "March",
-    "04": "April",
-    "05": "May",
-    "06": "June",
-    "07": "July",
-    "08": "August",
-    "09": "September",
-    ["10"]: "October", // Added brackets to prevent potential bugs
-    ["11"]: "November", // due to prettier removing double quotes
-    ["12"]: "December",
-  };
-
   if (dateObj.year != date.getFullYear()) {
     return `${months[dateObj.month]} ${dateObj.day}, ${dateObj.year}`;
   } else if (dateObj.month != date.getMonth() + 1 || dateObj.day != date.getDate()) {
@@ -54,9 +81,6 @@ const setDate = (createdDate) => {
     }
   }
 };
-
-const body = document.querySelector("body");
-const modal = document.querySelector("#img-modal");
 
 const setupImageModalFocus = (e) => {
   setupModalTrapFocus(modal, "button", closeModal, e);
@@ -171,12 +195,12 @@ const renderComments = async (comments, parent) => {
     parent.append(renderAlertDialog("alert", "There are no comments on this post yet"));
   } else {
     for (const comment of comments) {
-      document.querySelector("#comments-ul").append(renderComment(comment));
+      commentsUl.append(renderComment(comment));
     }
   }
 };
 
-const setupComments = async () => {
+const fetchComments = async () => {
   try {
     const comments = await fetchApiResults("/wp/v2/comments", `?post=${articleId}&page=${commentPage}&_embed`);
 
@@ -195,7 +219,110 @@ const setupComments = async () => {
   }
 };
 
+const submitComment = async (e) => {
+  const firstFormElem = commentForm.querySelector(":first-child");
+
+  const reqBody = JSON.stringify({
+    post: articleId,
+    author_name: nameInput.value.trim(),
+    author_email: emailInput.value.trim(),
+    content: commentInput.value.trim(),
+  });
+
+  const fetchInit = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: reqBody,
+  };
+
+  try {
+    const req = await postRequest("/wp/v2/comments", null, fetchInit);
+    const res = await req.json();
+    console.log(req);
+
+    if (req.ok) {
+      commentForm.reset();
+      firstFormElem.after(renderAlertDialog("success", "Comment sent", "comment-alert"));
+
+      commentsUl.prepend(renderComment(res));
+    } else {
+      if (!res.message) {
+        res.message = "Comment did not send, something happened on our end. Please try again";
+      }
+      console.log("error", res.message);
+      firstFormElem.after(renderAlertDialog("error", res.message, "comment-alert"));
+    }
+  } catch (error) {
+    console.log(error);
+    firstFormElem.after(renderAlertDialog("error", error.message, "comment-alert"));
+  }
+};
+
+const validateComment = (e) => {
+  e.preventDefault();
+
+  if (document.querySelector("#comment-alert")) {
+    document.querySelector("#comment-alert").remove();
+  }
+
+  const validation = {
+    name: characterValidation(nameInput.value),
+    email: emailValidation(emailInput.value),
+    comment: characterValidation(commentInput.value, 15),
+  };
+
+  if (validation.name && validation.email && validation.comment) {
+    submitComment();
+  } else {
+    if (!validation.name && !document.querySelector(`#${errorInfo.name.id}`)) {
+      nameInput.parentElement.append(renderAlertText("error", errorInfo.name.errorMessage, errorInfo.name.id));
+    }
+    if (!validation.email && !document.querySelector(`#${errorInfo.email.id}`)) {
+      emailInput.parentElement.append(renderAlertText("error", errorInfo.email.errorMessage, errorInfo.email.id));
+    }
+    if (!validation.comment && !document.querySelector(`#${errorInfo.comment.id}`)) {
+      commentInput.parentElement.append(renderAlertText("error", errorInfo.comment.errorMessage, errorInfo.comment.id));
+    }
+  }
+};
+
+const setupCommentForm = () => {
+  commentForm.reset();
+
+  nameInput.addEventListener("focusout", function (e) {
+    const validated = characterValidation(nameInput.value.trim());
+    validationError(this, validated, errorInfo.name.id, errorInfo.name.errorMessage);
+  });
+
+  nameInput.addEventListener("input", function (e) {
+    const validated = characterValidation(nameInput.value.trim());
+    if (validated && document.querySelector(`#${errorInfo.name.id}`)) {
+      document.querySelector(`#${errorInfo.name.id}`).remove();
+    }
+  });
+
+  setupEmailEventListener(emailInput, errorInfo.email.id, errorInfo.email.errorMessage);
+
+  commentInput.addEventListener("focusout", function (e) {
+    const validated = characterValidation(commentInput.value.trim(), 15);
+    validationError(this, validated, errorInfo.comment.id, errorInfo.comment.errorMessage);
+  });
+
+  commentInput.addEventListener("input", function (e) {
+    const validated = characterValidation(commentInput.value.trim(), 15);
+    if (validated && document.querySelector(`#${errorInfo.comment.id}`)) {
+      console.log(2);
+      document.querySelector(`#${errorInfo.comment.id}`).remove();
+    }
+  });
+
+  submitButton.addEventListener("click", validateComment);
+};
+
 export const setupArticle = () => {
   renderArticle();
-  setupComments();
+  fetchComments();
+  setupCommentForm();
 };
