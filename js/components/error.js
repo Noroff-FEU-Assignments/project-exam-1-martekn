@@ -24,9 +24,10 @@ export const renderAlertText = (alertType, message, alertId) => {
  * Creates a dialog alert element
  * @param {"error" | "alert" | "warning" | "success" | null | undefined} alertType
  * @param {String} message
+ * @param {String | null } id
  * @returns HTMLElement for dialog alerts
  */
-export const renderAlertDialog = (alertType = "alert", message) => {
+export const renderAlertDialog = (alertType = "alert", message, id) => {
   const alert = createHTML("div", ["alert", alertType, "alert-type--dialog", "flex"]);
   if (alertType == "error") {
     const icon = createHTML("i", "ri-error-warning-line");
@@ -34,6 +35,10 @@ export const renderAlertDialog = (alertType = "alert", message) => {
   }
 
   const messageElem = createHTML("span", "message", message);
+  if (id) {
+    alert.setAttribute("id", id);
+  }
+
   alert.append(messageElem);
   return alert;
 };
