@@ -26,3 +26,20 @@ export const fetchApiResults = async (endpoint, query) => {
 
   return res;
 };
+
+export const postRequest = async (endpoint, query, init) => {
+  let url = baseUrl;
+  if (endpoint) {
+    url += endpoint;
+  }
+
+  if (query) {
+    url += `${query}&${consumerKey}&${consumerSecret}`;
+  } else {
+    url += `?${consumerKey}&${consumerSecret}`;
+  }
+
+  const req = await fetch(url, init);
+
+  return req;
+};
