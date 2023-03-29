@@ -1,4 +1,19 @@
 /**
+ * Returns string where html entities have been decoded.
+ * @param {String} string
+ * @returns String | null
+ */
+export const decodeHTML = (string) => {
+  if (string) {
+    const elem = document.createElement("textarea");
+    elem.innerHTML = string;
+    return elem.textContent;
+  } else {
+    return null;
+  }
+};
+
+/**
  * Creates an html element
  * @param {string} tag Html tag
  * @param {string | String[] | null} [classes]
@@ -17,6 +32,7 @@ export const createHTML = (tag, classes, text, attributes) => {
   }
 
   if (text) {
+    text = decodeHTML(text);
     elem.innerText = text;
   }
 

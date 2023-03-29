@@ -1,5 +1,5 @@
 import { fetchApiResults } from "../util/api.js";
-import { createHTML } from "../util/createHTML.js";
+import { createHTML } from "../util/htmlUtilities.js";
 
 // Hero
 const heroSection = document.querySelector("#home-hero");

@@ -1,6 +1,6 @@
 import { fetchApiResults, postRequest } from "../util/api.js";
 import { renderAlertDialog } from "../components/error.js";
-import { createHTML } from "../util/createHTML.js";
+import { createHTML } from "../util/htmlUtilities.js";
 import { setupModalTrapFocus } from "../util/focus-trap.js";
 import { renderAlertText } from "../components/error.js";
 import { emailValidation, characterValidation, setupEmailEventListener, validationError } from "../util/validation.js";

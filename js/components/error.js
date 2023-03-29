@@ -1,4 +1,4 @@
-import { createHTML } from "../util/createHTML.js";
+import { createHTML } from "../util/htmlUtilities.js";
 
 /**
  * Creates a text alert element

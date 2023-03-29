@@ -1,5 +1,5 @@
 import { fetchApiResults } from "../util/api.js";
-import { createHTML } from "../util/createHTML.js";
+import { createHTML } from "../util/htmlUtilities.js";
 import { renderAlertDialog } from "../components/error.js";
 
 const seeMoreButton = document.querySelector("#see-more");
