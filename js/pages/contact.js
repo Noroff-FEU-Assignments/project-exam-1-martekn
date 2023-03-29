@@ -1,5 +1,4 @@
-import { renderAlertText } from "../components/error.js";
-import { emailValidation, characterValidation, setupEmailEventListener } from "../util/validation.js";
+import { emailValidation, characterValidation, setupEmailEventListener, validationError } from "../util/validation.js";
 const button = document.querySelector("#submit-btn");
 const form = document.querySelector("form");
 const nameInput = document.querySelector("#name");
@@ -53,26 +52,13 @@ const validateForm = (e) => {
   if (validation.name && validation.email && validation.subject && validation.message) {
     submitForm();
   } else {
-    if (!validation.name && !document.querySelector(`#${errorInfo.name.id}`)) {
-      nameInput.parentElement.append(renderAlertText("error", errorInfo.name.errorMessage, errorInfo.name.id));
-    }
-    if (!validation.email && !document.querySelector(`#${errorInfo.email.id}`)) {
-      emailInput.parentElement.append(renderAlertText("error", errorInfo.email.errorMessage, errorInfo.email.id));
-    }
-    if (!validation.subject && !document.querySelector(`#${errorInfo.subject.id}`)) {
-      subjectInput.parentElement.append(renderAlertText("error", errorInfo.subject.errorMessage, errorInfo.subject.id));
-    }
-    if (!validation.message && !document.querySelector(`#${errorInfo.message.id}`)) {
-      messageInput.parentElement.append(renderAlertText("error", errorInfo.message.errorMessage, errorInfo.message.id));
-    }
-  }
-};
+    validationError(nameInput, validation.name, errorInfo.name.id, errorInfo.name.errorMessage);
 
-const characterValidationError = (input, validated, errorId, errorMessage) => {
-  if (!validated && !document.querySelector(`#${errorId}`)) {
-    input.parentElement.append(renderAlertText("error", errorMessage, errorId));
-  } else if (validated && document.querySelector(`#${errorId}`)) {
-    document.querySelector(`#${errorId}`).remove();
+    validationError(emailInput, validation.email, errorInfo.email.id, errorInfo.email.errorMessage);
+
+    validationError(subjectInput, validation.subject, errorInfo.subject.id, errorInfo.subject.errorMessage);
+
+    validationError(messageInput, validation.message, errorInfo.message.id, errorInfo.message.errorMessage);
   }
 };
 
@@ -83,30 +69,36 @@ export const setupContact = () => {
 
   nameInput.addEventListener("focusout", function (e) {
     const validated = characterValidation(nameInput.value.trim(), 5);
-    characterValidationError(this, validated, errorInfo.name.id, errorInfo.name.errorMessage);
+    validationError(this, validated, errorInfo.name.id, errorInfo.name.errorMessage);
   });
 
   nameInput.addEventListener("input", function (e) {
     const validated = characterValidation(nameInput.value.trim(), 5);
-    characterValidationError(this, validated, errorInfo.name.id, errorInfo.name.errorMessage);
+    if (validated && document.querySelector(`#${errorInfo.name.id}`)) {
+      document.querySelector(`#${errorInfo.name.id}`).remove();
+    }
   });
   subjectInput.addEventListener("focusout", function (e) {
     const validated = characterValidation(subjectInput.value.trim(), 15);
-    characterValidationError(this, validated, errorInfo.subject.id, errorInfo.subject.errorMessage);
+    validationError(this, validated, errorInfo.subject.id, errorInfo.subject.errorMessage);
   });
 
   subjectInput.addEventListener("input", function (e) {
     const validated = characterValidation(subjectInput.value.trim(), 15);
-    characterValidationError(this, validated, errorInfo.subject.id, errorInfo.subject.errorMessage);
+    if (validated && document.querySelector(`#${errorInfo.subject.id}`)) {
+      document.querySelector(`#${errorInfo.subject.id}`).remove();
+    }
   });
 
   messageInput.addEventListener("focusout", function (e) {
     const validated = characterValidation(messageInput.value.trim(), 25);
-    characterValidationError(this, validated, errorInfo.message.id, errorInfo.message.errorMessage);
+    validationError(this, validated, errorInfo.message.id, errorInfo.message.errorMessage);
   });
 
   messageInput.addEventListener("input", function (e) {
     const validated = characterValidation(messageInput.value.trim(), 25);
-    characterValidationError(this, validated, errorInfo.message.id, errorInfo.message.errorMessage);
+    if (validated && document.querySelector(`#${errorInfo.message.id}`)) {
+      document.querySelector(`#${errorInfo.message.id}`).remove();
+    }
   });
 };
