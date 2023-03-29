@@ -8,6 +8,21 @@ import { renderAlertText } from "../components/error.js";
 export const characterValidation = (value, amountOfChar = 1) => value.length >= amountOfChar;
 
 /**
+ * Sets up error message for validation
+ * @param {HTMLElement} input
+ * @param {Boolean} validated
+ * @param {String} errorId - unique id to get error element later
+ * @param {String} errorMessage
+ */
+export const validationError = (input, validated, errorId, errorMessage) => {
+  if (!validated && !document.querySelector(`#${errorId}`)) {
+    input.parentElement.append(renderAlertText("error", errorMessage, errorId));
+  } else if (validated && document.querySelector(`#${errorId}`)) {
+    document.querySelector(`#${errorId}`).remove();
+  }
+};
+
+/**
  * Validates the email based on regex pattern
  * @param {String} email
  * @returns Boolean
