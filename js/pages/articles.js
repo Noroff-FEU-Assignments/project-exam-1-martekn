@@ -1,4 +1,4 @@
-import { fetchApiResults } from "../util/api.js";
+import { fetchApi } from "../util/api.js";
 import { createHTML } from "../util/htmlUtilities.js";
 import { renderAlertDialog } from "../components/error.js";
 
@@ -11,22 +11,23 @@ let categoryId;
 const loadPosts = async () => {
   try {
     articlesLoader.classList.remove("hidden");
-    let posts = [];
+    let response = [];
     postsPage++;
 
     seeMoreButton.classList.add("hidden");
 
     if (categoryId) {
-      posts = await fetchApiResults("/wp/v2/posts", `?categories=${Number(categoryId)}&page=${postsPage}&_embed`);
+      response = await fetchApi("/wp/v2/posts", `?categories=${Number(categoryId)}&page=${postsPage}&_embed`);
     } else {
-      posts = await fetchApiResults("/wp/v2/posts", `?page=${postsPage}&_embed`);
+      response = await fetchApi("/wp/v2/posts", `?page=${postsPage}&_embed`);
     }
 
-    renderPosts(posts);
+    renderPosts(response.data);
 
     articlesLoader.classList.add("hidden");
 
-    const totalPostsPages = posts.resHeader["x-wp-totalpages"];
+    const totalPostsPages = response.parsedHeader["x-wp-totalpages"];
+    console.log(totalPostsPages);
 
     if (seeMoreButton.classList.contains("hidden") && postsPage < totalPostsPages) {
       seeMoreButton.classList.remove("hidden");
@@ -72,12 +73,11 @@ const renderPosts = async (posts) => {
 
 const setupPosts = async () => {
   try {
-    const posts = await fetchApiResults("/wp/v2/posts", `?page=${postsPage}&_embed`);
-    const container = document.querySelector("#posts-container");
+    const response = await fetchApi("/wp/v2/posts", `?page=${postsPage}&_embed`);
 
-    const postCount = posts?.resHeader?.["x-wp-totalpages"] ?? 0;
+    const postCount = response?.parsedHeader?.["x-wp-totalpages"] ?? 0;
 
-    renderPosts(posts, container);
+    renderPosts(response.data);
     articlesLoader.classList.add("hidden");
     if (postCount > 1) {
       seeMoreButton.classList.remove("hidden");
@@ -137,13 +137,13 @@ const renderCategories = (categories) => {
 
 const setupCategories = async () => {
   try {
-    const categories = await fetchApiResults("/wp/v2/categories");
+    const response = await fetchApi("/wp/v2/categories");
     const container = document.querySelector("#category-container");
-    if (categories.length === 0) {
+    if (response.data.length === 0) {
       container.remove();
     } else {
       container.querySelector(".loader").remove();
-      renderCategories(categories);
+      renderCategories(response.data);
     }
   } catch (error) {
     console.log(error);

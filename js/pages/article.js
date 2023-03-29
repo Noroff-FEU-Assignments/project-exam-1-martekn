@@ -1,4 +1,4 @@
-import { fetchApiResults, postRequest } from "../util/api.js";
+import { fetchApi } from "../util/api.js";
 import { renderAlertDialog } from "../components/error.js";
 import { createHTML } from "../util/htmlUtilities.js";
 import { setupModalTrapFocus } from "../util/focus-trap.js";
@@ -135,10 +135,11 @@ const setupModal = (article) => {
 
 const renderArticle = async () => {
   try {
-    const articleRes = await fetchApiResults(`/wp/v2/posts/${articleId}`, "?_embed");
+    const response = await fetchApi(`/wp/v2/posts/${articleId}`, "?_embed");
+    const articleResponse = response.data;
 
-    document.title = `${articleRes.title.rendered} | Travella`;
-    const excerpt = articleRes.excerpt.rendered.replace("<p>", "").replace("</p>", "").replace("/n", "");
+    document.title = `${articleResponse.title.rendered} | Travella`;
+    const excerpt = articleResponse.excerpt.rendered.replace("<p>", "").replace("</p>", "").replace("/n", "");
     document.querySelector("meta[name='description']").setAttribute("content", excerpt);
 
     const template = document.querySelector("#template_article");
@@ -146,15 +147,15 @@ const renderArticle = async () => {
 
     const featuredImage = article.querySelector("header img");
     const category = article.querySelector("#category");
-    const imageInfo = articleRes._embedded["wp:featuredmedia"][0];
+    const imageInfo = articleResponse._embedded["wp:featuredmedia"][0];
 
-    category.innerText = articleRes._embedded["wp:term"][0][0].name;
+    category.innerText = articleResponse._embedded["wp:term"][0][0].name;
     featuredImage.setAttribute("src", imageInfo.source_url);
     featuredImage.setAttribute("alt", imageInfo.alt_text);
-    article.querySelector("header h1").innerHTML = articleRes.title.rendered;
-    article.querySelector(".article-content").innerHTML = articleRes.content.rendered;
+    article.querySelector("header h1").innerHTML = articleResponse.title.rendered;
+    article.querySelector(".article-content").innerHTML = articleResponse.content.rendered;
 
-    article.querySelector("#date").innerText = setDate(articleRes.date);
+    article.querySelector("#date").innerText = setDate(articleResponse.date);
 
     setupModal(article);
 
@@ -169,10 +170,10 @@ const loadComments = async (e) => {
   try {
     commentsLoader.classList.remove("hidden");
     commentPage++;
-    const comments = await fetchApiResults("/wp/v2/comments", `?post=${articleId}&page=${commentPage}&_embed`);
+    const response = await fetchApi("/wp/v2/comments", `?post=${articleId}&page=${commentPage}&_embed`);
     commentsLoader.classList.add("hidden");
-    renderComments(comments);
-    if (commentPage == comments.resHeader["x-wp-totalpages"]) {
+    renderComments(response.data);
+    if (commentPage == response.parsedHeader["x-wp-totalpages"]) {
       e.target.remove();
     }
   } catch (error) {
@@ -202,11 +203,11 @@ const renderComments = async (comments, parent) => {
 
 const fetchComments = async () => {
   try {
-    const comments = await fetchApiResults("/wp/v2/comments", `?post=${articleId}&page=${commentPage}&_embed`);
+    const response = await fetchApi("/wp/v2/comments", `?post=${articleId}&page=${commentPage}&_embed`);
 
-    const commentCount = comments.resHeader["x-wp-total"];
+    const commentCount = response.parsedHeader["x-wp-total"];
     commentsLoader.classList.add("hidden");
-    renderComments(comments, container);
+    renderComments(response.data, container);
 
     if (commentCount > 10) {
       const button = createHTML("button", ["btn", "btn--primary"], "See more");
@@ -238,21 +239,21 @@ const submitComment = async (e) => {
   };
 
   try {
-    const req = await postRequest("/wp/v2/comments", null, fetchInit);
-    const res = await req.json();
-    console.log(req);
+    const response = await fetchApi("/wp/v2/comments", null, fetchInit);
 
-    if (req.ok) {
+    console.log(response);
+
+    if (response.ok) {
       commentForm.reset();
       firstFormElem.after(renderAlertDialog("success", "Comment sent", "comment-alert"));
 
-      commentsUl.prepend(renderComment(res));
+      commentsUl.prepend(renderComment(response.data));
     } else {
-      if (!res.message) {
-        res.message = "Comment did not send, something happened on our end. Please try again";
+      if (!response.message) {
+        response.message = "Comment did not send, something happened on our end. Please try again";
       }
-      console.log("error", res.message);
-      firstFormElem.after(renderAlertDialog("error", res.message, "comment-alert"));
+      console.log("error", response.message);
+      firstFormElem.after(renderAlertDialog("error", response.message, "comment-alert"));
     }
   } catch (error) {
     console.log(error);

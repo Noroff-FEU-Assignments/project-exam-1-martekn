@@ -3,13 +3,15 @@ const consumerKey = "";
 const consumerSecret = "";
 
 /**
- * Fetches the result from api
- * @param {String | null} [endpoint] - Endpoint starting with /
- * @param {String | null} [query] - Query starting with ?
- * @returns Result of the api call
+ * Fetches from the api based on arguments
+ * @param {String | null} endpoint - Endpoint starting with /
+ * @param {String | null} query - Query starting with ?
+ * @param {Object | null} init - fetch RequestInit
+ * @returns Object with data property for response body and parsedHeader property for headers
  */
-export const fetchApiResults = async (endpoint, query) => {
+export const fetchApi = async (endpoint, query, init) => {
   let url = baseUrl;
+  let response;
   if (endpoint) {
     url += endpoint;
   }
@@ -18,28 +20,17 @@ export const fetchApiResults = async (endpoint, query) => {
   } else {
     url += `?${consumerKey}&${consumerSecret}`;
   }
-  const req = await fetch(url);
-  const headers = Object.fromEntries(req.headers.entries());
-  const res = await req.json();
 
-  res.resHeader = headers;
-
-  return res;
-};
-
-export const postRequest = async (endpoint, query, init) => {
-  let url = baseUrl;
-  if (endpoint) {
-    url += endpoint;
-  }
-
-  if (query) {
-    url += `${query}&${consumerKey}&${consumerSecret}`;
+  if (init) {
+    response = await fetch(url, init);
   } else {
-    url += `?${consumerKey}&${consumerSecret}`;
+    response = await fetch(url);
   }
 
-  const req = await fetch(url, init);
+  const headers = Object.fromEntries(response.headers.entries());
 
-  return req;
+  response.parsedHeader = headers;
+  response.data = await response.json();
+
+  return response;
 };

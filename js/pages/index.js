@@ -1,4 +1,4 @@
-import { fetchApiResults } from "../util/api.js";
+import { fetchApi } from "../util/api.js";
 import { createHTML } from "../util/htmlUtilities.js";
 
 // Hero
@@ -15,8 +15,8 @@ const renderHomeHero = (hero) => {
 
 const createHero = async () => {
   try {
-    const heroRes = await fetchApiResults("/wp/v2/pages", "?slug=home");
-    renderHomeHero(heroRes[0]);
+    const response = await fetchApi("/wp/v2/pages", "?slug=home");
+    renderHomeHero(response.data[0]);
     heroSection.querySelector(".loader").remove();
   } catch (error) {
     console.log(error);
@@ -55,8 +55,8 @@ const renderCard = (post) => {
 
 const renderCarousel = async () => {
   try {
-    const carouselPosts = await fetchApiResults("/wp/v2/posts", "?per_page=12&_embed");
-    for (const post of carouselPosts) {
+    const response = await fetchApi("/wp/v2/posts", "?per_page=12&_embed");
+    for (const post of response.data) {
       const li = renderCard(post);
       carousel.appendChild(li);
     }
@@ -185,9 +185,9 @@ const renderFeaturedHtml = (post) => {
 const renderFeatured = async () => {
   try {
     const featuredContainer = document.querySelector("#featured-section");
-    const featuredPost = await fetchApiResults("/wp/v2/posts", "?tags=5&_embed");
+    const response = await fetchApi("/wp/v2/posts", "?tags=5&_embed");
     featuredContainer.querySelector(".loader").remove();
-    featuredContainer.appendChild(renderFeaturedHtml(featuredPost[0]));
+    featuredContainer.appendChild(renderFeaturedHtml(response.data[0]));
   } catch (error) {
     console.log(error);
   }
@@ -221,12 +221,9 @@ const renderPopularCard = (index, post) => {
 const renderPopularSection = async () => {
   try {
     const popularContainer = document.querySelector("#popular-container");
-    const popularPosts = await fetchApiResults(
-      "/wordpress-popular-posts/v1/popular-posts",
-      "?limit=4&range=all&_embed"
-    );
+    const response = await fetchApi("/wordpress-popular-posts/v1/popular-posts", "?limit=4&range=all&_embed");
     document.querySelector(".popular-posts .loader").remove();
-    for (const [index, post] of popularPosts.entries()) {
+    for (const [index, post] of response.data.entries()) {
       popularContainer.appendChild(renderPopularCard(index, post));
     }
   } catch (error) {
