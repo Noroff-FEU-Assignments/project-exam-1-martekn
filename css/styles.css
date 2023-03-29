@@ -576,14 +576,6 @@ h6 {
   height: fit-content;
 }
 
-.comments-section .error {
-  border-radius: var(--border-radius);
-  border: 1px solid var(--clr-neutral-300);
-  background-color: var(--clr-neutral-600--opacity-20);
-  padding: var(--space-500);
-  text-align: center;
-}
-
 .comments ul {
   gap: var(--space-600);
 }
