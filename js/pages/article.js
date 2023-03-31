@@ -13,7 +13,10 @@ const commentsUl = document.querySelector("#comments-ul");
 const commentsLoader = container.querySelector(".loader");
 const commentForm = document.querySelector("#comment-form");
 const submitButton = commentForm.querySelector(".btn");
+const commentsPerPage = 10;
+let commentOffset = commentsPerPage;
 let commentPage = 1;
+let commentCount = 0;
 
 const nameInput = document.querySelector("#name");
 const emailInput = document.querySelector("#email");
@@ -37,40 +40,39 @@ const errorInfo = {
 const body = document.querySelector("body");
 const modal = document.querySelector("#img-modal");
 
+// Backets are added to prevent possible issues of
+// the property names being numbers
 const months = {
-  "01": "January",
-  "02": "February",
-  "03": "March",
-  "04": "April",
-  "05": "May",
-  "06": "June",
-  "07": "July",
-  "08": "August",
-  "09": "September",
-  ["10"]: "October", // Added brackets to prevent potential bugs
-  ["11"]: "November", // due to prettier removing double quotes
-  ["12"]: "December",
+  ["0"]: "January",
+  ["1"]: "February",
+  ["2"]: "March",
+  ["3"]: "April",
+  ["4"]: "May",
+  ["5"]: "June",
+  ["6"]: "July",
+  ["7"]: "August",
+  ["8"]: "September",
+  ["9"]: "October",
+  ["10"]: "November",
+  ["11"]: "December",
 };
 
 const setDate = (createdDate) => {
   const date = new Date();
-
-  createdDate = createdDate.split("T");
-  const day = createdDate[0].split("-");
-  const time = createdDate[1].split(":");
+  createdDate = new Date(`${createdDate}+0000`);
 
   const dateObj = {
-    day: day[2],
-    month: day[1],
-    year: day[0],
-    hour: time[0],
-    minute: time[1],
-    second: time[2],
+    day: createdDate.getDate(),
+    month: createdDate.getMonth(),
+    year: createdDate.getFullYear(),
+    hour: createdDate.getHours(),
+    minute: createdDate.getMinutes(),
+    second: createdDate.getSeconds(),
   };
 
   if (dateObj.year != date.getFullYear()) {
     return `${months[dateObj.month]} ${dateObj.day}, ${dateObj.year}`;
-  } else if (dateObj.month != date.getMonth() + 1 || dateObj.day != date.getDate()) {
+  } else if (dateObj.month != date.getMonth() || dateObj.day != date.getDate()) {
     return `${months[dateObj.month]} ${dateObj.day}`;
   } else {
     if (date.getHours() - Number(dateObj.hour) > 0) {
@@ -139,8 +141,6 @@ const renderArticle = async () => {
     const response = await fetchApi(`/wp/v2/posts/${articleId}`, "?_embed");
     const articleResponse = response.data;
 
-    console.log(articleResponse);
-
     document.title = `${articleResponse.title.rendered} | Travella`;
     const excerpt = articleResponse.excerpt.rendered.replace("<p>", "").replace("</p>", "").replace("/n", "");
     document.querySelector("meta[name='description']").setAttribute("content", excerpt);
@@ -175,11 +175,17 @@ const loadComments = async (e) => {
   try {
     commentsLoader.classList.remove("hidden");
     commentPage++;
-    const response = await fetchApi("/wp/v2/comments", `?post=${articleId}&page=${commentPage}&_embed`);
+    const response = await fetchApi(
+      "/wp/v2/comments",
+      `?post=${articleId}&per_page=${commentsPerPage}&offset=${commentOffset}&_embed`
+    );
+
     commentsLoader.classList.add("hidden");
     renderComments(response.data);
     if (commentPage == response.parsedHeader["x-wp-totalpages"]) {
       e.target.remove();
+    } else {
+      commentOffset += commentsPerPage;
     }
   } catch (error) {
     console.log(error);
@@ -211,8 +217,7 @@ const renderComments = async (comments, parent) => {
 const fetchComments = async () => {
   try {
     const response = await fetchApi("/wp/v2/comments", `?post=${articleId}&page=${commentPage}&_embed`);
-
-    const commentCount = response.parsedHeader["x-wp-total"];
+    commentCount = response.parsedHeader["x-wp-total"];
     commentsLoader.classList.add("hidden");
     renderComments(response.data, container);
     if (commentCount > 10) {
@@ -249,13 +254,14 @@ const submitComment = async (e) => {
   try {
     const response = await fetchApi("/wp/v2/comments", null, fetchInit);
 
-    console.log(response);
-
     if (response.ok) {
       commentForm.reset();
       firstFormElem.after(renderAlertDialog("success", "Comment sent", "comment-alert"));
 
       commentsUl.prepend(renderComment(response.data));
+      commentOffset++;
+      commentCount++;
+      document.querySelector("#comment-count").innerText = `( ${commentCount} )`;
     } else {
       if (!response.data.message) {
         response.message = "Comment did not send, something happened on our end. Please try again";
