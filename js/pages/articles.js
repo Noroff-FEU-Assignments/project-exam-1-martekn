@@ -1,5 +1,5 @@
 import { fetchApi } from "../util/api.js";
-import { createHTML } from "../util/htmlUtilities.js";
+import { createHTML, decodeHTML } from "../util/htmlUtilities.js";
 import { renderAlertDialog } from "../components/error.js";
 
 const categoryContainer = document.querySelector("#category-container");
@@ -47,14 +47,14 @@ const renderPost = (post) => {
   const template = document.querySelector("#template_large-card");
   const card = template.content.cloneNode(true);
   const titleLink = card.querySelector("h2 a");
-  const excerpt = post.excerpt.rendered.replace("/n", "").replace("<p>", "").replace("</p>", "");
+  const excerpt = decodeHTML(post.excerpt.rendered.replace("<p>", "").replace("</p>", ""));
   const image = card.querySelector("img");
   const featuredImage = post._embedded["wp:featuredmedia"][0];
   const categoryName = post._embedded["wp:term"][0][0].name;
 
-  titleLink.innerHTML = post.title.rendered;
+  titleLink.innerText = decodeHTML(post.title.rendered);
   titleLink.setAttribute("href", `./article.html?id=${post.id}`);
-  card.querySelector("p").innerHTML = excerpt;
+  card.querySelector("p").innerText = excerpt;
   image.setAttribute("src", featuredImage.source_url);
   image.setAttribute("alt", featuredImage.alt_text);
   card.querySelector(".category-item").innerText = categoryName;
@@ -104,7 +104,7 @@ const setupPosts = async () => {
 
 const categoryListener = (e) => {
   articleLoader.classList.remove("hidden");
-  postsList.innerHTML = ``;
+  postsList.innerHTML = "";
 
   if (e.target.classList.contains("selected")) {
     e.target.classList.remove("selected");

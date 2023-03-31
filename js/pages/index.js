@@ -1,6 +1,6 @@
 import { fetchApi } from "../util/api.js";
 import { renderAlertDialog } from "../components/error.js";
-import { createHTML } from "../util/htmlUtilities.js";
+import { createHTML, decodeHTML } from "../util/htmlUtilities.js";
 
 const heroSection = document.querySelector("#home-hero");
 
@@ -44,14 +44,14 @@ const renderCard = (post) => {
   const template = document.querySelector("#template_carousel-card");
   const card = template.content.cloneNode(true);
   const titleLink = card.querySelector("h3 a");
-  const excerpt = post.excerpt.rendered.replace("/n", "").replace("<p>", "").replace("</p>", "");
+  const excerpt = decodeHTML(post.excerpt.rendered.replace("<p>", "").replace("</p>", ""));
   const image = card.querySelector("img");
   const featuredImage = post._embedded["wp:featuredmedia"][0];
   const categoryName = post._embedded["wp:term"][0][0].name;
 
-  titleLink.innerHTML = post.title.rendered;
+  titleLink.innerText = decodeHTML(post.title.rendered);
   titleLink.setAttribute("href", `./article.html?id=${post.id}`);
-  card.querySelector("p").innerHTML = excerpt;
+  card.querySelector("p").innerText = excerpt;
   image.setAttribute("src", featuredImage.source_url);
   image.setAttribute("alt", featuredImage.alt_text);
   card.querySelector(".category-item").innerText = categoryName;
@@ -178,13 +178,13 @@ const renderFeaturedHtml = (post) => {
   const template = document.querySelector("#template_featured");
   const featured = template.content.cloneNode(true);
   const title = featured.querySelector("h2");
-  const excerpt = post.excerpt.rendered.replace("/n", "").replace("<p>", "").replace("</p>", "");
+  const excerpt = decodeHTML(post.excerpt.rendered.replace("<p>", "").replace("</p>", ""));
   const featuredImage = post._embedded["wp:featuredmedia"][0];
   const image = featured.querySelector("img");
 
-  title.innerHTML = post.title.rendered;
+  title.innerText = decodeHTML(post.title.rendered);
   featured.querySelector(".btn").setAttribute("href", `./article.html?id=${post.id}`);
-  featured.querySelector("p").innerHTML = excerpt;
+  featured.querySelector("p").innerText = excerpt;
   image.setAttribute("src", featuredImage.source_url);
   image.setAttribute("alt", featuredImage.alt_text);
 
@@ -212,11 +212,11 @@ const renderPopularCard = (index, post) => {
   const template = document.querySelector("#template_popular-card");
   const card = template.content.cloneNode(true);
   const titleLink = card.querySelector("h3 a");
-  const excerpt = post.excerpt.rendered.replace("/n", "").replace("<p>", "").replace("</p>", "");
+  const excerpt = decodeHTML(post.excerpt.rendered.replace("<p>", "").replace("</p>", ""));
 
-  titleLink.innerHTML = post.title.rendered;
+  titleLink.innerText = decodeHTML(post.title.rendered);
   titleLink.setAttribute("href", `./article.html?id=${post.id}`);
-  card.querySelector("p").innerHTML = excerpt;
+  card.querySelector("p").innerText = excerpt;
 
   if (index === 0) {
     const featuredImage = post._embedded["wp:featuredmedia"][0];
