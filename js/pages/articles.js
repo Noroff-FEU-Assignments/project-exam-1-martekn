@@ -2,20 +2,23 @@ import { fetchApi } from "../util/api.js";
 import { createHTML } from "../util/htmlUtilities.js";
 import { renderAlertDialog } from "../components/error.js";
 
-const seeMoreButton = document.querySelector("#see-more");
-const postsUl = document.querySelector("#posts");
-const articlesContainer = document.querySelector("#posts-container");
-const articlesLoader = articlesContainer.querySelector(".loader");
+const categoryContainer = document.querySelector("#category-container");
+const categoryList = categoryContainer.querySelector("#category");
+
+const articleContainer = document.querySelector("#posts-container");
+const postsList = articleContainer.querySelector("#posts");
+const loadButton = articleContainer.querySelector("#see-more");
+const articleLoader = articleContainer.querySelector(".loader");
+
 let postsPage = 1;
 let categoryId;
 
 const loadPosts = async () => {
+  articleLoader.classList.remove("hidden");
+
   try {
-    articlesLoader.classList.remove("hidden");
     let response = [];
     postsPage++;
-
-    seeMoreButton.classList.add("hidden");
 
     if (categoryId) {
       response = await fetchApi("/wp/v2/posts", `?categories=${Number(categoryId)}&page=${postsPage}&_embed`);
@@ -23,20 +26,20 @@ const loadPosts = async () => {
       response = await fetchApi("/wp/v2/posts", `?page=${postsPage}&_embed`);
     }
 
+    const totalPostsPages = response.parsedHeader["x-wp-totalpages"];
+
+    loadButton.classList.add("hidden");
+    articleLoader.classList.add("hidden");
+
     renderPosts(response.data);
 
-    articlesLoader.classList.add("hidden");
-
-    const totalPostsPages = response.parsedHeader["x-wp-totalpages"];
-    console.log(totalPostsPages);
-
-    if (seeMoreButton.classList.contains("hidden") && postsPage < totalPostsPages) {
-      seeMoreButton.classList.remove("hidden");
+    if (loadButton.classList.contains("hidden") && postsPage < totalPostsPages) {
+      loadButton.classList.remove("hidden");
     }
   } catch (error) {
     console.log(error);
-    articlesContainer.innerHTML = "";
-    articlesContainer.append(renderAlertDialog("alert", "Oops, content failed to load. Please try again later"));
+    articleContainer.innerHTML = "";
+    articleContainer.append(renderAlertDialog("alert", "Oops, content failed to load. Please try again later"));
   }
 };
 
@@ -44,14 +47,17 @@ const renderPost = (post) => {
   const template = document.querySelector("#template_large-card");
   const card = template.content.cloneNode(true);
   const titleLink = card.querySelector("h2 a");
+  const excerpt = post.excerpt.rendered.replace("/n", "").replace("<p>", "").replace("</p>", "");
+  const image = card.querySelector("img");
+  const featuredImage = post._embedded["wp:featuredmedia"][0];
+  const categoryName = post._embedded["wp:term"][0][0].name;
+
   titleLink.innerHTML = post.title.rendered;
   titleLink.setAttribute("href", `./article.html?id=${post.id}`);
-  const excerpt = post.excerpt.rendered.replace("/n", "").replace("<p>", "").replace("</p>", "");
   card.querySelector("p").innerHTML = excerpt;
-  const image = card.querySelector("img");
-  image.setAttribute("src", post._embedded["wp:featuredmedia"][0].source_url);
-  image.setAttribute("alt", post._embedded["wp:featuredmedia"][0].alt_text);
-  card.querySelector(".category-item").innerText = post._embedded["wp:term"][0][0].name;
+  image.setAttribute("src", featuredImage.source_url);
+  image.setAttribute("alt", featuredImage.alt_text);
+  card.querySelector(".category-item").innerText = categoryName;
 
   return card;
 };
@@ -59,17 +65,20 @@ const renderPost = (post) => {
 const renderPosts = async (posts) => {
   if (posts.length === 0) {
     let errorMessage = "There are no posts";
-    postsUl.innerHTML = "";
+    postsList.innerHTML = "";
+
     if (categoryId) {
       errorMessage = "There are no posts for this category";
     }
-    postsUl.append(renderAlertDialog("alert", errorMessage));
-    if (!seeMoreButton.classList.contains("hidden")) {
-      seeMoreButton.classList.add("hidden");
+
+    postsList.append(renderAlertDialog("alert", errorMessage));
+
+    if (!loadButton.classList.contains("hidden")) {
+      loadButton.classList.add("hidden");
     }
   } else {
     for (const post of posts) {
-      postsUl.append(renderPost(post));
+      postsList.append(renderPost(post));
     }
   }
 };
@@ -77,25 +86,26 @@ const renderPosts = async (posts) => {
 const setupPosts = async () => {
   try {
     const response = await fetchApi("/wp/v2/posts", `?page=${postsPage}&_embed`);
-
     const postCount = response?.parsedHeader?.["x-wp-totalpages"] ?? 0;
 
     renderPosts(response.data);
-    articlesLoader.classList.add("hidden");
+    articleLoader.classList.add("hidden");
+
     if (postCount > 1) {
-      seeMoreButton.classList.remove("hidden");
-      seeMoreButton.addEventListener("click", loadPosts);
+      loadButton.classList.remove("hidden");
+      loadButton.addEventListener("click", loadPosts);
     }
   } catch (error) {
     console.log(error);
-    articlesContainer.innerHTML = "";
-    articlesContainer.append(renderAlertDialog("alert", "Oops, content failed to load. Please try again later"));
+    articleContainer.innerHTML = "";
+    articleContainer.append(renderAlertDialog("alert", "Oops, content failed to load. Please try again later"));
   }
 };
 
 const categoryListener = (e) => {
-  articlesLoader.classList.remove("hidden");
-  postsUl.innerHTML = ``;
+  articleLoader.classList.remove("hidden");
+  postsList.innerHTML = ``;
+
   if (e.target.classList.contains("selected")) {
     e.target.classList.remove("selected");
     categoryId = null;
@@ -111,6 +121,7 @@ const categoryListener = (e) => {
     e.target.classList.add("selected");
     categoryId = e.target.getAttribute("data-category");
   }
+
   postsPage = 0;
   loadPosts();
 };
@@ -135,25 +146,24 @@ const renderCategories = (categories) => {
     if (category.name === "Uncategorized") {
       continue;
     } else {
-      document.querySelector("#category").append(renderCategory(category));
+      categoryList.append(renderCategory(category));
     }
   }
 };
 
 const setupCategories = async () => {
-  const container = document.querySelector("#category-container");
   try {
     const response = await fetchApi("/wp/v2/categories");
 
     if (response.data.length === 0) {
-      container.remove();
+      categoryContainer.remove();
     } else {
-      container.querySelector(".loader").remove();
+      categoryContainer.querySelector(".loader").remove();
       renderCategories(response.data);
     }
   } catch (error) {
     console.log(error);
-    container.innerHTML = "";
+    categoryContainer.innerHTML = "";
   }
 };
 

@@ -10,9 +10,11 @@ const baseUrl = "https://martekn.com/noroff/travella/wp-json";
 export const fetchApi = async (endpoint, query, init) => {
   let url = baseUrl;
   let response;
+
   if (endpoint) {
     url += endpoint;
   }
+
   if (query) {
     url += query;
   }

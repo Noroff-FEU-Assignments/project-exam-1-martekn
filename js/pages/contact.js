@@ -1,12 +1,13 @@
 import { fetchApi } from "../util/api.js";
 import { emailValidation, characterValidation, setupEmailEventListener, validationError } from "../util/validation.js";
 import { renderAlertDialog } from "../components/error.js";
+
 const form = document.querySelector("form");
 const firstFormElem = form.querySelector(":first-child");
-const nameInput = document.querySelector("#name");
-const emailInput = document.querySelector("#email");
-const subjectInput = document.querySelector("#subject");
-const messageInput = document.querySelector("#message");
+const nameInput = form.querySelector("#name");
+const emailInput = form.querySelector("#email");
+const subjectInput = form.querySelector("#subject");
+const messageInput = form.querySelector("#message");
 
 const errorInfo = {
   name: {
@@ -37,17 +38,20 @@ const renderSuccessMessage = () => {
 const submitForm = async (e) => {
   const requestBody = new FormData(e.target);
   const errorMessage = "Comment did not send, something happened on our end. Please try again";
+  const alert = document.querySelector("#message-alert");
+
   const fetchInit = {
     method: "POST",
     body: requestBody,
   };
 
-  if (document.querySelector("#message-alert")) {
-    document.querySelector("#message-alert").remove();
+  if (alert) {
+    alert.remove();
   }
 
   try {
     const response = await fetchApi("/contact-form-7/v1/contact-forms/166/feedback", null, fetchInit);
+
     if (response.ok) {
       form.reset();
       form.remove();
@@ -87,7 +91,9 @@ const validateForm = (e) => {
 
 export const setupContact = () => {
   form.reset();
+
   setupEmailEventListener(emailInput, errorInfo.email.id, errorInfo.email.errorMessage);
+
   form.addEventListener("submit", validateForm);
 
   nameInput.addEventListener("focusout", function (e) {
@@ -101,6 +107,7 @@ export const setupContact = () => {
       document.querySelector(`#${errorInfo.name.id}`).remove();
     }
   });
+
   subjectInput.addEventListener("focusout", function (e) {
     const validated = characterValidation(subjectInput.value.trim(), 15);
     validationError(this, validated, errorInfo.subject.id, errorInfo.subject.errorMessage);

@@ -5,22 +5,29 @@ import { setupModalTrapFocus } from "../util/focus-trap.js";
 import { renderAlertText } from "../components/error.js";
 import { emailValidation, characterValidation, setupEmailEventListener, validationError } from "../util/validation.js";
 
-const articleId = new URLSearchParams(window.location.search).get("id");
+const body = document.body;
 const main = document.querySelector("#main-content");
+const modal = document.querySelector("#img-modal");
+
 const commentSection = document.querySelector("#comments-section");
-const container = document.querySelector("#comments-container");
-const commentsUl = document.querySelector("#comments-ul");
-const commentsLoader = container.querySelector(".loader");
-const commentForm = document.querySelector("#comment-form");
+const commentCount = commentSection.querySelector("#comment-count");
+const commentListWrapper = commentSection.querySelector("#comments-container");
+const commentList = commentListWrapper.querySelector("#comments-ul");
+const commentsLoader = commentListWrapper.querySelector(".loader");
+
+const commentForm = commentSection.querySelector("#comment-form");
+const firstFormElem = commentForm.querySelector(":first-child");
 const submitButton = commentForm.querySelector(".btn");
+const nameInput = commentForm.querySelector("#name");
+const emailInput = commentForm.querySelector("#email");
+const commentInput = commentForm.querySelector("#comment");
+
+const articleId = new URLSearchParams(window.location.search).get("id");
 const commentsPerPage = 10;
+
 let commentOffset = commentsPerPage;
 let commentPage = 1;
-let commentCount = 0;
-
-const nameInput = document.querySelector("#name");
-const emailInput = document.querySelector("#email");
-const commentInput = document.querySelector("#comment");
+let commentAmount = 0;
 
 const errorInfo = {
   name: {
@@ -36,9 +43,6 @@ const errorInfo = {
     errorMessage: "Your comment has to contain at least 15 characters",
   },
 };
-
-const body = document.querySelector("body");
-const modal = document.querySelector("#img-modal");
 
 // Backets are added to prevent possible issues of
 // the property names being numbers
@@ -175,13 +179,16 @@ const loadComments = async (e) => {
   try {
     commentsLoader.classList.remove("hidden");
     commentPage++;
+
     const response = await fetchApi(
       "/wp/v2/comments",
       `?post=${articleId}&per_page=${commentsPerPage}&offset=${commentOffset}&_embed`
     );
 
     commentsLoader.classList.add("hidden");
+
     renderComments(response.data);
+
     if (commentPage == response.parsedHeader["x-wp-totalpages"]) {
       e.target.remove();
     } else {
@@ -190,7 +197,7 @@ const loadComments = async (e) => {
   } catch (error) {
     console.log(error);
     e.target.remove();
-    commentsUl.append(renderAlertDialog("alert", "Oops, content failed to load. Please try again later"));
+    commentList.append(renderAlertDialog("alert", "Oops, content failed to load. Please try again later"));
   }
 };
 
@@ -209,7 +216,7 @@ const renderComments = async (comments, parent) => {
     parent.append(renderAlertDialog("alert", "There are no comments on this post yet"));
   } else {
     for (const comment of comments) {
-      commentsUl.append(renderComment(comment));
+      commentList.append(renderComment(comment));
     }
   }
 };
@@ -217,15 +224,18 @@ const renderComments = async (comments, parent) => {
 const fetchComments = async () => {
   try {
     const response = await fetchApi("/wp/v2/comments", `?post=${articleId}&page=${commentPage}&_embed`);
-    commentCount = response.parsedHeader["x-wp-total"];
+
+    commentAmount = response.parsedHeader["x-wp-total"];
     commentsLoader.classList.add("hidden");
-    renderComments(response.data, container);
-    if (commentCount > 10) {
+
+    renderComments(response.data, commentListWrapper);
+
+    if (commentAmount > 10) {
       const button = createHTML("button", ["btn", "btn--primary"], "See more");
       button.addEventListener("click", loadComments);
-      container.append(button);
+      commentListWrapper.append(button);
     }
-    document.querySelector("#comment-count").innerText = `( ${commentCount} )`;
+    document.querySelector("#comment-count").innerText = `( ${commentAmount} )`;
   } catch (error) {
     console.log(error);
     commentSection.innerHTML = "";
@@ -233,9 +243,7 @@ const fetchComments = async () => {
   }
 };
 
-const submitComment = async (e) => {
-  const firstFormElem = commentForm.querySelector(":first-child");
-
+const submitComment = async () => {
   const reqBody = JSON.stringify({
     post: articleId,
     author_name: nameInput.value.trim(),
@@ -256,17 +264,19 @@ const submitComment = async (e) => {
 
     if (response.ok) {
       commentForm.reset();
-      firstFormElem.after(renderAlertDialog("success", "Comment sent", "comment-alert"));
-
-      commentsUl.prepend(renderComment(response.data));
       commentOffset++;
-      commentCount++;
-      document.querySelector("#comment-count").innerText = `( ${commentCount} )`;
+      commentAmount++;
+
+      firstFormElem.after(renderAlertDialog("success", "Comment sent", "comment-alert"));
+      commentList.prepend(renderComment(response.data));
+      commentCount.innerText = `( ${commentAmount} )`;
     } else {
+      console.log("error", response.data.message);
+
       if (!response.data.message) {
         response.message = "Comment did not send, something happened on our end. Please try again";
       }
-      console.log("error", response.data.message);
+
       firstFormElem.after(renderAlertDialog("error", response.data.message, "comment-alert"));
     }
   } catch (error) {
@@ -291,13 +301,19 @@ const validateComment = (e) => {
   if (validation.name && validation.email && validation.comment) {
     submitComment();
   } else {
-    if (!validation.name && !document.querySelector(`#${errorInfo.name.id}`)) {
+    const nameAlert = document.querySelector(`#${errorInfo.name.id}`);
+    const emailAlert = document.querySelector(`#${errorInfo.email.id}`);
+    const messageAlert = document.querySelector(`#${errorInfo.comment.id}`);
+
+    if (!validation.name && !nameAlert) {
       nameInput.parentElement.append(renderAlertText("error", errorInfo.name.errorMessage, errorInfo.name.id));
     }
-    if (!validation.email && !document.querySelector(`#${errorInfo.email.id}`)) {
+
+    if (!validation.email && !emailAlert) {
       emailInput.parentElement.append(renderAlertText("error", errorInfo.email.errorMessage, errorInfo.email.id));
     }
-    if (!validation.comment && !document.querySelector(`#${errorInfo.comment.id}`)) {
+
+    if (!validation.comment && !messageAlert) {
       commentInput.parentElement.append(renderAlertText("error", errorInfo.comment.errorMessage, errorInfo.comment.id));
     }
   }
@@ -313,8 +329,10 @@ const setupCommentForm = () => {
 
   nameInput.addEventListener("input", function (e) {
     const validated = characterValidation(nameInput.value.trim());
-    if (validated && document.querySelector(`#${errorInfo.name.id}`)) {
-      document.querySelector(`#${errorInfo.name.id}`).remove();
+    const alert = document.querySelector(`#${errorInfo.name.id}`);
+
+    if (validated && alert) {
+      alert.remove();
     }
   });
 
@@ -327,9 +345,10 @@ const setupCommentForm = () => {
 
   commentInput.addEventListener("input", function (e) {
     const validated = characterValidation(commentInput.value.trim(), 15);
-    if (validated && document.querySelector(`#${errorInfo.comment.id}`)) {
-      console.log(2);
-      document.querySelector(`#${errorInfo.comment.id}`).remove();
+    const alert = document.querySelector(`#${errorInfo.comment.id}`);
+
+    if (validated && alert) {
+      alert.remove();
     }
   });
 

@@ -2,9 +2,20 @@ import { fetchApi } from "../util/api.js";
 import { renderAlertDialog } from "../components/error.js";
 import { createHTML } from "../util/htmlUtilities.js";
 
-// Hero
 const heroSection = document.querySelector("#home-hero");
 
+const carouselSection = document.querySelector(".carousel-container");
+const carousel = carouselSection.querySelector("#carousel");
+const carouselRightButton = carouselSection.querySelector("#carousel-right");
+const carouselLeftButton = carouselSection.querySelector("#carousel-left");
+const carouselDots = Array.from(carouselSection.querySelectorAll(".dots .dot"));
+
+let carouselWidth = carousel.clientWidth;
+let scrollX = 0;
+let dotCount = 0;
+let sliderIndex = 0;
+
+// Hero
 const renderHomeHero = (hero) => {
   heroSection.innerHTML += hero.content.rendered;
   const content = heroSection.querySelector(".content");
@@ -27,32 +38,23 @@ const createHero = async () => {
 };
 
 // Carousel
-const carousel = document.querySelector("#carousel");
-const carouselRightButton = document.querySelector("#carousel-right");
-const carouselLeftButton = document.querySelector("#carousel-left");
-const carouselSection = document.querySelector(".carousel-container");
-
-let carouselWidth = carousel.clientWidth;
-const dots = Array.from(document.querySelectorAll(".dots .dot"));
-
-let scrollX = 0;
-let dotCount = 0;
-let sliderIndex = 0;
-
-dots[sliderIndex].classList.add("active");
+carouselDots[sliderIndex].classList.add("active");
 
 const renderCard = (post) => {
   const template = document.querySelector("#template_carousel-card");
   const card = template.content.cloneNode(true);
   const titleLink = card.querySelector("h3 a");
+  const excerpt = post.excerpt.rendered.replace("/n", "").replace("<p>", "").replace("</p>", "");
+  const image = card.querySelector("img");
+  const featuredImage = post._embedded["wp:featuredmedia"][0];
+  const categoryName = post._embedded["wp:term"][0][0].name;
+
   titleLink.innerHTML = post.title.rendered;
   titleLink.setAttribute("href", `./article.html?id=${post.id}`);
-  const excerpt = post.excerpt.rendered.replace("/n", "").replace("<p>", "").replace("</p>", "");
   card.querySelector("p").innerHTML = excerpt;
-  const image = card.querySelector("img");
-  image.setAttribute("src", post._embedded["wp:featuredmedia"][0].source_url);
-  image.setAttribute("alt", post._embedded["wp:featuredmedia"][0].alt_text);
-  card.querySelector(".category-item").innerText = post._embedded["wp:term"][0][0].name;
+  image.setAttribute("src", featuredImage.source_url);
+  image.setAttribute("alt", featuredImage.alt_text);
+  card.querySelector(".category-item").innerText = categoryName;
 
   return card;
 };
@@ -60,10 +62,12 @@ const renderCard = (post) => {
 const renderCarousel = async () => {
   try {
     const response = await fetchApi("/wp/v2/posts", "?per_page=12&_embed");
+
     for (const post of response.data) {
       const li = renderCard(post);
       carousel.appendChild(li);
     }
+
     carouselSection.querySelector(".loader").remove();
   } catch (error) {
     console.log(error);
@@ -78,13 +82,13 @@ const setDotCount = () => {
   } else if (!window.matchMedia("(max-width: 55em)").matches) {
     dotCount = 4;
   } else {
-    dotCount = dots.length;
+    dotCount = carouselDots.length;
   }
 };
 
 const updateCarousel = (e) => {
   carouselWidth = carousel.clientWidth;
-  dots[sliderIndex].classList.remove("active");
+  carouselDots[sliderIndex].classList.remove("active");
 
   if (e.target === carouselLeftButton) {
     sliderIndex--;
@@ -109,7 +113,7 @@ const updateCarousel = (e) => {
 
     scrollX += carouselWidth + window.padding;
   } else {
-    dots[sliderIndex].classList.add("active");
+    carouselDots[sliderIndex].classList.add("active");
     return;
   }
 
@@ -124,7 +128,7 @@ const updateCarousel = (e) => {
     behavior: "smooth",
   });
 
-  dots[sliderIndex].classList.add("active");
+  carouselDots[sliderIndex].classList.add("active");
 };
 
 const setupCarousel = async () => {
@@ -134,8 +138,8 @@ const setupCarousel = async () => {
   setDotCount();
 
   const cardWidth = carousel.querySelector("li").clientWidth;
-  const visibleCards = Math.floor(carouselWidth / cardWidth);
-  window.padding = (carouselWidth - cardWidth * visibleCards) / (visibleCards - 1);
+  const cardsInView = Math.floor(carouselWidth / cardWidth);
+  window.padding = (carouselWidth - cardWidth * cardsInView) / (cardsInView - 1);
 
   carouselLeftButton.addEventListener("click", updateCarousel);
   carouselRightButton.addEventListener("click", updateCarousel);
@@ -152,9 +156,9 @@ const setupCarousel = async () => {
 
       if (width !== carouselWidth) {
         setDotCount();
-        dots[sliderIndex].classList.remove("active");
+        carouselDots[sliderIndex].classList.remove("active");
         sliderIndex = 0;
-        dots[sliderIndex].classList.add("active");
+        carouselDots[sliderIndex].classList.add("active");
         scrollX = 0;
 
         carousel.scroll({
@@ -174,16 +178,15 @@ const renderFeaturedHtml = (post) => {
   const template = document.querySelector("#template_featured");
   const featured = template.content.cloneNode(true);
   const title = featured.querySelector("h2");
+  const excerpt = post.excerpt.rendered.replace("/n", "").replace("<p>", "").replace("</p>", "");
+  const featuredImage = post._embedded["wp:featuredmedia"][0];
+  const image = featured.querySelector("img");
+
   title.innerHTML = post.title.rendered;
   featured.querySelector(".btn").setAttribute("href", `./article.html?id=${post.id}`);
-  const excerpt = post.excerpt.rendered.replace("/n", "").replace("<p>", "").replace("</p>", "");
   featured.querySelector("p").innerHTML = excerpt;
-
-  const imageUrl = post._embedded["wp:featuredmedia"][0].source_url;
-  const imageAlt = post._embedded["wp:featuredmedia"][0].alt_text;
-  const image = featured.querySelector("img");
-  image.setAttribute("src", imageUrl);
-  image.setAttribute("alt", imageAlt);
+  image.setAttribute("src", featuredImage.source_url);
+  image.setAttribute("alt", featuredImage.alt_text);
 
   return featured;
 };
@@ -209,19 +212,22 @@ const renderPopularCard = (index, post) => {
   const template = document.querySelector("#template_popular-card");
   const card = template.content.cloneNode(true);
   const titleLink = card.querySelector("h3 a");
+  const excerpt = post.excerpt.rendered.replace("/n", "").replace("<p>", "").replace("</p>", "");
+
   titleLink.innerHTML = post.title.rendered;
   titleLink.setAttribute("href", `./article.html?id=${post.id}`);
-  const excerpt = post.excerpt.rendered.replace("/n", "").replace("<p>", "").replace("</p>", "");
   card.querySelector("p").innerHTML = excerpt;
 
   if (index === 0) {
+    const featuredImage = post._embedded["wp:featuredmedia"][0];
+
     const li = card.querySelector("li");
     li.classList.remove("flow-content");
     li.classList.add("flex", "flex--col");
-    const imageUrl = post._embedded["wp:featuredmedia"][0].source_url;
-    const imageAlt = post._embedded["wp:featuredmedia"][0].alt_text;
+
     const imageContainer = createHTML("div", "image");
-    const image = createHTML("img", null, null, { src: imageUrl, alt: imageAlt });
+    const image = createHTML("img", null, null, { src: featuredImage.source_url, alt: featuredImage.alt_text });
+
     imageContainer.append(image);
     li.appendChild(imageContainer);
   }
@@ -235,6 +241,7 @@ const renderPopularSection = async () => {
   try {
     const response = await fetchApi("/wordpress-popular-posts/v1/popular-posts", "?limit=4&range=all&_embed");
     document.querySelector(".popular-posts .loader").remove();
+
     for (const [index, post] of response.data.entries()) {
       popularContainer.appendChild(renderPopularCard(index, post));
     }
