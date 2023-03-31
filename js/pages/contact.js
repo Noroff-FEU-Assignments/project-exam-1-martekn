@@ -1,6 +1,8 @@
+import { fetchApi } from "../util/api.js";
 import { emailValidation, characterValidation, setupEmailEventListener, validationError } from "../util/validation.js";
-const button = document.querySelector("#submit-btn");
+import { renderAlertDialog } from "../components/error.js";
 const form = document.querySelector("form");
+const firstFormElem = form.querySelector(":first-child");
 const nameInput = document.querySelector("#name");
 const emailInput = document.querySelector("#email");
 const subjectInput = document.querySelector("#subject");
@@ -32,12 +34,33 @@ const renderSuccessMessage = () => {
   return success;
 };
 
-const submitForm = () => {
-  // Send data to wordpress api
-  form.reset();
-  form.remove();
+const submitForm = async (e) => {
+  const requestBody = new FormData(e.target);
+  const errorMessage = "Comment did not send, something happened on our end. Please try again";
+  const fetchInit = {
+    method: "POST",
+    body: requestBody,
+  };
 
-  document.querySelector("#main-content").append(renderSuccessMessage());
+  if (document.querySelector("#message-alert")) {
+    document.querySelector("#message-alert").remove();
+  }
+
+  try {
+    const response = await fetchApi("/contact-form-7/v1/contact-forms/166/feedback", null, fetchInit);
+    if (response.ok) {
+      form.reset();
+      form.remove();
+
+      document.querySelector("#main-content").append(renderSuccessMessage());
+    } else {
+      console.log("error", response);
+      firstFormElem.after(renderAlertDialog("error", errorMessage, "message-alert"));
+    }
+  } catch (error) {
+    console.log(error);
+    firstFormElem.after(renderAlertDialog("error", errorMessage, "message-alert"));
+  }
 };
 
 const validateForm = (e) => {
@@ -50,7 +73,7 @@ const validateForm = (e) => {
   };
 
   if (validation.name && validation.email && validation.subject && validation.message) {
-    submitForm();
+    submitForm(e);
   } else {
     validationError(nameInput, validation.name, errorInfo.name.id, errorInfo.name.errorMessage);
 
@@ -65,7 +88,7 @@ const validateForm = (e) => {
 export const setupContact = () => {
   form.reset();
   setupEmailEventListener(emailInput, errorInfo.email.id, errorInfo.email.errorMessage);
-  button.addEventListener("click", validateForm);
+  form.addEventListener("submit", validateForm);
 
   nameInput.addEventListener("focusout", function (e) {
     const validated = characterValidation(nameInput.value.trim(), 5);
