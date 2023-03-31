@@ -1,6 +1,6 @@
 import { fetchApi } from "../util/api.js";
 import { renderAlertDialog } from "../components/error.js";
-import { createHTML } from "../util/htmlUtilities.js";
+import { createHTML, decodeHTML } from "../util/htmlUtilities.js";
 import { setupModalTrapFocus } from "../util/focus-trap.js";
 import { renderAlertText } from "../components/error.js";
 import { emailValidation, characterValidation, setupEmailEventListener, validationError } from "../util/validation.js";
@@ -143,10 +143,11 @@ const setupModal = (article) => {
 const renderArticle = async () => {
   try {
     const response = await fetchApi(`/wp/v2/posts/${articleId}`, "?_embed");
-    const articleResponse = response.data;
+    const post = response.data;
+    const title = decodeHTML(post.title.rendered);
+    document.title = `${title} | Travella`;
 
-    document.title = `${articleResponse.title.rendered} | Travella`;
-    const excerpt = articleResponse.excerpt.rendered.replace("<p>", "").replace("</p>", "").replace("/n", "");
+    const excerpt = decodeHTML(post.excerpt.rendered.replace("<p>", "").replace("</p>", ""));
     document.querySelector("meta[name='description']").setAttribute("content", excerpt);
 
     const template = document.querySelector("#template_article");
@@ -154,15 +155,15 @@ const renderArticle = async () => {
 
     const featuredImage = article.querySelector("header img");
     const category = article.querySelector("#category");
-    const imageInfo = articleResponse._embedded["wp:featuredmedia"][0];
+    const imageInfo = post._embedded["wp:featuredmedia"][0];
 
-    category.innerText = articleResponse._embedded["wp:term"][0][0].name;
+    category.innerText = post._embedded["wp:term"][0][0].name;
     featuredImage.setAttribute("src", imageInfo.source_url);
     featuredImage.setAttribute("alt", imageInfo.alt_text);
-    article.querySelector("header h1").innerHTML = articleResponse.title.rendered;
-    article.querySelector(".article-content").innerHTML = articleResponse.content.rendered;
+    article.querySelector("header h1").innerText = title;
+    article.querySelector(".article-content").innerHTML = post.content.rendered;
 
-    article.querySelector("#date").innerText = setDate(articleResponse.date);
+    article.querySelector("#date").innerText = setDate(post.date);
 
     setupModal(article);
 
@@ -204,7 +205,7 @@ const loadComments = async (e) => {
 const renderComment = (comment) => {
   const template = document.querySelector("#template_comment");
   const commentElem = template.content.cloneNode(true);
-  commentElem.querySelector("h3").innerText = comment.author_name;
+  commentElem.querySelector("h3").innerText = decodeHTML(comment.author_name);
   commentElem.querySelector("#content").innerHTML = comment.content.rendered;
   commentElem.querySelector("#time").innerText = setDate(comment.date);
   return commentElem;
