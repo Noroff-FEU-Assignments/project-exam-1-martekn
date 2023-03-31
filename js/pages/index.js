@@ -1,4 +1,5 @@
 import { fetchApi } from "../util/api.js";
+import { renderAlertDialog } from "../components/error.js";
 import { createHTML } from "../util/htmlUtilities.js";
 
 // Hero
@@ -20,6 +21,8 @@ const createHero = async () => {
     heroSection.querySelector(".loader").remove();
   } catch (error) {
     console.log(error);
+    heroSection.innerHTML = "";
+    heroSection.append(renderAlertDialog("alert", "Oops, content failed to load. Please try again later"));
   }
 };
 
@@ -27,6 +30,7 @@ const createHero = async () => {
 const carousel = document.querySelector("#carousel");
 const carouselRightButton = document.querySelector("#carousel-right");
 const carouselLeftButton = document.querySelector("#carousel-left");
+const carouselSection = document.querySelector(".carousel-container");
 
 let carouselWidth = carousel.clientWidth;
 const dots = Array.from(document.querySelectorAll(".dots .dot"));
@@ -60,9 +64,11 @@ const renderCarousel = async () => {
       const li = renderCard(post);
       carousel.appendChild(li);
     }
-    document.querySelector(".carousel-container .loader").remove();
+    carouselSection.querySelector(".loader").remove();
   } catch (error) {
     console.log(error);
+    carouselSection.innerHTML = "";
+    carouselSection.append(renderAlertDialog("alert", "Oops, latest posts failed to load. Please try again later"));
   }
 };
 
@@ -183,13 +189,18 @@ const renderFeaturedHtml = (post) => {
 };
 
 const renderFeatured = async () => {
+  const featuredContainer = document.querySelector("#featured-section");
+
   try {
-    const featuredContainer = document.querySelector("#featured-section");
     const response = await fetchApi("/wp/v2/posts", "?tags=5&_embed");
     featuredContainer.querySelector(".loader").remove();
     featuredContainer.appendChild(renderFeaturedHtml(response.data[0]));
   } catch (error) {
     console.log(error);
+    featuredContainer.innerHTML = "";
+    featuredContainer.append(
+      renderAlertDialog("alert", "Oops, featured content failed to load. Please try again later")
+    );
   }
 };
 
@@ -219,8 +230,9 @@ const renderPopularCard = (index, post) => {
 };
 
 const renderPopularSection = async () => {
+  const popularContainer = document.querySelector("#popular-container");
+
   try {
-    const popularContainer = document.querySelector("#popular-container");
     const response = await fetchApi("/wordpress-popular-posts/v1/popular-posts", "?limit=4&range=all&_embed");
     document.querySelector(".popular-posts .loader").remove();
     for (const [index, post] of response.data.entries()) {
@@ -228,6 +240,9 @@ const renderPopularSection = async () => {
     }
   } catch (error) {
     console.log(error);
+    const popularSection = document.querySelector("#popular-posts");
+    popularSection.innerHTML = "";
+    popularSection.append(renderAlertDialog("alert", "Oops, popular posts failed to load. Please try again later"));
   }
 };
 

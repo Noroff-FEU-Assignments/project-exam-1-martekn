@@ -4,7 +4,8 @@ import { renderAlertDialog } from "../components/error.js";
 
 const seeMoreButton = document.querySelector("#see-more");
 const postsUl = document.querySelector("#posts");
-const articlesLoader = document.querySelector("#posts-container .loader");
+const articlesContainer = document.querySelector("#posts-container");
+const articlesLoader = articlesContainer.querySelector(".loader");
 let postsPage = 1;
 let categoryId;
 
@@ -34,6 +35,8 @@ const loadPosts = async () => {
     }
   } catch (error) {
     console.log(error);
+    articlesContainer.innerHTML = "";
+    articlesContainer.append(renderAlertDialog("alert", "Oops, content failed to load. Please try again later"));
   }
 };
 
@@ -85,6 +88,8 @@ const setupPosts = async () => {
     }
   } catch (error) {
     console.log(error);
+    articlesContainer.innerHTML = "";
+    articlesContainer.append(renderAlertDialog("alert", "Oops, content failed to load. Please try again later"));
   }
 };
 
@@ -136,9 +141,10 @@ const renderCategories = (categories) => {
 };
 
 const setupCategories = async () => {
+  const container = document.querySelector("#category-container");
   try {
     const response = await fetchApi("/wp/v2/categories");
-    const container = document.querySelector("#category-container");
+
     if (response.data.length === 0) {
       container.remove();
     } else {
@@ -147,6 +153,7 @@ const setupCategories = async () => {
     }
   } catch (error) {
     console.log(error);
+    container.innerHTML = "";
   }
 };
 

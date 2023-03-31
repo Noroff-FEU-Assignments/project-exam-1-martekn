@@ -7,6 +7,7 @@ import { emailValidation, characterValidation, setupEmailEventListener, validati
 
 const articleId = new URLSearchParams(window.location.search).get("id");
 const main = document.querySelector("#main-content");
+const commentSection = document.querySelector("#comments-section");
 const container = document.querySelector("#comments-container");
 const commentsUl = document.querySelector("#comments-ul");
 const commentsLoader = container.querySelector(".loader");
@@ -138,6 +139,8 @@ const renderArticle = async () => {
     const response = await fetchApi(`/wp/v2/posts/${articleId}`, "?_embed");
     const articleResponse = response.data;
 
+    console.log(articleResponse);
+
     document.title = `${articleResponse.title.rendered} | Travella`;
     const excerpt = articleResponse.excerpt.rendered.replace("<p>", "").replace("</p>", "").replace("/n", "");
     document.querySelector("meta[name='description']").setAttribute("content", excerpt);
@@ -163,6 +166,8 @@ const renderArticle = async () => {
     main.prepend(article);
   } catch (error) {
     console.log(error);
+    main.innerHTML = "";
+    main.append(renderAlertDialog("alert", "Oops, content failed to load. Please try again later"));
   }
 };
 
@@ -178,6 +183,8 @@ const loadComments = async (e) => {
     }
   } catch (error) {
     console.log(error);
+    e.target.remove();
+    commentsUl.append(renderAlertDialog("alert", "Oops, content failed to load. Please try again later"));
   }
 };
 
@@ -208,7 +215,6 @@ const fetchComments = async () => {
     const commentCount = response.parsedHeader["x-wp-total"];
     commentsLoader.classList.add("hidden");
     renderComments(response.data, container);
-
     if (commentCount > 10) {
       const button = createHTML("button", ["btn", "btn--primary"], "See more");
       button.addEventListener("click", loadComments);
@@ -217,6 +223,8 @@ const fetchComments = async () => {
     document.querySelector("#comment-count").innerText = `( ${commentCount} )`;
   } catch (error) {
     console.log(error);
+    commentSection.innerHTML = "";
+    commentSection.append(renderAlertDialog("alert", "Oops, comments failed to load. Please try again later"));
   }
 };
 
@@ -249,11 +257,11 @@ const submitComment = async (e) => {
 
       commentsUl.prepend(renderComment(response.data));
     } else {
-      if (!response.message) {
+      if (!response.data.message) {
         response.message = "Comment did not send, something happened on our end. Please try again";
       }
-      console.log("error", response.message);
-      firstFormElem.after(renderAlertDialog("error", response.message, "comment-alert"));
+      console.log("error", response.data.message);
+      firstFormElem.after(renderAlertDialog("error", response.data.message, "comment-alert"));
     }
   } catch (error) {
     console.log(error);

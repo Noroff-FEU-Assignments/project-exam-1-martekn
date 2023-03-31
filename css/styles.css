@@ -121,6 +121,11 @@ main {
   border-radius: var(--border-radius);
 }
 
+.featured-post .alert {
+  width: min(var(--max-width), 100% - (var(--screen-edge) * 2));
+  margin-inline: auto;
+}
+
 /* 3.3. Popular posts
 -------------------------*/
 .popular-posts ol {
@@ -467,6 +472,12 @@ main {
 .page-article img:focus-visible {
   outline: 3px solid var(--clr-neutral-200);
   box-shadow: 0 0 0 6px var(--clr-neutral-600);
+}
+
+.page-article > .alert,
+.page-article .comments-section > .alert {
+  width: min(var(--max-width), 100% - (var(--screen-edge)));
+  margin-inline: auto;
 }
 
 /* 7.1. Article
