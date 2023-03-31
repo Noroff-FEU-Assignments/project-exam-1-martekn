@@ -1,6 +1,4 @@
 const baseUrl = "https://martekn.com/noroff/travella/wp-json";
-const consumerKey = "";
-const consumerSecret = "";
 
 /**
  * Fetches from the api based on arguments
@@ -16,9 +14,7 @@ export const fetchApi = async (endpoint, query, init) => {
     url += endpoint;
   }
   if (query) {
-    url += `${query}&${consumerKey}&${consumerSecret}`;
-  } else {
-    url += `?${consumerKey}&${consumerSecret}`;
+    url += query;
   }
 
   if (init) {
