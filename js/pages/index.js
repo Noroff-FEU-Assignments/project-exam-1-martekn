@@ -239,7 +239,11 @@ const renderPopularSection = async () => {
   const popularContainer = document.querySelector("#popular-container");
 
   try {
-    const response = await fetchApi("/wordpress-popular-posts/v1/popular-posts", "?limit=4&range=all&_embed");
+    const response = await fetchApi(
+      "/wp_query/args/",
+      "?meta_key=views&orderby=meta_value_num&post_type=post&posts_per_page=4&_embed"
+    );
+
     document.querySelector(".popular-posts .loader").remove();
 
     for (const [index, post] of response.data.entries()) {

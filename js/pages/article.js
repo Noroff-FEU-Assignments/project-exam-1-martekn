@@ -356,8 +356,14 @@ const setupCommentForm = () => {
   submitButton.addEventListener("click", validateComment);
 };
 
+const updateViewCount = async () => {
+  const response = await fetchApi(`/base/views/${articleId}`);
+  console.log(response);
+};
+
 export const setupArticle = () => {
   renderArticle();
   fetchComments();
   setupCommentForm();
+  updateViewCount();
 };
