@@ -45,3 +45,15 @@ export const createHTML = (tag, classes, text, attributes) => {
 
   return elem;
 };
+
+/**
+ * Parse html string through DOMParser and return the body element
+ * @param {String} htmlString
+ * @returns Body element
+ */
+export const parseHTML = (htmlString) => {
+  const parser = new DOMParser();
+  const content = parser.parseFromString(htmlString, "text/html");
+
+  return content.body;
+};
