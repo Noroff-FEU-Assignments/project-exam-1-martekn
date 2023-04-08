@@ -117,7 +117,7 @@ footer .logo {
   border-left-color: transparent;
   border-bottom-color: transparent;
   height: 0.5rem;
-  aspect-ratio: 1 / 1;
+  width: 0.5rem;
   transform: rotate(45deg);
   border-radius: var(--border-radius);
 }
@@ -296,6 +296,7 @@ footer .logo {
   position: relative;
   margin: 100px auto;
   height: 60px;
+  width: 60px;
   border-color: var(--clr-neutral-600);
   animation: spinner 3s linear infinite;
 }
@@ -311,12 +312,14 @@ footer .logo {
 
 .loader::after {
   height: calc(100% - 10px);
+  width: calc(100% - 10px);
   border-color: var(--clr-primary-400);
   animation: spinner 2s ease-in-out infinite;
 }
 
 .loader::before {
   height: calc(100% - 25px);
+  width: calc(100% - 25px);
   border-color: var(--clr-neutral-600);
   animation: spinner 1s linear infinite;
 }
@@ -327,7 +330,6 @@ footer .logo {
   border-width: 2px;
   border-style: solid;
   border-radius: 50%;
-  aspect-ratio: 1 / 1;
   border-top-color: transparent;
   border-right-color: transparent;
 }
@@ -391,8 +393,8 @@ footer .logo {
 .icon {
   display: grid;
   place-items: center;
-  min-height: 44px;
-  aspect-ratio: 1 / 1;
+  min-height: 2.75rem;
+  min-width: 2.75rem;
   border-radius: var(--border-radius);
   border: none;
   background-color: var(--bg-icon, var(--clr-neutral-600));
@@ -514,15 +516,15 @@ label,
 .card a {
   color: inherit;
   padding-bottom: 0.3rem;
-  text-decoration: underline solid var(--clr-primary-400) 2px;
-  text-underline-offset: 0.35rem;
-  text-decoration-color: transparent;
-  transition: text-decoration-color 0.15s ease-in-out;
 }
 
 .card a:hover,
 .card a:focus-visible {
   color: var(--clr-neutral-500);
+
+  text-decoration-line: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.35rem;
   text-decoration-color: var(--clr-primary-400);
   -webkit-text-decoration-color: var(--clr-primary-400);
   -moz-text-decoration-color: var(--clr-primary-400);
@@ -794,7 +796,7 @@ label,
     border-left-color: transparent;
     border-bottom-color: transparent;
     height: 0.8rem;
-    aspect-ratio: 1 / 1;
+    width: 0.8rem;
     border-radius: var(--border-radius);
   }
 
