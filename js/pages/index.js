@@ -1,6 +1,6 @@
 import { fetchApi } from "../util/api.js";
 import { renderAlertDialog } from "../components/error.js";
-import { createHTML, decodeHTML } from "../util/htmlUtilities.js";
+import { appendArray, createHTML, decodeHTML, parseHTML } from "../util/htmlUtilities.js";
 
 const heroSection = document.querySelector("#home-hero");
 
@@ -17,10 +17,12 @@ let sliderIndex = 0;
 
 // Hero
 const renderHomeHero = (hero) => {
-  heroSection.innerHTML += hero.content.rendered;
-  const content = heroSection.querySelector(".content");
+  const heroContent = parseHTML(hero.content.rendered);
+  const content = heroContent.querySelector(".content");
   const btn = createHTML("a", ["btn", "btn--primary"], "Read more", { href: "./about.html" });
   const btnHidden = createHTML("span", "visually-hidden", "about travella");
+
+  appendArray(heroContent.childNodes, heroSection);
   btn.appendChild(btnHidden);
   content.appendChild(btn);
 };

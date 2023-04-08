@@ -1,6 +1,6 @@
 import { fetchApi } from "../util/api.js";
 import { renderAlertDialog } from "../components/error.js";
-import { createHTML, decodeHTML } from "../util/htmlUtilities.js";
+import { createHTML, decodeHTML, parseHTML, appendArray } from "../util/htmlUtilities.js";
 import { setupModalTrapFocus } from "../util/focus-trap.js";
 import { renderAlertText } from "../components/error.js";
 import { emailValidation, characterValidation, setupEmailEventListener, validationError } from "../util/validation.js";
@@ -119,12 +119,7 @@ const closeModal = () => {
   openedElement.removeAttribute("id");
 };
 
-const setupModal = (article) => {
-  const featuredImage = article.querySelector("header img");
-  featuredImage.setAttribute("tabindex", 0);
-  featuredImage.addEventListener("click", openModal);
-  featuredImage.addEventListener("keydown", openModal);
-  const images = Array.from(article.querySelectorAll(".article-content img"));
+const setupModal = (images) => {
   for (const image of images) {
     image.setAttribute("tabindex", 0);
     image.addEventListener("click", openModal);
@@ -157,15 +152,22 @@ const renderArticle = async () => {
     const category = article.querySelector("#category");
     const imageInfo = post._embedded["wp:featuredmedia"][0];
 
+    const postContent = parseHTML(post.content.rendered);
+    const images = Array.from(postContent.querySelectorAll("img"));
+    images.push(article.querySelector("header img"));
+
+    console.log(postContent);
+
     category.innerText = post._embedded["wp:term"][0][0].name;
     featuredImage.setAttribute("src", imageInfo.source_url);
     featuredImage.setAttribute("alt", imageInfo.alt_text);
     article.querySelector("header h1").innerText = title;
-    article.querySelector(".article-content").innerHTML = post.content.rendered;
+
+    appendArray(postContent.childNodes, article.querySelector(".article-content"));
 
     article.querySelector("#date").innerText = setDate(post.date);
 
-    setupModal(article);
+    setupModal(images);
 
     main.querySelector(".loader").remove();
     main.prepend(article);
@@ -205,9 +207,12 @@ const loadComments = async (e) => {
 const renderComment = (comment) => {
   const template = document.querySelector("#template_comment");
   const commentElem = template.content.cloneNode(true);
+  const content = parseHTML(comment.content.rendered);
+
   commentElem.querySelector("h3").innerText = decodeHTML(comment.author_name);
-  commentElem.querySelector("#content").innerHTML = comment.content.rendered;
   commentElem.querySelector("#time").innerText = setDate(comment.date);
+  appendArray(content.childNodes, commentElem.querySelector("#content"));
+
   return commentElem;
 };
 
