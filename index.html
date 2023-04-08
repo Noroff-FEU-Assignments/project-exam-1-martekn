@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Travella</title>
+    <meta
+      name="description"
+      content="Here at Travella you can find information and inspiration for your next travels. I write reviews, share tips, tricks and experiences with you on my blog."
+    />
+
+    <!-- Remix icon -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Vollkorn:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Css -->
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <a href="#main-content" class="skip-nav">Skip to content</a>
+    <div class="min-full-height">
+      <header class="primary-header container flex">
+        <a href="./index.html" class="logo">Travella</a>
+        <button id="nav-open" class="btn--nav" aria-controls="primary-nav" aria-expanded="false" aria-haspopup="true">
+          <i class="ri-menu-line" aria-hidden="true"></i>
+          <span class="visually-hidden">Open menu</span>
+        </button>
+
+        <nav
+          id="primary-nav"
+          class="primary-nav flex"
+          data-visible="false"
+          tabindex="-1"
+          role="dialog"
+          aria-modal="true"
+        >
+          <button id="nav-close" class="btn--nav" aria-controls="primary-nav" aria-expanded="true">
+            <i class="ri-close-line"></i>
+            <span class="visually-hidden">Close menu</span>
+          </button>
+          <ul class="flex">
+            <li><a href="./index.html" class="active" aria-current="page">Home</a></li>
+            <li><a href="./articles.html">Articles</a></li>
+            <li><a href="./about.html">About</a></li>
+            <li><a href="./contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <main id="main-content" class="page-home grid">
+        <section id="home-hero" class="hero hero--left-img bg--accent grid">
+          <div class="loader"></div>
+        </section>
+        <section class="carousel-container grid container">
+          <div class="header flex">
+            <h2>Latest post</h2>
+            <button id="carousel-left" class="icon icon--secondary control control--left">
+              <span class="visually-hidden">Slide left</span>
+            </button>
+            <button id="carousel-right" class="icon icon--secondary control control--right">
+              <span class="visually-hidden">Slide right</span>
+            </button>
+            <div class="dots flex">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
+          </div>
+          <div class="loader"></div>
+          <ul id="carousel" class="carousel flex"></ul>
+        </section>
+        <section id="featured-section" class="featured-post bg--dark">
+          <div class="loader"></div>
+        </section>
+        <section id="popular-posts" class="popular-posts container">
+          <h2>Popular posts</h2>
+          <div class="loader"></div>
+          <ol id="popular-container" class="popular-list grid"></ol>
+        </section>
+        <section class="bg--accent">
+          <div class="ig-container flex flex--col container">
+            <div class="content grid bg--dark">
+              <h2>Follow me on instagram</h2>
+              <a href="#">@Travella</a>
+            </div>
+            <ul class="images flex flex--col">
+              <li>
+                <img src="./assets/ig-1.jpg" alt="the Eiffel Tower" />
+              </li>
+              <li>
+                <img src="./assets/ig-2.jpg" alt="A sign on the road saying 'follow that dream'" />
+              </li>
+              <li>
+                <img src="./assets/ig-3.jpg" alt="Seating area with tables" />
+              </li>
+            </ul>
+          </div>
+        </section>
+      </main>
+    </div>
+    <footer class="primary-footer bg--dark">
+      <div class="top-bar flex container">
+        <a href="./index.html" class="logo">Travella</a>
+        <ul class="socials flex">
+          <li>
+            <a href="#" class="icon"
+              ><i class="ri-instagram-fill" aria-hidden="true"></i><span class="visually-hidden">Instagram</span></a
+            >
+          </li>
+          <li>
+            <a href="#" class="icon"
+              ><i class="ri-facebook-fill" aria-hidden="true"></i><span class="visually-hidden">Facebook</span></a
+            >
+          </li>
+          <li>
+            <a href="#" class="icon"
+              ><i class="ri-twitter-fill" aria-hidden="true"></i><span class="visually-hidden">Twitter</span></a
+            >
+          </li>
+        </ul>
+      </div>
+      <form action="post" class="grid grid--even-col2 container">
+        <h2>Subscribe to our newsletter</h2>
+        <p>
+          Get extra tips, tricks and updates delivered right to your email. We will also notify you about new posts on
+          the blog.
+        </p>
+        <div class="grid">
+          <label for="sub-email">Email</label>
+
+          <input type="text" id="sub-email" />
+          <button class="btn btn--secondary">Subscribe</button>
+        </div>
+      </form>
+      <div class="container">
+        <i class="ri-copyright-line" aria-hidden="true"></i><span class="visually-hidden">Copyright </span>2023 Marte
+        Møllen Knutsen
+      </div>
+    </footer>
+
+    <!-- Templates -->
+    <template id="template_carousel-card">
+      <li class="card card--small grid">
+        <div class="content flex flex--col">
+          <h3><a href="" class="ellipse-text"></a></h3>
+          <p class="ellipse-text"></p>
+        </div>
+        <div class="image">
+          <div class="category-item"></div>
+          <img src="" alt="" />
+        </div>
+      </li>
+    </template>
+
+    <template id="template_featured">
+      <div class="container flex">
+        <div class="content flex flex--col">
+          <h2 class="text-600"></h2>
+          <p class="text-450"></p>
+          <a href="" class="btn btn--secondary">Read more</a>
+        </div>
+        <div class="image">
+          <img src="" alt="" />
+        </div>
+      </div>
+    </template>
+
+    <template id="template_popular-card">
+      <li class="card flow-content">
+        <h3><a href=""></a></h3>
+        <p class="ellipse-text"></p>
+      </li>
+    </template>
+
+    <!-- Js -->
+    <script src="./js/app.js" type="module"></script>
+    <script type="module">
+      import { setupIndex } from "./js/pages/index.js";
+      setupIndex();
+    </script>
+  </body>
+</html>

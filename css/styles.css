@@ -1,0 +1,673 @@
+/* Table of contents
+--------------------------------------------------
+    1. Imports
+    2. General
+    3. Homepage
+      3.1. Hero
+      3.2. Featured post
+      3.3. Popular posts
+      3.4. Instagram section
+      3.5. Media queries
+        3.5.1 Featured post
+        3.5.2 Popular posts
+        3.5.3 Instagram section
+    4. About page
+      4.1. Media queries
+    5. Contact page
+      5.1. Media queries
+    6. Articles page
+      6.1. Media queries
+    7. Article specific page
+      7.1. Article
+      7.2. Modal
+      7.3. Comments
+      7.4. Media queries
+*/
+
+/** 1. Imports
+-------------------------*/
+/* #region */
+@import url(./variables.css);
+@import url(./animations.css);
+@import url(./reset.css);
+@import url(./typography.css);
+@import url(./utility.css);
+@import url(./components.css);
+/* #endregion */
+
+/** 2. General
+-------------------------*/
+/* #region */
+body {
+  background-color: var(--clr-neutral-200);
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+.min-full-height {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+main {
+  flex: 1;
+}
+
+.image {
+  position: relative;
+}
+
+/* 2.1. Media queries
+-------------------------*/
+@media (min-width: 170em) {
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .min-full-height {
+    min-height: unset;
+    flex: 1;
+  }
+}
+
+/* #endregion */
+
+/** 3. Homepage
+-------------------------*/
+/* #region */
+.page-home {
+  gap: var(--space-900);
+}
+
+/* 3.1. hero
+-------------------------*/
+.page-home .hero a {
+  margin-top: var(--space-600);
+}
+
+/* 3.2. Featured post
+-------------------------*/
+.featured-post {
+  padding-block: var(--space-900);
+}
+
+.featured-post > div {
+  gap: var(--space-600);
+  flex-wrap: wrap-reverse;
+}
+.featured-post > div > * {
+  flex: 1 0 min(20rem, 100%);
+}
+
+.featured-post .content {
+  justify-content: center;
+  --gap: var(--space-400);
+}
+
+.featured-post .content h2 {
+  color: var(--clr-primary-400);
+}
+
+.featured-post .content a {
+  margin-top: calc(var(--space-600) - var(--gap));
+  align-self: flex-start;
+}
+
+.featured-post img {
+  height: 500px;
+  border-radius: var(--border-radius);
+}
+
+.featured-post .alert {
+  width: min(var(--max-width), 100% - (var(--screen-edge) * 2));
+  margin-inline: auto;
+}
+
+/* 3.3. Popular posts
+-------------------------*/
+.popular-posts ol {
+  margin-top: var(--space-450);
+  --gap: var(--space-500);
+}
+
+.popular-posts .card {
+  --flow-space: var(--space-400);
+}
+
+.popular-posts .card:first-of-type {
+  font-size: var(--fs-450);
+  gap: var(--space-400);
+}
+
+.popular-posts .card:first-of-type .image {
+  order: -1;
+  flex: 1;
+  position: relative;
+  flex-basis: 200px;
+}
+
+.popular-posts .card:first-of-type img {
+  border-radius: var(--border-radius);
+  position: absolute;
+  inset: 0;
+}
+
+.popular-posts .card:first-of-type h3 {
+  margin-top: calc(var(--space-500) - var(--space-400));
+  font-size: var(--fs-500);
+}
+
+.popular-posts .card + .card {
+  border-top: 1px solid var(--clr-primary-400);
+  padding-top: var(--gap);
+}
+
+.popular-posts p {
+  --lines: 2;
+  color: var(--clr-neutral-500);
+}
+
+/* 3.4. Instagram section
+-------------------------*/
+.ig-container {
+  padding-block: var(--space-900);
+  --gap: 0;
+}
+
+.ig-container .content {
+  padding: var(--space-600) var(--space-450);
+  --gap: var(--space-400);
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.ig-container h2 {
+  align-self: end;
+}
+
+.ig-container a {
+  color: inherit;
+  align-self: start;
+  justify-self: start;
+  font-size: var(--fs-500);
+  box-shadow: 0 2px 0 0 var(--clr-primary-400);
+
+  transition: color 0.1s ease-in-out;
+}
+.ig-container a:hover,
+.ig-container a:focus-visible {
+  color: var(--clr-primary-400);
+}
+
+.ig-container a:focus-visible {
+  outline: 4px solid var(--clr-neutral-600);
+  box-shadow: 0 0 0 6px var(--clr-primary-400);
+  border-radius: var(--border-radius);
+}
+
+.ig-container .images li {
+  flex-basis: 100%;
+  position: relative;
+  min-height: 250px;
+}
+
+.ig-container img {
+  position: absolute;
+}
+
+.ig-container li:last-of-type img {
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+}
+
+/* 3.5. Media queries
+-------------------------*/
+@media (min-width: 35em) {
+  .ig-container .images {
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 50em) {
+  .page-home {
+    gap: var(--space-1000);
+  }
+
+  /* 3.5.1 Featured post */
+  .featured-post {
+    padding-block: var(--space-1000);
+  }
+
+  .featured-post > div {
+    gap: var(--space-700);
+  }
+
+  .featured-post img {
+    height: 600px;
+  }
+
+  /* 3.5.2 Popular posts */
+  .popular-posts ol {
+    margin-top: var(--space-500);
+    grid-template-columns: 1fr 1fr;
+    column-gap: 0;
+    grid-template-rows: calc(1fr - var(--gap)) 1fr calc(1fr - var(--gap));
+  }
+
+  .popular-posts .card {
+    margin-left: var(--gap);
+  }
+
+  .popular-posts .card:first-of-type {
+    margin-left: 0;
+    grid-row: 1 / 4;
+    border-right: 1px solid var(--clr-primary-400);
+    padding-right: var(--gap);
+  }
+
+  .popular-posts .card:first-of-type .image {
+    flex-basis: auto;
+  }
+
+  .popular-posts .card:nth-of-type(2) {
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .popular-posts .card:last-of-type {
+    padding-bottom: 0;
+  }
+
+  /* 3.5.3 Instagram section */
+  .ig-container {
+    padding-block: var(--space-1000);
+    --gap: 0;
+  }
+
+  .ig-container .content {
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+  }
+
+  .ig-container {
+    flex-direction: row;
+  }
+
+  .ig-container .images {
+    width: 100%;
+  }
+
+  .ig-container li:last-of-type img {
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  }
+}
+
+/* #endregion */
+
+/** 4. About page
+-------------------------*/
+/* #region */
+
+.page-about {
+  gap: var(--space-900);
+}
+
+/* 4.1. Hero
+-------------------------*/
+.page-about .hero .content {
+  font-size: var(--fs-450);
+}
+
+.page-about .hero .content p {
+  --flow-space: var(--space-400);
+}
+
+.page-about .hero .content p:first-of-type {
+  margin-top: 0;
+}
+
+/* 4.1. Contact section
+-------------------------*/
+.contact-me {
+  --gap: var(--space-500) var(--space-900);
+  grid-template-columns: repeat(auto-fit, minmax(min(30ch, 100%), 1fr));
+}
+
+.contact-me .btn {
+  margin-top: var(--space-500);
+}
+
+.page-about ul {
+  --gap: var(--space-300);
+}
+
+/* 4.1. Media queries
+-------------------------*/
+@media (min-width: 50em) {
+  .page-about {
+    gap: var(--space-1000);
+  }
+}
+
+/* #endregion */
+
+/** 5. Contact page
+-------------------------*/
+/* #region */
+.page-contact form,
+.page-contact .success {
+  padding-block: var(--space-500) var(--space-900);
+  --gap: var(--space-400);
+  min-height: 62rem;
+}
+
+.page-contact .success {
+  animation: fade-in 0.15s ease-in;
+}
+
+.page-contact form > :nth-child(2) {
+  margin-top: var(--space-500);
+}
+
+.page-contact textarea {
+  flex: 1;
+  min-height: 12rem;
+  max-height: 16rem;
+}
+
+.page-contact button {
+  margin-top: calc(var(--space-500) - var(--gap));
+  width: fit-content;
+}
+
+/* 5.1. Media queries
+-------------------------*/
+@media (min-width: 50em) {
+  .page-contact {
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .page-contact form,
+  .page-contact .success {
+    margin: var(--space-700) auto var(--space-1000) 0;
+    width: min(var(--max-width) / 2, 100% - (var(--screen-edge)));
+    padding-left: var(--space-700);
+  }
+
+  .page-contact::before {
+    content: "";
+    display: block;
+    background: url(../assets/contact.jpg) no-repeat;
+    height: calc(62rem + var(--space-1000) + var(--space-700));
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+@media (min-width: 170em) {
+  .page-contact::before {
+    width: min(var(--max-width) / 2, 100% - (var(--screen-edge)));
+    margin-left: auto;
+  }
+}
+/* #endregion */
+
+/** 6. Articles page
+-------------------------*/
+/* #region */
+.page-articles {
+  --spacing: var(--space-300);
+  margin-top: var(--space-600);
+  gap: var(--spacing);
+  grid-auto-rows: min-content;
+}
+
+.page-articles .categories > li {
+  flex: 0;
+}
+
+.page-articles .cards-container ul {
+  --gap: var(--space-600);
+  margin-top: calc(var(--space-600) - var(--spacing));
+}
+
+.page-articles .btn {
+  margin-inline: auto;
+  margin-top: var(--space-900);
+}
+
+.page-articles .btn.hidden {
+  display: none;
+}
+
+/* 6.1. Media queries
+-------------------------*/
+@media (min-width: 50em) {
+  .page-articles .btn {
+    margin-top: var(--space-1000);
+  }
+}
+/* #endregion */
+
+/** 7. Article specific page
+-------------------------*/
+/* #region */
+.page-article .container {
+  --max-width: 43rem;
+}
+
+.page-article img {
+  cursor: pointer;
+  transition: opacity 0.15s ease-in-out;
+}
+
+.page-article img:hover,
+.page-article img:focus-visible {
+  opacity: 0.9;
+}
+
+.page-article img:focus-visible {
+  outline: 3px solid var(--clr-neutral-200);
+  box-shadow: 0 0 0 6px var(--clr-neutral-600);
+}
+
+.page-article > .alert,
+.page-article .comments-section > .alert {
+  width: min(var(--max-width), 100% - (var(--screen-edge)));
+  margin-inline: auto;
+}
+
+/* 7.1. Article
+-------------------------*/
+.page-article article {
+  --flow-space: var(--space-600);
+}
+
+.page-article header {
+  --flow-space: var(--space-500);
+}
+
+.page-article header img {
+  max-width: 2000px;
+  margin-inline: auto;
+  max-height: min(700px, 70lvh);
+  min-height: 400px;
+  aspect-ratio: 2.5/1;
+}
+
+.page-article .article-content {
+  --flow-space: var(--space-400);
+}
+
+.page-article .article-content p:first-of-type {
+  font-weight: var(--fw-light);
+  color: var(--clr-neutral-500);
+}
+
+.page-article .article-content a {
+  color: var(--clr-neutral-600);
+  box-shadow: 0 2px 0 0 var(--clr-primary-500);
+}
+
+.page-article .article-content a:hover {
+  color: var(--clr-primary-500);
+}
+
+.page-article .article-content a:focus-visible {
+  border-radius: var(--border-radius);
+  outline: 3px solid var(--clr-neutral-200);
+  box-shadow: 0 0 0 5px var(--clr-primary-500);
+}
+
+.page-article figure,
+.page-article figure + *,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  --flow-space: var(--space-500);
+}
+
+.page-article figure img {
+  aspect-ratio: 1.75 / 1;
+
+  border-radius: var(--border-radius);
+}
+
+/* 7.2. Modal
+-------------------------*/
+.img-modal {
+  position: fixed;
+  place-items: center;
+  inset: 0;
+  background-color: var(--clr-neutral-600--opacity-90);
+}
+
+.img-modal.hidden {
+  display: none;
+}
+
+.img-modal.open {
+  opacity: 1;
+  animation: fade-in 0.2s ease-in-out;
+}
+
+.img-modal > div {
+  position: relative;
+}
+
+.img-modal img {
+  max-height: 70dvh;
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
+}
+
+.img-modal button {
+  position: absolute;
+  top: var(--space-400);
+  right: var(--space-400);
+}
+
+/* 7.3. Comments
+-------------------------*/
+.comments-section {
+  margin-top: var(--space-700);
+  padding-top: var(--space-700);
+  border-top: 1px solid var(--clr-primary-400);
+}
+
+.comments-section > * + * {
+  margin-top: var(--space-600);
+}
+
+.comments-section > div .btn {
+  flex-grow: 0;
+  height: fit-content;
+}
+
+.comments ul {
+  gap: var(--space-600);
+}
+
+.comments .btn {
+  margin-inline: auto;
+  margin-top: var(--space-700);
+}
+
+/* 7.3.1 Comment */
+.comments .comment {
+  --flow-space: var(--space-400);
+  border-bottom: 1px solid var(--clr-neutral-600);
+  padding-bottom: var(--space-600);
+}
+
+.comment .header {
+  align-items: center;
+}
+
+.comment .header > * {
+  flex: 0 0 auto;
+}
+
+.comment h3 {
+  font-size: var(--fs-500);
+  font-family: var(--ff-accent);
+}
+
+.comment .header span {
+  align-items: center;
+  font-weight: var(--fw-light);
+  font-size: var(--fs-350);
+  color: var(--clr-neutral-400);
+  position: relative;
+  top: -0.1rem;
+}
+
+.comment .header span::before {
+  position: relative;
+  top: 0.1rem;
+  content: "";
+  display: block;
+  border-radius: 50%;
+  background-color: var(--clr-neutral-400);
+  width: 0.25rem;
+  aspect-ratio: 1 / 1;
+}
+
+/* 7.3.2 comment form */
+.comment-form {
+  margin-top: var(--space-900);
+}
+
+.comment-form .btn {
+  align-self: flex-start;
+}
+
+.comment-form textarea {
+  min-height: 10rem;
+}
+
+/* 7.4. Media queries
+-------------------------*/
+@media (min-width: 50em) {
+  .comments-section {
+    margin-top: var(--space-900);
+    padding-top: var(--space-900);
+  }
+
+  .comments-section form {
+    margin-top: var(--space-1000);
+  }
+}
+@media (min-width: 2000px) {
+  .page-article header img {
+    width: min(var(--max-width), 100% - (var(--screen-edge)));
+  }
+}
+/* #endregion */

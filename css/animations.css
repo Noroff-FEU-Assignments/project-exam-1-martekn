@@ -1,0 +1,36 @@
+@keyframes slidein {
+  0% {
+    transform: translateX(130%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-dot {
+  0% {
+    background-color: var(--clr-neutral-300);
+  }
+  100% {
+    background-color: var(--clr-neutral-600);
+  }
+}

@@ -1,0 +1,90 @@
+/* Table of contents
+--------------------------------------------------
+    1. Colors
+    2. Base typography
+    3. Spacing
+    4. Other
+    5. Smaller screens font sizes
+*/
+
+:root {
+  /** 1. Colors
+-------------------------*/
+  --clr-primary-200: #f1decf;
+  --clr-primary-300: #d0b4a0;
+  --clr-primary-400: #d8a47f;
+  --clr-primary-500: #826b5c;
+
+  --clr-neutral-200: #faf7f5;
+  --clr-neutral-300: #8f9499;
+  --clr-neutral-400: #5d606b;
+  --clr-neutral-500: #41434d;
+  --clr-neutral-600: #272932;
+  --clr-neutral-600--opacity-90: #272932e6;
+  --clr-neutral-600--opacity-20: #27293233;
+
+  --clr-error-350: #f0deda;
+  --clr-error-400: #750a0a;
+  --clr-warning-350: #ede2d2;
+  --clr-warning-400: #744409;
+  --clr-success-350: #e5e7dd;
+  --clr-success-400: #1f5409;
+  --clr-alert-350: #eeebeb;
+  --clr-alert-400: #272932;
+
+  /** 2. Base typography
+-------------------------*/
+  --ff-base: "Lato", arial, helvetica, sans-serif;
+  --ff-accent: "Vollkorn", cambria, "times new roman", serif;
+
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-italic: 400 italic;
+  --fw-bold: 700;
+  --fw-bold-italic: 700 italic;
+
+  --fs-350: 1rem; /* 16px */
+  --fs-400: 1.138rem; /* 18.22px */
+  --fs-450: 1.25rem; /* 20px */
+  --fs-500: 1.563rem; /* 25px */
+  --fs-550: 1.953rem; /* 31.25px */
+  --fs-600: 2.441rem; /* 39.06px */
+  --fs-700: 3.052rem; /* 48.83px */
+  --fs-800: 3.815rem; /* 61.04px */
+
+  /** 3. Spacing
+-------------------------*/
+  --space-300: 0.25rem; /* 4px */
+  --space-350: 0.5rem; /* 8px */
+  --space-375: 0.75rem; /* 12px */
+  --space-400: 1rem; /* 16px */
+  --space-450: 1.5rem; /* 24px */
+  --space-500: 2rem; /* 32px */
+  --space-600: 3rem; /* 48px */
+  --space-700: 4rem; /* 64px */
+  --space-900: 6rem; /* 96px */
+  --space-1000: 8rem; /* 128px */
+
+  /** 4. Other
+-------------------------*/
+  --max-width: 78rem;
+  --screen-edge: var(--space-450);
+  --box-shadow--inset: inset 0px 1px 4px 0px var(--clr-neutral-600--opacity-20);
+  --box-shadow: 2px 3px 6px var(--clr-neutral-600--opacity-20);
+  --border-radius: 2px;
+}
+
+/** 5. Smaller screens font sizes and spacing
+-------------------------*/
+@media (max-width: 35em) {
+  :root {
+    --fs-450: 1.215rem; /* 19.44px*/
+    --fs-500: 1.383rem; /* 22.13px */
+    --fs-550: 1.575rem; /* 25.19px */
+    --fs-600: 1.793rem; /* 28.68px */
+    --fs-700: 2.041rem; /* 32.65px */
+    --fs-800: 2.323rem; /* 37.18px */
+
+    --space-900: var(--space-700);
+  }
+}

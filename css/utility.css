@@ -1,0 +1,94 @@
+/* Table of contents
+--------------------------------------------------
+    1. General
+    2. Colors
+    3. Layout
+*/
+
+/* Typography related utility classes can be found in typography.css */
+
+/** 1. General
+-------------------------*/
+/* #region */
+.visually-hidden {
+  position: absolute;
+  clip: rect(1px 1px 1px 1px);
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  word-wrap: normal;
+  overflow: hidden;
+}
+
+/* #endregion */
+
+/** 2. Colors
+-------------------------*/
+/* #region */
+[class*="bg-"] {
+  color: var(--fg, var(--clr-neutral-600));
+  background-color: var(--bg, green);
+}
+
+.bg--accent {
+  --bg: var(--clr-primary-200);
+  --fg: var(--clr-neutral-600);
+}
+
+.bg--dark {
+  --bg: var(--clr-neutral-600);
+  --fg: var(--clr-neutral-200);
+}
+
+/* #endregion */
+
+/** 3. Layout
+-------------------------*/
+/* #region */
+/* Child elements that has a previous sibling gains margin-top,
+This keeps things consistent regardless of the formatting context */
+.flow-content > * + * {
+  margin-top: var(--flow-space, var(--space-400));
+}
+
+.container {
+  width: min(var(--max-width), 100% - (var(--screen-edge) * 2));
+  margin-inline: auto;
+}
+
+.flex {
+  display: flex;
+  gap: var(--gap, var(--space-400));
+}
+
+.flex--col {
+  flex-direction: column;
+}
+
+.flex--wrap {
+  flex-wrap: wrap;
+}
+
+.flex--wrap > * {
+  flex: 1 0 auto;
+}
+
+.grid {
+  display: grid;
+  gap: var(--gap, var(--space-400));
+}
+
+.grid--even-columns {
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+}
+
+@media (min-width: 50em) {
+  .grid--even-col2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* #endregion */

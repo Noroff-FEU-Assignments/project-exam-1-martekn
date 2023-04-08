@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Travella</title>
+    <meta name="description" content="" />
+
+    <!-- Remix icon -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Vollkorn:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Css -->
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <a href="#main-content" class="skip-nav">Skip to content</a>
+    <div class="min-full-height">
+      <header class="primary-header container flex">
+        <a href="./index.html" class="logo">Travella</a>
+        <button id="nav-open" class="btn--nav" aria-controls="primary-nav" aria-expanded="false" aria-haspopup="true">
+          <i class="ri-menu-line" aria-hidden="true"></i>
+          <span class="visually-hidden">Open menu</span>
+        </button>
+
+        <nav
+          id="primary-nav"
+          class="primary-nav flex"
+          data-visible="false"
+          tabindex="-1"
+          role="dialog"
+          aria-modal="true"
+        >
+          <button id="nav-close" class="btn--nav" aria-controls="primary-nav" aria-expanded="true">
+            <i class="ri-close-line"></i>
+            <span class="visually-hidden">Close menu</span>
+          </button>
+          <ul class="flex">
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./articles.html">Articles</a></li>
+            <li><a href="./about.html">About</a></li>
+            <li><a href="./contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <main id="main-content" class="page-article">
+        <div class="loader"></div>
+        <section id="comments-section" class="comments-section flow-content">
+          <div class="flex flex--wrap container">
+            <h2 class="text-600">Comments <span id="comment-count"></span></h2>
+            <a href="#comment-form" class="btn btn--primary">Write a comment</a>
+          </div>
+          <div id="comments-container" class="comments container">
+            <ul id="comments-ul" class="flex flex--col"></ul>
+            <div class="loader"></div>
+          </div>
+          <form id="comment-form" action="post" class="comment-form flex flex--col container">
+            <h3 class="h2">Write a comment</h3>
+            <div class="form-group flow-content">
+              <label for="name">Name</label>
+              <input type="text" name="name" id="name" />
+            </div>
+            <div class="form-group flow-content">
+              <label for="email">Email</label>
+              <input type="email" name="email" id="email" />
+            </div>
+            <div class="form-group flex flex--col">
+              <label for="comment">Comment</label>
+              <textarea name="comment" id="comment"></textarea>
+            </div>
+            <button class="btn btn--primary">Post</button>
+          </form>
+        </section>
+      </main>
+      <div
+        id="img-modal"
+        aria-label="Larger image"
+        class="img-modal hidden grid"
+        tabindex="-1"
+        role="dialog"
+        aria-modal="true"
+      >
+        <div class="container">
+          <img tabindex="-1" src="" alt="" />
+          <button id="modal-close" class="icon">
+            <i class="ri-close-line"></i>
+            <span class="visually-hidden">Close modal</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="primary-footer bg--dark footer-margin">
+      <div class="top-bar flex container">
+        <a href="./index.html" class="logo">Travella</a>
+        <ul class="socials flex">
+          <li>
+            <a href="#" class="icon"
+              ><i class="ri-instagram-fill" aria-hidden="true"></i><span class="visually-hidden">Instagram</span></a
+            >
+          </li>
+          <li>
+            <a href="#" class="icon"
+              ><i class="ri-facebook-fill" aria-hidden="true"></i><span class="visually-hidden">Facebook</span></a
+            >
+          </li>
+          <li>
+            <a href="#" class="icon"
+              ><i class="ri-twitter-fill" aria-hidden="true"></i><span class="visually-hidden">Twitter</span></a
+            >
+          </li>
+        </ul>
+      </div>
+      <form action="post" class="grid grid--even-col2 container">
+        <h2>Subscribe to our newsletter</h2>
+        <p>
+          Get extra tips, tricks and updates delivered right to your email. We will also notify you about new posts on
+          the blog.
+        </p>
+        <div class="grid">
+          <label for="sub-email">Email</label>
+
+          <input type="text" id="sub-email" />
+          <button class="btn btn--secondary">Subscribe</button>
+        </div>
+      </form>
+      <div class="container">
+        <i class="ri-copyright-line" aria-hidden="true"></i><span class="visually-hidden">Copyright </span>2023 Marte
+        Møllen Knutsen
+      </div>
+    </footer>
+
+    <!-- Template -->
+    <template id="template_article">
+      <article class="flow-content">
+        <header clasS="article-header flow-content">
+          <div class="image">
+            <img src="" alt="" />
+          </div>
+          <div class="flow-content container">
+            <span id="category" href="./articles.html" class="category-item">Travel</span>
+            <h1></h1>
+          </div>
+        </header>
+        <div class="article-content flow-content container"></div>
+        <footer class="article-footer container text-350 text-light">
+          <div id="date"></div>
+        </footer>
+      </article>
+    </template>
+
+    <template id="template_comment">
+      <li class="comment flow-content">
+        <div class="header flex flex--wrap">
+          <h3></h3>
+          <span id="time" class="flex"></span>
+        </div>
+        <div id="content"></div>
+      </li>
+    </template>
+
+    <!-- Js -->
+    <script src="./js/app.js" type="module"></script>
+    <script type="module">
+      import { setupArticle } from "./js/pages/article.js";
+      setupArticle();
+    </script>
+  </body>
+</html>
