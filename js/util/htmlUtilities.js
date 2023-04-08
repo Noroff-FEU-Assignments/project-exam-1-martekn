@@ -57,3 +57,14 @@ export const parseHTML = (htmlString) => {
 
   return content.body;
 };
+
+/**
+ * Appends an array of elements to parent
+ * @param {Array} array - Array of HTMLElements
+ * @param {HTMLElement} parent
+ */
+export const appendArray = (array, parent) => {
+  for (const element of array) {
+    parent.append(element);
+  }
+};
