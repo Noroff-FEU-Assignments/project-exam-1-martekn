@@ -56,6 +56,11 @@ body.no-scroll {
 main {
   flex: 1;
 }
+
+.image {
+  position: relative;
+}
+
 /* 2.1. Media queries
 -------------------------*/
 @media (min-width: 170em) {
@@ -116,8 +121,6 @@ main {
 
 .featured-post img {
   height: 500px;
-  width: 100%;
-  object-fit: cover;
   border-radius: var(--border-radius);
 }
 
@@ -153,9 +156,6 @@ main {
   border-radius: var(--border-radius);
   position: absolute;
   inset: 0;
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
 }
 
 .popular-posts .card:first-of-type h3 {
@@ -217,9 +217,6 @@ main {
 
 .ig-container img {
   position: absolute;
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
 }
 
 .ig-container li:last-of-type img {
@@ -461,7 +458,6 @@ main {
 
 .page-article img {
   cursor: pointer;
-  object-fit: cover;
 }
 
 .page-article img:hover,
@@ -491,11 +487,10 @@ main {
 }
 
 .page-article header img {
-  width: 100%;
   max-width: 2000px;
   margin-inline: auto;
-  max-height: 70dvh;
-  min-height: 40dvh;
+  max-height: min(700px, 70lvh);
+  min-height: 400px;
   aspect-ratio: 2.5/1;
 }
 
@@ -557,9 +552,7 @@ h6 {
 }
 
 .img-modal img {
-  width: 100%;
   max-height: 70dvh;
-  object-fit: cover;
   box-shadow: var(--box-shadow);
   border-radius: var(--border-radius);
 }
