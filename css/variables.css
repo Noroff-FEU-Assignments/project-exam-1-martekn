@@ -74,12 +74,17 @@
   --border-radius: 2px;
 }
 
-/** 5. Smaller screens font sizes
+/** 5. Smaller screens font sizes and spacing
 -------------------------*/
-@media (max-width: 40em) {
+@media (max-width: 35em) {
   :root {
-    --fs-600: 2.178rem; /* 34.84px */
-    --fs-700: 2.441rem; /* 39.06px */
-    --fs-800: 3.052rem; /* 48.83px */
+    --fs-450: 1.215rem; /* 19.44px*/
+    --fs-500: 1.383rem; /* 22.13px */
+    --fs-550: 1.575rem; /* 25.19px */
+    --fs-600: 1.793rem; /* 28.68px */
+    --fs-700: 2.041rem; /* 32.65px */
+    --fs-800: 2.323rem; /* 37.18px */
+
+    --space-900: var(--space-700);
   }
 }
