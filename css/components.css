@@ -124,14 +124,14 @@ footer .logo {
   border-radius: var(--border-radius);
 }
 
-.primary-nav a[aria-current="page"] {
+.primary-nav a.active {
   font-weight: var(--fw-bold);
   text-decoration: underline;
   color: var(--fg-nav);
 }
 
-.primary-nav a[aria-current="page"]:hover::after,
-.primary-nav a[aria-current="page"]:focus-visible::after {
+.primary-nav a.active:hover::after,
+.primary-nav a.active:focus-visible::after {
   display: none;
 }
 
@@ -195,7 +195,7 @@ footer .logo {
     flex-direction: column;
   }
 
-  .primary-nav[data-visible="true"] a[aria-current="page"] {
+  .primary-nav[data-visible="true"] a.active {
     color: var(--fg-nav-btn);
   }
 }
