@@ -103,6 +103,7 @@ const openModal = (e) => {
     img.setAttribute("alt", alt);
     body.classList.add("no-scroll");
     modal.classList.remove("hidden");
+    modal.classList.add("open");
 
     modal.focus();
 
@@ -112,6 +113,7 @@ const openModal = (e) => {
 
 const closeModal = () => {
   modal.classList.add("hidden");
+  modal.classList.remove("open");
   body.classList.remove("no-scroll");
   document.removeEventListener("keydown", setupImageModalFocus);
   const openedElement = document.querySelector("#modal-open");

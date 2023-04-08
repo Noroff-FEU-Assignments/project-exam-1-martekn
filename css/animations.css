@@ -16,3 +16,21 @@
     transform: rotate(360deg);
   }
 }
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-dot {
+  0% {
+    background-color: var(--clr-neutral-300);
+  }
+  100% {
+    background-color: var(--clr-neutral-600);
+  }
+}
