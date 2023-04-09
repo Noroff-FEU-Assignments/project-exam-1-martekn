@@ -533,7 +533,16 @@ h6 {
   --flow-space: var(--space-500);
 }
 
+/* the padding and positioning helps keep the aspect ratio at 1.75 / 1*/
+.page-article figure {
+  padding-top: calc((2 / 3) * 100%);
+  width: 100%;
+  position: relative;
+}
+
 .page-article figure img {
+  position: absolute;
+  top: 0;
   border-radius: var(--border-radius);
 }
 
