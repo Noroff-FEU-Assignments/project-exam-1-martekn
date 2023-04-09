@@ -224,7 +224,6 @@ const renderComment = (comment) => {
 
 const renderComments = async (comments, parent) => {
   if (comments.length === 0) {
-    parent.innerHTML = "";
     parent.append(renderAlertDialog("alert", "There are no comments on this post yet"));
   } else {
     for (const comment of comments) {
@@ -275,6 +274,8 @@ const submitComment = async () => {
     const response = await fetchApi("/wp/v2/comments", null, fetchInit);
 
     if (response.ok) {
+      const alert = commentListWrapper.querySelector(".alert");
+
       commentForm.reset();
       commentOffset++;
       commentAmount++;
@@ -282,6 +283,10 @@ const submitComment = async () => {
       firstFormElem.after(renderAlertDialog("success", "Comment sent", "comment-alert"));
       commentList.prepend(renderComment(response.data));
       commentCount.innerText = `( ${commentAmount} )`;
+
+      if (alert) {
+        alert.remove();
+      }
     } else {
       console.log("error", response.data.message);
 
