@@ -10,6 +10,7 @@
     8. Category items
     9. Inputs + Label
     10. Cards
+      10.1. Media queries
     11. Hero section
     12. Carousel
       12.1. Media queries
@@ -589,7 +590,7 @@ label,
   left: 8px;
 }
 
-/* 6.1. Media queries
+/* 10.1. Media queries
 -------------------------*/
 @media (min-width: 40em) {
   .card.card--large {
