@@ -96,11 +96,14 @@ const setupImageModalFocus = (e) => {
 const openModal = (e) => {
   if (e.type === "click" || e.key === "Enter") {
     e.target.setAttribute("id", "modal-open");
-    const img = modal.querySelector("img");
-    const src = e.target.getAttribute("src");
-    const alt = e.target.getAttribute("alt");
-    img.setAttribute("src", src);
-    img.setAttribute("alt", alt);
+
+    const img = createHTML("img", null, null, {
+      tabindex: "-1",
+      src: e.target.getAttribute("src"),
+      alt: e.target.getAttribute("alt"),
+    });
+
+    modal.querySelector(".container").prepend(img);
     body.classList.add("no-scroll");
     modal.classList.remove("hidden");
     modal.classList.add("open");
