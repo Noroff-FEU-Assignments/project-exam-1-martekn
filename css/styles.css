@@ -2,6 +2,7 @@
 --------------------------------------------------
     1. Imports
     2. General
+      2.1. Media queries
     3. Homepage
       3.1. Hero
       3.2. Featured post
@@ -12,7 +13,9 @@
         3.5.2 Popular posts
         3.5.3 Instagram section
     4. About page
-      4.1. Media queries
+      4.1. Hero
+      4.2. Contact section
+      4.3. Media queries
     5. Contact page
       5.1. Media queries
     6. Articles page
@@ -21,6 +24,8 @@
       7.1. Article
       7.2. Modal
       7.3. Comments
+        7.3.1. Comment
+        7.3.2. Comment form
       7.4. Media queries
 */
 
@@ -199,6 +204,7 @@ main {
 
   transition: color 0.1s ease-in-out;
 }
+
 .ig-container a:hover,
 .ig-container a:focus-visible {
   color: var(--clr-primary-400);
@@ -329,7 +335,7 @@ main {
   margin-top: 0;
 }
 
-/* 4.1. Contact section
+/* 4.2. Contact section
 -------------------------*/
 .contact-me {
   --gap: var(--space-500) var(--space-900);
@@ -344,7 +350,7 @@ main {
   --gap: var(--space-300);
 }
 
-/* 4.1. Media queries
+/* 4.3. Media queries
 -------------------------*/
 @media (min-width: 50em) {
   .page-about {
@@ -646,7 +652,7 @@ h6 {
   width: 0.25rem;
 }
 
-/* 7.3.2 comment form */
+/* 7.3.2 Comment form */
 .comment-form {
   margin-top: var(--space-900);
 }
