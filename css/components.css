@@ -263,6 +263,11 @@ footer .logo {
   font-size: var(--fs-350);
 }
 
+.primary-footer .alert.error {
+  color: rgb(227, 123, 123);
+  margin-block: 0px;
+}
+
 @media (min-width: 30em) {
   .primary-footer form > div {
     grid-template-columns: 1fr auto;
