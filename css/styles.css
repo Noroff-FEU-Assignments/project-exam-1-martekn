@@ -497,7 +497,6 @@ main {
   margin-inline: auto;
   max-height: min(700px, 70lvh);
   min-height: 400px;
-  aspect-ratio: 2.5/1;
 }
 
 .page-article .article-content {
@@ -535,8 +534,6 @@ h6 {
 }
 
 .page-article figure img {
-  aspect-ratio: 1.75 / 1;
-
   border-radius: var(--border-radius);
 }
 
@@ -636,8 +633,8 @@ h6 {
   display: block;
   border-radius: 50%;
   background-color: var(--clr-neutral-400);
+  height: 0.25rem;
   width: 0.25rem;
-  aspect-ratio: 1 / 1;
 }
 
 /* 7.3.2 comment form */
