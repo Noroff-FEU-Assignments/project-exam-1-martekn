@@ -654,7 +654,8 @@ h6 {
 
 /* 7.3.2 Comment form */
 .comment-form {
-  margin-top: var(--space-900);
+  margin-top: 0;
+  padding-top: var(--space-900);
 }
 
 .comment-form .btn {
@@ -673,8 +674,8 @@ h6 {
     padding-top: var(--space-900);
   }
 
-  .comments-section form {
-    margin-top: var(--space-1000);
+  .comment-form {
+    padding-top: var(--space-1000);
   }
 }
 @media (min-width: 2000px) {

@@ -448,13 +448,28 @@ footer .logo {
 
 .category-item.category-clickable {
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
 .category-item.selected {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-right: calc(var(--space-400) * 2 + var(--space-400) / 2);
   --bg-category: var(--clr-primary-400);
   --fg-category: var(--clr-neutral-600);
   --bg-category-hover: var(--clr-primary-200);
   font-weight: var(--fw-bold);
+}
+
+.category-item.selected::after {
+  content: "\2716";
+  display: block;
+  position: absolute;
+  font-size: 0.75rem;
+  right: var(--space-400);
+  animation: fade-in 0.25s ease-in;
+  opacity: 1;
 }
 
 .category-item.category-clickable:hover {
