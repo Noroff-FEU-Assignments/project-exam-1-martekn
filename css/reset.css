@@ -69,17 +69,6 @@ ol {
   list-style: none;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th,
-td {
-  text-align: left;
-  vertical-align: top;
-}
-
 html:focus-within {
   scroll-behavior: smooth;
 }

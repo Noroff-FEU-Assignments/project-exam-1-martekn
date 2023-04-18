@@ -23,7 +23,6 @@ const submitForm = (e) => {
     alert = renderAlertDialog("success", "You have subscribed");
     inputParent.append(alert);
   } else if (!document.querySelector(`#${emailInfo.errorId}`)) {
-    console.log("not valid");
     alert = renderAlertText("error", emailInfo.errorMessage, emailInfo.errorId);
     inputParent.append(alert);
   }

@@ -271,6 +271,7 @@ footer .logo {
   .primary-footer form > div {
     grid-template-columns: 1fr auto;
   }
+
   .primary-footer label {
     grid-column: 1 / -1;
   }
@@ -857,6 +858,7 @@ label,
   .carousel {
     grid-auto-columns: calc((100% - (var(--gap)) * 2) / 3);
   }
+
   .carousel-container .dot:nth-of-type(n + 5) {
     display: none;
   }
@@ -866,6 +868,7 @@ label,
   .carousel {
     grid-auto-columns: calc((100% - (var(--gap)) * 3) / 4);
   }
+
   .carousel-container .dot:nth-of-type(n + 4) {
     display: none;
   }

@@ -162,8 +162,6 @@ const renderArticle = async () => {
     const images = Array.from(postContent.querySelectorAll("img"));
     images.push(article.querySelector("header img"));
 
-    console.log(postContent);
-
     category.innerText = post._embedded["wp:term"][0][0].name;
     featuredImage.setAttribute("src", imageInfo.source_url);
     featuredImage.setAttribute("alt", imageInfo.alt_text);
@@ -372,14 +370,8 @@ const setupCommentForm = () => {
   submitButton.addEventListener("click", validateComment);
 };
 
-const updateViewCount = async () => {
-  const response = await fetchApi(`/base/views/${articleId}`);
-  console.log(response);
-};
-
 export const setupArticle = () => {
   renderArticle();
   fetchComments();
   setupCommentForm();
-  updateViewCount();
 };
