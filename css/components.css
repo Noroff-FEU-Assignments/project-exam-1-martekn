@@ -265,13 +265,13 @@ footer .logo {
 
 .primary-footer .alert.error {
   color: rgb(227, 123, 123);
-  margin-block: 0px;
 }
 
 @media (min-width: 30em) {
   .primary-footer form > div {
     grid-template-columns: 1fr auto;
   }
+
   .primary-footer label {
     grid-column: 1 / -1;
   }
@@ -748,6 +748,7 @@ label,
 .carousel-container .dots {
   display: none;
 }
+
 .carousel-container .control {
   display: none;
 }
@@ -756,9 +757,11 @@ label,
   flex-direction: column;
   --gap: var(--space-600);
 }
+
 .carousel:focus {
   outline: none;
 }
+
 .carousel:focus-visible {
   outline: 1px solid var(--clr-neutral-200);
   box-shadow: 0 0 0 3px var(--clr-neutral-600);
@@ -855,6 +858,7 @@ label,
   .carousel {
     grid-auto-columns: calc((100% - (var(--gap)) * 2) / 3);
   }
+
   .carousel-container .dot:nth-of-type(n + 5) {
     display: none;
   }
@@ -864,6 +868,7 @@ label,
   .carousel {
     grid-auto-columns: calc((100% - (var(--gap)) * 3) / 4);
   }
+
   .carousel-container .dot:nth-of-type(n + 4) {
     display: none;
   }
@@ -876,7 +881,6 @@ label,
 /* #region */
 .alert {
   color: var(--alert-fg, var(--clr-alert-400));
-  margin-block: var(--space-400);
 }
 
 .alert.error {

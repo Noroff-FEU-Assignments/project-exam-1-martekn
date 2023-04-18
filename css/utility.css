@@ -22,6 +22,10 @@
   overflow: hidden;
 }
 
+.image {
+  position: relative;
+}
+
 /* #endregion */
 
 /** 2. Colors

@@ -28,6 +28,9 @@ const errorInfo = {
   },
 };
 
+// Its set as an object in order to pass updated value through setupEmailEventListener
+const contactFormStatus = { isActive: false };
+
 const renderSuccessMessage = () => {
   const template = document.querySelector("#template_success");
   const success = template.content.cloneNode(true);
@@ -92,16 +95,21 @@ const validateForm = (e) => {
 export const setupContact = () => {
   form.reset();
 
-  setupEmailEventListener(emailInput, errorInfo.email.id, errorInfo.email.errorMessage);
+  setupEmailEventListener(emailInput, errorInfo.email.id, errorInfo.email.errorMessage, contactFormStatus);
 
   form.addEventListener("submit", validateForm);
 
   nameInput.addEventListener("focusout", function (e) {
-    const validated = characterValidation(nameInput.value.trim(), 5);
-    validationError(this, validated, errorInfo.name.id, errorInfo.name.errorMessage);
+    if (contactFormStatus.isActive) {
+      const validated = characterValidation(nameInput.value.trim(), 5);
+      validationError(this, validated, errorInfo.name.id, errorInfo.name.errorMessage);
+    }
   });
 
   nameInput.addEventListener("input", function (e) {
+    if (!contactFormStatus.isActive) {
+      contactFormStatus.isActive = true;
+    }
     const validated = characterValidation(nameInput.value.trim(), 5);
     if (validated && document.querySelector(`#${errorInfo.name.id}`)) {
       document.querySelector(`#${errorInfo.name.id}`).remove();
@@ -109,11 +117,16 @@ export const setupContact = () => {
   });
 
   subjectInput.addEventListener("focusout", function (e) {
-    const validated = characterValidation(subjectInput.value.trim(), 15);
-    validationError(this, validated, errorInfo.subject.id, errorInfo.subject.errorMessage);
+    if (contactFormStatus.isActive) {
+      const validated = characterValidation(subjectInput.value.trim(), 15);
+      validationError(this, validated, errorInfo.subject.id, errorInfo.subject.errorMessage);
+    }
   });
 
   subjectInput.addEventListener("input", function (e) {
+    if (!contactFormStatus.isActive) {
+      contactFormStatus.isActive = true;
+    }
     const validated = characterValidation(subjectInput.value.trim(), 15);
     if (validated && document.querySelector(`#${errorInfo.subject.id}`)) {
       document.querySelector(`#${errorInfo.subject.id}`).remove();
@@ -121,11 +134,16 @@ export const setupContact = () => {
   });
 
   messageInput.addEventListener("focusout", function (e) {
-    const validated = characterValidation(messageInput.value.trim(), 25);
-    validationError(this, validated, errorInfo.message.id, errorInfo.message.errorMessage);
+    if (contactFormStatus.isActive) {
+      const validated = characterValidation(messageInput.value.trim(), 25);
+      validationError(this, validated, errorInfo.message.id, errorInfo.message.errorMessage);
+    }
   });
 
   messageInput.addEventListener("input", function (e) {
+    if (!contactFormStatus.isActive) {
+      contactFormStatus.isActive = true;
+    }
     const validated = characterValidation(messageInput.value.trim(), 25);
     if (validated && document.querySelector(`#${errorInfo.message.id}`)) {
       document.querySelector(`#${errorInfo.message.id}`).remove();

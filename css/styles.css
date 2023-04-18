@@ -62,10 +62,6 @@ main {
   flex: 1;
 }
 
-.image {
-  position: relative;
-}
-
 /* 2.1. Media queries
 -------------------------*/
 @media (min-width: 170em) {
@@ -106,6 +102,7 @@ main {
   gap: var(--space-600);
   flex-wrap: wrap-reverse;
 }
+
 .featured-post > div > * {
   flex: 1 0 min(20rem, 100%);
 }
