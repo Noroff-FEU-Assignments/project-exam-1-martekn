@@ -39,14 +39,16 @@ export const emailValidation = (email) => {
  * @param {String} id - unique id to get error element later
  * @param {String} errorMessage
  */
-export const setupEmailEventListener = (emailInput, id, errorMessage) => {
+export const setupEmailEventListener = (emailInput, id, errorMessage, formObj) => {
   let timeout;
   let validated = false;
 
   emailInput.addEventListener("focusout", function (e) {
-    validated = emailValidation(emailInput.value);
-    if (!validated && !document.querySelector(`#${id}`)) {
-      emailInput.parentElement.append(renderAlertText("error", errorMessage, id));
+    if (formObj.isActive) {
+      validated = emailValidation(emailInput.value);
+      if (!validated && !document.querySelector(`#${id}`)) {
+        emailInput.parentElement.append(renderAlertText("error", errorMessage, id));
+      }
     }
   });
 
@@ -54,6 +56,10 @@ export const setupEmailEventListener = (emailInput, id, errorMessage) => {
     if (timeout) {
       clearTimeout(timeout);
       timeout = 0;
+    }
+
+    if (!formObj.isActive) {
+      formObj.isActive = true;
     }
 
     timeout = setTimeout(() => {

@@ -10,6 +10,9 @@ const emailInfo = {
   errorMessage: "Please enter a valid email",
 };
 
+// Its set as an object in order to pass updated value through setupEmailEventListener
+const subFormStatus = { isActive: false };
+
 const submitForm = (e) => {
   e.preventDefault();
 
@@ -27,6 +30,6 @@ const submitForm = (e) => {
 };
 
 export const setupSubscribe = () => {
-  setupEmailEventListener(submitEmail, emailInfo.errorId, emailInfo.errorMessage);
+  setupEmailEventListener(submitEmail, emailInfo.errorId, emailInfo.errorMessage, subFormStatus);
   form.addEventListener("submit", submitForm);
 };
