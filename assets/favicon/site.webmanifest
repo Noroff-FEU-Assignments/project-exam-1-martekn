@@ -1,0 +1,14 @@
+{
+    "name": "Travella",
+    "short_name": "Travella",
+    "icons": [
+        {
+            "src": "android-chrome-96x96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#272932",
+    "background_color": "#272932",
+    "display": "standalone"
+}
